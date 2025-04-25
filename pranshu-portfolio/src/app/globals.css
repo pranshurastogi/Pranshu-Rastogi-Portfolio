@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
 
 /* src/styles/globals.css */
 /* Tailwind + DaisyUI already set up */
@@ -24,5 +26,9 @@
 .animate-gradient-slow {
   background-size: 200% 200%;
   animation: gradient-slow 20s ease infinite;
+}
+
+html {
+  font-family: 'Poppins', sans-serif;
 }
 

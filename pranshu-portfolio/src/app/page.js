@@ -4,6 +4,8 @@ import TweetsSection from "@/components/TweetSection";
 import BlogSection from "@/components/BlogSection";
 import YouTubeSection from "@/components/YouTubeSection";
 import SpeakerGallery from "@/components/SpeakerGallery";
+import CareerTimeline from "@/components/CareerTimeline";
+
 
 
 export default function Home() {
@@ -22,6 +24,7 @@ export default function Home() {
     <>
       <Header />
       <Hero />
+      < CareerTimeline />
       <BlogSection />
       <SpeakerGallery/>
       <YouTubeSection />
