@@ -1,37 +1,53 @@
+// src/components/Hero.jsx
 "use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import ParticlesBackground from "@/components/ParticlesBackground";
 import {
   FaTwitter,
   FaLinkedin,
   FaMedium,
   FaGithub,
   FaYoutube,
-  FaShareAlt,   // generic “share” icon for Warpcast
+  FaShareAlt,
 } from "react-icons/fa";
 
 export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-indigo-50 to-white py-20">
-      {/* Animated background */}
-      <div className="absolute inset-0 -z-10 animate-gradient-slow bg-gradient-to-r from-indigo-100 via-purple-100 to-orange-100 opacity-20"></div>
+      {/* 1. Particle background */}
+      <div className="absolute inset-0 -z-10">
+        <ParticlesBackground />
+      </div>
 
-      <div className="container mx-auto flex flex-col md:flex-row items-center px-4">
-        {/* Animated gradient border + avatar */}
-        <div className="relative w-48 h-48 mb-8 md:mb-0 md:mr-12">
+      <div className="container mx-auto flex flex-col md:flex-row items-center px-4 relative z-10">
+        {/* 2. Animated avatar with gradient border */}
+        <motion.div
+          className="relative w-48 h-48 mb-8 md:mb-0 md:mr-12"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           <div className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-indigo-600 via-orange-400 to-indigo-600 p-[2px] animate-spin-slow"></div>
           <div className="relative w-full h-full rounded-full bg-white overflow-hidden">
             <Image
-              src="/images/pranshu.JPG"
+              src="/images/pfp.jpg"
               alt="Pranshu Rastogi"
               fill
               className="object-cover"
             />
           </div>
-        </div>
+        </motion.div>
 
-        {/* Intro text + social icons */}
-        <div className="max-w-2xl">
+        {/* 3. Animated text & social icons */}
+        <motion.div
+          className="max-w-2xl"
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.4, duration: 0.8 }}
+        >
           <h1 className="text-5xl font-extrabold text-indigo-800 mb-2">
             Pranshu Rastogi
           </h1>
@@ -44,7 +60,6 @@ export default function Hero() {
             open-infrastructure solutions.
           </p>
 
-          {/* Social links */}
           <div className="flex space-x-6">
             <Link
               href="https://x.com/pranshurastogii"
@@ -95,8 +110,8 @@ export default function Hero() {
               <FaShareAlt size={24} aria-label="Warpcast" />
             </Link>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
-  );
+);
 }
