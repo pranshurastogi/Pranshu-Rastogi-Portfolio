@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import TweetsSection from "@/components/TweetSection";
 import BlogSection from "@/components/BlogSection";
 import YouTubeSection from "@/components/YouTubeSection";
+import SpeakerGallery from "@/components/SpeakerGallery";
 
 
 export default function Home() {
@@ -22,6 +23,7 @@ export default function Home() {
       <Header />
       <Hero />
       <BlogSection />
+      <SpeakerGallery/>
       <YouTubeSection />
       <TweetsSection tweets={tweetLinks} limit={6} />
       {/* future sections */}

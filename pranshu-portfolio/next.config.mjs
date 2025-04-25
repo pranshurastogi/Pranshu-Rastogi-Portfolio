@@ -2,19 +2,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-      // Allow next/image to fetch from Medium's CDN
-      domains: ["cdn-images-1.medium.com"],
-      // Or use remotePatterns for finer control:
-      // remotePatterns: [
-      //   {
-      //     protocol: "https",
-      //     hostname: "cdn-images-1.medium.com",
-      //     port: "",
-      //     pathname: "/**",
-      //   },
-      // ],
-    },
+        domains: [
+            "cdn-images-1.medium.com",   // for Medium embeds
+            "img.youtube.com",           // for YouTube thumbnails
+          ],
+        remotePatterns: [
+          {
+            protocol: "https",
+            hostname: "img.youtube.com",
+            port: "",
+            pathname: "/vi/**/hqdefault.jpg",
+          },
+        ],
+      },
   };
   
   export default nextConfig;
   
+ 
