@@ -1,12 +1,27 @@
+import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import TweetsSection from "@/components/TweetSection";
 import BlogSection from "@/components/BlogSection";
 
 export default function Home() {
+  const tweetLinks = [
+    // Replace these with your actual tweet URLs
+    "https://twitter.com/pranshurastogii/status/1896185004666814791",
+    "https://twitter.com/pranshurastogii/status/1912881709705748722",
+    "https://twitter.com/pranshurastogii/status/1833831369333469401",
+    "https://twitter.com/ETHCluj/status/1902331148891553879",
+    "https://twitter.com/pranshurastogii/status/1705287298101698736",
+    "https://twitter.com/pranshurastogii/status/1894254871517511902"
+
+  ];
+
   return (
-    <main>
+    <>
+      <Header />
       <Hero />
       <BlogSection />
-      {/* ⇢ Later you can add <Experience />, <Projects />, etc. here */}
-    </main>
+      <TweetsSection tweets={tweetLinks} />
+      {/* future sections */}
+    </>
   );
 }
