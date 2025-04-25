@@ -1,4 +1,3 @@
-// src/components/Header.jsx
 "use client";
 import Link from "next/link";
 
@@ -6,7 +5,8 @@ export default function Header() {
   const navItems = [
     { name: "Home", href: "/" },
     { name: "About", href: "/#about" },
-    { name: "Blog", href: "/blog" },  // ← updated
+    { name: "Blog", href: "/blog" },
+    { name: "Tweets", href: "/tweets" },   // ← new
   ];
 
   return (
