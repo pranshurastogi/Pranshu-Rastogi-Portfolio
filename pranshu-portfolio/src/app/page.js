@@ -2,6 +2,8 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import TweetsSection from "@/components/TweetSection";
 import BlogSection from "@/components/BlogSection";
+import YouTubeSection from "@/components/YouTubeSection";
+
 
 export default function Home() {
   const tweetLinks = [
@@ -20,6 +22,7 @@ export default function Home() {
       <Header />
       <Hero />
       <BlogSection />
+      <YouTubeSection />
       <TweetsSection tweets={tweetLinks} limit={6} />
       {/* future sections */}
     </>

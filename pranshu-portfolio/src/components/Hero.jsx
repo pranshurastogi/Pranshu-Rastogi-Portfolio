@@ -22,7 +22,7 @@ export default function Hero() {
           <div className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-indigo-600 via-orange-400 to-indigo-600 p-[2px] animate-spin-slow"></div>
           <div className="relative w-full h-full rounded-full bg-white overflow-hidden">
             <Image
-              src="/pranshu-portfolio/public/images/pranshu.JPG"
+              src="/images/pranshu.JPG"
               alt="Pranshu Rastogi"
               fill
               className="object-cover"
