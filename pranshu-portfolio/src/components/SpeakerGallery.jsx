@@ -7,10 +7,22 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 
 const speakers = [
+  { src: "/images/pg-bangkok.JPG", name: "ETHGlobal Bangkok booth" },
+  { src: "/images/pg-bangkok-2.jpg", name: "ETHGlobal Bangkok Push Protocol" },
+  { src: "/images/pg-ethIndia.JPG", name: "ETHIndia Push protocol booth" },
+  { src: "/images/pg-ETHGlobal-istanbul.jpg", name: "ETHGlobal Istanbul" },
+  { src: "/images/pg-EThGlobal-istanbul-2.jpg", name: "ETHGlobal Istanbul" },
+  { src: "/images/pg-Unfold.jpg", name: "Unfold X Push Protocol" },
+  { src: "/images/pg-NFT-day-SKIT.JPG", name: "NFT Day - SKIT" },
+  { src: "/images/pg-polygon.jpg", name: "Polygon event" },
   { src: "/images/pg-coindcx.png", name: "Namaste Web3, CoinDCX X Forbes" },
   { src: "/images/pg-polygon-guild.png", name: "Polygon Guild, Blr" },
   { src: "/images/pg-google.png", name: "Google Cloud Web3 Conclave" },
+  { src: "/images/pg-dtp.png", name: "Intro to web3 - DYP" },
+  { src: "/images/pg-fipkart.JPG", name: "Polygon X Flipkart" },
   { src: "/images/pg-vietnam.png", name: "BUIDL ASIA, Vietnam" },
+  { src: "/images/pg-w3c.jpeg", name: "Web3 Conf Goa" },
+
   // …add more as needed
 ];
 
@@ -47,7 +59,7 @@ export default function SpeakerGallery() {
     >
       <div className="container mx-auto px-4">
         <h3 className="text-3xl font-semibold text-center mb-8 text-primary">
-          Speakers &amp; Mentors
+          Picture Gallery
         </h3>
 
         <div className="relative">
