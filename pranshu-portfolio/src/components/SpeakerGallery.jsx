@@ -59,7 +59,7 @@ export default function SpeakerGallery() {
     >
       <div className="container mx-auto px-4">
         <h3 className="text-3xl font-semibold text-center mb-8 text-primary">
-          Picture Gallery
+        Gallery
         </h3>
 
         <div className="relative">

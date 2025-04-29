@@ -5,6 +5,9 @@ import BlogSection from "@/components/BlogSection";
 import YouTubeSection from "@/components/YouTubeSection";
 import SpeakerGallery from "@/components/SpeakerGallery";
 import CareerTimeline from "@/components/CareerTimeline";
+import ContactForm from "@/components/ContactForm";
+import MediaSection from "@/components/MediaSection";
+
 
 
 
@@ -30,6 +33,8 @@ export default function Home() {
       <SpeakerGallery/>
       <YouTubeSection />
       <TweetsSection tweets={tweetLinks} limit={6} />
+      <MediaSection/>
+      <ContactForm/>
       {/* future sections */}
     </>
   );
