@@ -5,6 +5,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { Analytics } from "@vercel/analytics/react";
+
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
