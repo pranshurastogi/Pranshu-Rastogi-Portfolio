@@ -11,10 +11,10 @@ const speakers = [
   { src: "/images/pg-bangkok-2.jpg", name: "ETHGlobal Bangkok Push Protocol" },
   { src: "/images/pg-ethIndia.JPG", name: "ETHIndia Push protocol booth" },
   { src: "/images/pg-ETHGlobal-istanbul.jpg", name: "ETHGlobal Istanbul" },
-  { src: "/images/pg-EThGlobal-istanbul-2.jpg", name: "ETHGlobal Istanbul" },
+  { src: "/images/pg-ethi.jpg", name: "ETHGlobal Istanbul" },
   { src: "/images/pg-Unfold.jpg", name: "Unfold X Push Protocol" },
   { src: "/images/pg-NFT-day-SKIT.JPG", name: "NFT Day - SKIT" },
-  { src: "/images/pg-polygon.jpg", name: "Polygon event" },
+  { src: "/images/pg-poly.jpg", name: "Polygon event" },
   { src: "/images/pg-coindcx.png", name: "Namaste Web3, CoinDCX X Forbes" },
   { src: "/images/pg-polygon-guild.png", name: "Polygon Guild, Blr" },
   { src: "/images/pg-google.png", name: "Google Cloud Web3 Conclave" },
@@ -31,7 +31,7 @@ export default function SpeakerGallery() {
   const [hovering, setHovering] = useState(false);
   const [selected, setSelected] = useState(null);
 
-  // Auto‐scroll every 3s, pause on hover
+  // Auto‐scroll every 6s, pause on hover
   useEffect(() => {
     const c = containerRef.current;
     if (!c) return;
@@ -39,7 +39,7 @@ export default function SpeakerGallery() {
       if (!hovering) {
         c.scrollBy({ left: c.clientWidth / 2, behavior: "smooth" });
       }
-    }, 3000);
+    }, 6000);
     return () => clearInterval(interval);
   }, [hovering]);
 

@@ -16,7 +16,8 @@ export default function Home() {
     "https://twitter.com/pranshurastogii/status/1833831369333469401",
     "https://twitter.com/ETHCluj/status/1902331148891553879",
     "https://twitter.com/pranshurastogii/status/1705287298101698736",
-    "https://twitter.com/pranshurastogii/status/1894254871517511902"
+    "https://twitter.com/pranshurastogii/status/1894254871517511902",
+    "https://twitter.com/pranshurastogii/status/1660440193499901953"
 
   ];
 
