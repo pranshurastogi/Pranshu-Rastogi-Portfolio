@@ -7,6 +7,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import FooterTicker from "@/components/FooterTicker";
+
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
@@ -36,6 +38,7 @@ export default function RootLayout({ children }) {
 
         {/* Vercel Speed Insights: reports LCP, TTFB, CLS, etc. */}
         <SpeedInsights />
+        <FooterTicker/>
       </body>
     </html>
   );
