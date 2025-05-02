@@ -1,4 +1,7 @@
+// src/components/FooterTicker.jsx
 "use client";
+
+import { useState } from "react";
 
 export default function FooterTicker() {
   const stats = [
@@ -12,6 +15,9 @@ export default function FooterTicker() {
     "20+ published technical articles",
   ];
 
+  // track whether the ticker is hovered
+  const [paused, setPaused] = useState(false);
+
   return (
     <footer className="
       fixed bottom-0 left-0 w-full
@@ -20,7 +26,12 @@ export default function FooterTicker() {
       h-12 flex items-center
       overflow-hidden z-50
     ">
-      <div className="marquee space-x-16 px-4">
+      <div
+        className="marquee space-x-16 px-4"
+        style={{ animationPlayState: paused ? "paused" : "running" }}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
         {stats.map((text, idx) => (
           <span key={idx} className="text-sm font-medium">
             {text}
