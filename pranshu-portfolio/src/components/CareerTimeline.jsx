@@ -264,7 +264,7 @@ export default function CareerTimeline() {
                 <FaCube />
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-1 text-center tracking-wide" style={{color: '#38A169'}}>Chain Age (Total exp.)</h3>
-              <div className="text-gray-700 font-medium mb-1 text-center">Blocks Mined Since Genesis</div>
+              <div className="text-gray-700 font-medium mb-1 text-center">Experience Mined Since Genesis</div>
               <div className="flex gap-4 mt-2 text-center">
                 <div className="flex flex-col items-center">
                   <span className="text-2xl font-mono font-bold text-green-700 animate-pulse">{exp.years}</span>
