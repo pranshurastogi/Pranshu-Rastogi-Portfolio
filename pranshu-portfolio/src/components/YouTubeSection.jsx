@@ -1,10 +1,8 @@
 // src/components/YouTubeSection.jsx
 "use client";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-// Animated mesh/hex background
 function YouTubeGalleryBg() {
   return (
     <svg
@@ -12,6 +10,7 @@ function YouTubeGalleryBg() {
       height="100%"
       className="absolute inset-0 w-full h-full -z-10 pointer-events-none"
     >
+      {/* drifting hexagons */}
       {[...Array(10)].map((_, i) => (
         <polygon
           key={i}
@@ -32,6 +31,29 @@ function YouTubeGalleryBg() {
           />
         </polygon>
       ))}
+
+      {/* subtle Ethereum Ξ symbols */}
+      {[...Array(8)].map((_, i) => (
+        <text
+          key={i}
+          x={`${Math.random() * 100}%`}
+          y={`${Math.random() * 100}%`}
+          fill="#38A169"
+          opacity="0.05"
+          fontSize="40"
+          style={{ transform: "translate(-50%,-50%)" }}
+        >
+          Ξ
+          <animate
+            attributeName="opacity"
+            values="0.05;0.12;0.05"
+            dur={`${5 + i}s`}
+            repeatCount="indefinite"
+          />
+        </text>
+      ))}
+
+      {/* sweeping wave line */}
       <polyline
         points="0,100 200,120 400,80 600,140 800,100"
         fill="none"
@@ -44,7 +66,6 @@ function YouTubeGalleryBg() {
 }
 
 export default function YouTubeSection({ videos }) {
-  // type checks & empty state
   if (!Array.isArray(videos)) {
     return <div className="text-center py-8">Invalid video data.</div>;
   }
@@ -52,53 +73,13 @@ export default function YouTubeSection({ videos }) {
     return <div className="text-center py-8">No videos available.</div>;
   }
 
-  const visibleCount = 4;
-  const [activeIndex, setActiveIndex] = useState(0);
   const [modalVideo, setModalVideo] = useState(null);
+  const visibleVideos = videos.slice(0, 4);
 
-  const maxVisible = Math.min(visibleCount, videos.length);
-
-  // Carousel nav
-  const prev = () =>
-    setActiveIndex((i) => (i - 1 + videos.length) % videos.length);
-  const next = () => setActiveIndex((i) => (i + 1) % videos.length);
-
-  // Touch support
-  const touchStartRef = useRef(null);
-  const handleTouchStart = (e) => {
-    touchStartRef.current = e.touches[0].clientX;
-  };
-  const handleTouchEnd = (e) => {
-    if (touchStartRef.current == null) return;
-    const delta = e.changedTouches[0].clientX - touchStartRef.current;
-    if (delta > 50) prev();
-    else if (delta < -50) next();
-    touchStartRef.current = null;
-  };
-
-  // slice visible set
-  const visibleVideos = Array.from({ length: maxVisible }, (_, i) => {
-    const idx = (activeIndex + i) % videos.length;
-    return videos[idx];
-  });
-
-  // thumbnail + fallback
   const getThumbnail = (id) =>
     `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
   const handleImgError = (e) => {
     e.target.src = "/images/fallback.jpg";
-  };
-
-  // animation variants
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50, scale: 0.8 },
-    visible: (i) => ({
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { delay: i * 0.1, type: "spring", stiffness: 200 },
-    }),
-    hover: { scale: 1.05, rotate: 1, transition: { type: "spring", stiffness: 300 } },
   };
 
   return (
@@ -108,73 +89,46 @@ export default function YouTubeSection({ videos }) {
         <h3 className="text-3xl font-semibold text-center text-primary mb-8">
           Latest YouTube Videos
         </h3>
-
-        <div
-          className="relative flex items-center justify-center max-w-5xl mx-auto"
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
-          {/* Prev arrow */}
-          {videos.length > maxVisible && (
-            <motion.button
-              whileTap={{ scale: 0.8 }}
-              onClick={prev}
-              className="absolute left-0 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-100 z-10"
-              aria-label="Previous"
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-3xl mx-auto">
+          {visibleVideos.map((video, idx) => (
+            <motion.div
+              key={video.videoId}
+              className="relative rounded-2xl overflow-hidden shadow-xl cursor-pointer group bg-gradient-to-br from-indigo-500/30 to-purple-500/20 p-1"
+              whileHover={{ boxShadow: '0 0 32px #38A169', scale: 1.04 }}
+              onClick={() => setModalVideo(video)}
+              initial={{ opacity: 0, y: 40, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ type: "spring", stiffness: 120, delay: idx * 0.08 }}
             >
-              <FaChevronLeft size={24} />
-            </motion.button>
-          )}
-
-          {/* Cards */}
-          <div className="flex gap-6 justify-center overflow-hidden">
-            {visibleVideos.map((video, idx) => (
-              <motion.div
-                key={video.videoId}
-                custom={idx}
-                variants={cardVariants}
-                initial="hidden"
-                animate="visible"
-                whileHover="hover"
-                className="w-72 h-48 bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl p-0.5 cursor-pointer shadow-lg"
-                onClick={() => setModalVideo(video)}
-              >
-                <div className="relative w-full h-full bg-black rounded-[calc(1rem-2px)] overflow-hidden">
-                  <img
-                    src={getThumbnail(video.videoId)}
-                    alt={video.title}
-                    loading="lazy"
-                    onError={handleImgError}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-40">
-                    <span className="text-white text-5xl">▶</span>
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2">
-                    <h4 className="text-white text-sm font-semibold line-clamp-2">
-                      {video.title}
-                    </h4>
-                  </div>
+              <div className="relative w-full h-48 sm:h-56 md:h-56 rounded-xl overflow-hidden bg-black">
+                <img
+                  src={getThumbnail(video.videoId)}
+                  alt={video.title}
+                  loading="lazy"
+                  onError={handleImgError}
+                  className="w-full h-full object-cover rounded-xl group-hover:brightness-110 group-hover:scale-105 transition duration-300"
+                />
+                {/* Web3 border animation */}
+                <div className="absolute inset-0 rounded-xl pointer-events-none border-2 border-transparent group-hover:border-green-400 group-hover:animate-pulse" />
+                {/* Play overlay */}
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-40">
+                  <span className="text-white text-5xl">▶</span>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Next arrow */}
-          {videos.length > maxVisible && (
-            <motion.button
-              whileTap={{ scale: 0.8 }}
-              onClick={next}
-              className="absolute right-0 top-1/2 -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-100 z-10"
-              aria-label="Next"
-            >
-              <FaChevronRight size={24} />
-            </motion.button>
-          )}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                  <h4 className="text-white text-sm font-semibold line-clamp-2">
+                    {video.title}
+                  </h4>
+                </div>
+                {/* Floating Ethereum icon on hover */}
+                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="text-green-400 text-2xl">Ξ</span>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
-
-      {/* Modal */}
+      {/* Modal/Lightbox */}
       <AnimatePresence>
         {modalVideo && (
           <motion.div

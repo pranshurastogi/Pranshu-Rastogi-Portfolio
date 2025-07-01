@@ -8,9 +8,9 @@ export default async function YouTubeSectionWrapper() {
     const feed = await parser.parseURL(
       "https://www.youtube.com/feeds/videos.xml?channel_id=UC8INoQWXK5AwIe5Fdb0BO2Q"
     );
-    // only take first 4 videos
+
+    // map all videos, handle parsing errors
     const videos = feed.items
-      .slice(0, 4)
       .map((item) => {
         try {
           const url = new URL(item.link);

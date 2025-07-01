@@ -33,8 +33,8 @@ export default function Home() {
       <BlogSection />
       <SpeakerGallery/>
       <YouTubeSectionWrapper />
-      <TweetsSection tweets={tweetLinks} limit={6} />
       <MediaSection/>
+      <TweetsSection tweets={tweetLinks} limit={6} />
       {/* <PoapSection/> */}
       <ContactForm/>
       {/* future sections */}

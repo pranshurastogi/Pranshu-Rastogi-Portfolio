@@ -39,12 +39,19 @@ html {
   .marquee {
     display: inline-flex;
     white-space: nowrap;
-    animation: marquee 20s linear infinite;
+    animation: marquee 40s linear infinite;
   }
 }
 
 @keyframes marquee {
   0%   { transform: translateX(100%); }
   100% { transform: translateX(-100%); }
+}
+
+/* Slower marquee for FooterTicker */
+.marquee {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marquee 40s linear infinite;
 }
 
