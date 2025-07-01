@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import TweetsSection from "@/components/TweetSection";
 import BlogSection from "@/components/BlogSection";
-import YouTubeSection from "@/components/YouTubeSection";
+import YouTubeSectionWrapper from "@/components/YouTubeSectionWrapper";
 import SpeakerGallery from "@/components/SpeakerGallery";
 import CareerTimeline from "@/components/CareerTimeline";
 import ContactForm from "@/components/ContactForm";
@@ -32,7 +32,7 @@ export default function Home() {
       < CareerTimeline />
       <BlogSection />
       <SpeakerGallery/>
-      <YouTubeSection />
+      <YouTubeSectionWrapper />
       <TweetsSection tweets={tweetLinks} limit={6} />
       <MediaSection/>
       {/* <PoapSection/> */}
