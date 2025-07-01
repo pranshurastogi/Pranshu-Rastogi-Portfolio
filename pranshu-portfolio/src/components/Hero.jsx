@@ -17,7 +17,7 @@ import {
 
 export default function Hero() {
   // Typewriter bio
-  const fullBio = `Started my journey in 2018, not with an airdrop, but with the Bitcoin whitepaper. That one PDF hit differently.\n\nSince then, I’ve worn many hats: software engineer, engineering lead, and now, I help grow ecosystems and forge integrations that matter. Along the way, I’ve realized one underrated superpower—empathy. It’s what builds strong communities, aligns people, and turns contributors into believers.\n\nI’m deeply obsessed with tech, psychology, and storytelling—the kind that connects, not just converts. I believe we’re not just building products here; we’re building purpose. For me, Web3 isn't a hype cycle. It’s a mirror—a place to find our truest contribution.\n\nStill here. Still building. Long road ahead, but with the right people, it feels just right. Positive vibes only.`;
+  const fullBio = `Started my journey in 2018, not with an airdrop, but with the Bitcoin whitepaper. That one PDF hit differently.\n\nSince then, I’ve worn many hats: software engineer, engineering lead, and now, I help grow ecosystems and forge integrations that matter. Along the way, I’ve realized one underrated superpower—empathy. It’s what builds strong communities, aligns people, and turns contributors into believers.\n\nI’m deeply obsessed with tech, psychology, and storytelling—the kind that connects, not just converts. I believe we’re not just building products here; we’re building purpose. For me, Web3 isn't a hype cycle. It’s a mirror a place to find our truest contribution.\n\nStill here. Still building. Long road ahead, but with the right people, it feels just right. Positive vibes only.`;
   const [typedBio, setTypedBio] = useState("");
   useEffect(() => {
     let idx = 0;
