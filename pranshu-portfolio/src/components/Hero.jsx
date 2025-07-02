@@ -16,6 +16,7 @@ import {
   FaLink,
   FaCube,
 } from "react-icons/fa";
+import AnimatedPfp from "./AnimatedPfp";
 
 // Update Typewriter for hacker theme
 function Typewriter({ roles, speed = 80, pause = 1200 }) {
@@ -300,7 +301,11 @@ export default function Hero() {
         <div className="w-full h-full opacity-20" style={{ background: "repeating-linear-gradient(0deg, transparent, transparent 2px, #00ff99 2.5px, transparent 3px)" }} />
       </div>
       {/* Glassmorphism overlay for the whole hero section */}
-      <div className="absolute inset-0 z-20 bg-white/30 dark:bg-black/30 backdrop-blur-xl" style={{opacity: 0.7}} />
+      <div className="absolute inset-0 z-20 glass-bg">
+        <div className="glass-shadow" />
+        <div className="glass-reflection" />
+        <div className="glass-inner-border" />
+      </div>
       {/* Main content */}
       <motion.div
         className="relative z-30 flex flex-col md:flex-row items-center md:items-start w-full max-w-6xl gap-12 py-24"
@@ -318,26 +323,11 @@ export default function Hero() {
           onMouseLeave={() => setHovered(false)}
           style={{ perspective: 800 }}
         >
-          {/* Terminal-style background and scanline */}
-          <div className="absolute inset-0 rounded-3xl bg-black/80 border-2 border-[#AEEA00] z-0" />
-          <div className="absolute inset-0 rounded-3xl z-0 pointer-events-none opacity-10" style={{background: 'repeating-linear-gradient(0deg, transparent, transparent 6px, #AEEA0033 7px, transparent 8px)'}} />
-          {/* Matrix rain effect inside avatar */}
-          <div className="absolute inset-0 rounded-3xl overflow-hidden z-10 pointer-events-none">
-            <MatrixRain />
-          </div>
-          {/* Animated glowing, pulsing border (neon green) */}
-          <motion.div
-            className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-[#AEEA00] via-[#00ff99] to-[#AEEA00] blur-2xl opacity-90 z-0"
-            animate={{
-              scale: [1, 1.08, 1],
-              filter: [
-                'blur(24px) brightness(1)',
-                'blur(32px) brightness(1.2)',
-                'blur(24px) brightness(1)'
-              ]
-            }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-          />
+          {/* Premium glass border effect */}
+          <div className="absolute inset-0 z-0 glass-avatar-border" />
+          {/* Glass highlight/reflection */}
+          <div className="absolute inset-0 z-10 pointer-events-none glass-avatar-reflection" />
+          {/* PFP stays perfectly clear */}
           <motion.div
             className="relative w-full h-full rounded-3xl overflow-hidden z-20"
             animate={{
@@ -347,14 +337,7 @@ export default function Hero() {
             }}
             transition={{ type: 'spring', stiffness: 120, damping: 12 }}
           >
-            <Image
-              src="/images/pfp.jpg"
-              alt="Pranshu Rastogi"
-              fill
-              className="object-cover"
-              sizes="220px"
-              priority
-            />
+            <AnimatedPfp />
           </motion.div>
         </motion.div>
         {/* Text content */}
@@ -456,6 +439,105 @@ export default function Hero() {
         }
         @keyframes blink {
           to { visibility: hidden; }
+        }
+        .glass-bg {
+          background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08) 60%, rgba(255,255,255,0.18) 90%, rgba(174,234,0,0.10) 100%);
+          border: 1.5px solid rgba(255,255,255,0.22);
+          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18), 0 1.5px 8px 0 rgba(174,234,0,0.08) inset;
+          backdrop-filter: blur(12px) saturate(1.1);
+          -webkit-backdrop-filter: blur(12px) saturate(1.1);
+          border-radius: 24px;
+          opacity: 0.85;
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        .glass-bg:before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: 24px;
+          pointer-events: none;
+          background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.04) 60%, rgba(255,255,255,0.18) 95%, rgba(255,255,255,0.22) 100%);
+          opacity: 0.7;
+          z-index: 1;
+        }
+        /* Top-left highlight */
+        .glass-bg:after {
+          content: '';
+          position: absolute;
+          top: 0; left: 0;
+          width: 60%; height: 40%;
+          border-radius: 32px 120px 80px 0;
+          background: linear-gradient(120deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.08) 100%);
+          filter: blur(2px);
+          opacity: 0.55;
+          z-index: 2;
+          pointer-events: none;
+        }
+        /* Bottom-right shadow for depth */
+        .glass-bg .glass-shadow {
+          content: '';
+          position: absolute;
+          right: 0; bottom: 0;
+          width: 60%; height: 40%;
+          border-radius: 0 0 32px 120px;
+          background: linear-gradient(120deg, rgba(31,38,135,0.13) 0%, rgba(174,234,0,0.04) 100%);
+          filter: blur(4px);
+          opacity: 0.5;
+          z-index: 2;
+          pointer-events: none;
+        }
+        /* Curved reflection highlight */
+        .glass-bg .glass-reflection {
+          content: '';
+          position: absolute;
+          left: 18%; top: 12%;
+          width: 38%; height: 18%;
+          border-radius: 60% 80% 60% 80%/80% 60% 80% 60%;
+          background: linear-gradient(120deg, rgba(255,255,255,0.33) 0%, rgba(255,255,255,0.01) 100%);
+          transform: rotate(-8deg);
+          opacity: 0.45;
+          z-index: 3;
+          pointer-events: none;
+        }
+        /* Inner border for thickness */
+        .glass-bg .glass-inner-border {
+          content: '';
+          position: absolute;
+          inset: 8px;
+          border-radius: 18px;
+          border: 1.5px solid rgba(255,255,255,0.18);
+          opacity: 0.7;
+          z-index: 4;
+          pointer-events: none;
+        }
+        /* Premium glass avatar border */
+        .glass-avatar-border {
+          border-radius: 1.5rem;
+          box-shadow:
+            0 0 0 4px rgba(255,255,255,0.10) inset,
+            0 0 0 10px rgba(174,234,0,0.10) inset,
+            0 4px 32px 0 rgba(31, 38, 135, 0.13),
+            0 1.5px 8px 0 rgba(174,234,0,0.08) inset;
+          background:
+            linear-gradient(120deg, rgba(255,255,255,0.18) 0%, rgba(174,234,0,0.07) 100%),
+            radial-gradient(circle at 30% 20%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.04) 80%);
+          border: 2.5px solid rgba(255,255,255,0.22);
+          backdrop-filter: blur(10px) saturate(1.2);
+          -webkit-backdrop-filter: blur(10px) saturate(1.2);
+          opacity: 0.98;
+          width: 100%;
+          height: 100%;
+        }
+        .glass-avatar-reflection {
+          border-radius: 1.5rem;
+          background: linear-gradient(120deg, rgba(255,255,255,0.33) 10%, rgba(255,255,255,0.01) 80%);
+          opacity: 0.25;
+          width: 100%;
+          height: 100%;
+          mask-image: linear-gradient(120deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0) 100%);
+          pointer-events: none;
         }
       `}</style>
     </section>
