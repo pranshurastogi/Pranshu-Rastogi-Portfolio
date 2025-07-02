@@ -88,7 +88,7 @@ export default function PoapGallery({ address, limit }) {
           <div className="p-4">
             <h4 className="font-semibold text-lg">{poap.event.name}</h4>
             <p className="text-sm text-gray-600 mt-1">
-              {new Date(poap.minted_date).toLocaleDateString()}
+              {new Date(poap.minted_date).toLocaleDateString('en-US', { timeZone: 'UTC' })}
             </p>
           </div>
         </motion.a>

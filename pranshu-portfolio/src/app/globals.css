@@ -55,3 +55,11 @@ html {
   animation: marquee 40s linear infinite;
 }
 
+/* Accessibility: visible focus ring for links and buttons */
+a:focus, button:focus, [tabindex]:focus {
+  outline: 2px solid #AEEA00 !important;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px #39FF14;
+  z-index: 2;
+}
+

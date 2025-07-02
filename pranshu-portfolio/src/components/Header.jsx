@@ -4,16 +4,17 @@
 import { useState } from "react";
 import Link from "next/link";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const links = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Blog", href: "/blog" },
-    { name: "Tweets", href: "/tweets" },
-    // { name: "POAPs", href: "/poaps" },
+    { name: "Career", href: "#career" },
+    { name: "YouTube", href: "#youtube" },
+    { name: "Blog", href: "#blog" },
+    { name: "Featured", href: "#featured" },
   ];
+  const pathname = usePathname();
 
   return (
     <header className="fixed top-0 inset-x-0 z-50 font-mono">
@@ -35,6 +36,7 @@ export default function Header() {
                 key={l.href}
                 href={l.href}
                 className="relative flex items-center gap-1 text-green-300 hover:text-amber-400 transition group text-base tracking-wide"
+                aria-current={pathname === l.href ? "page" : undefined}
               >
                 <span className="text-amber-400">&gt;</span>
                 <span className="group-hover:glow-text">{l.name}</span>
@@ -63,6 +65,7 @@ export default function Header() {
                   href={l.href}
                   onClick={() => setOpen(false)}
                   className="block text-lg text-green-300 hover:text-amber-400 transition flex items-center gap-2"
+                  aria-current={pathname === l.href ? "page" : undefined}
                 >
                   <span className="text-amber-400">&gt;</span>
                   <span>{l.name}</span>

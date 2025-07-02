@@ -1,9 +1,19 @@
 // src/components/YouTubeSection.jsx
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 function YouTubeGalleryBg() {
+  // Generate random positions for Ξ symbols only on the client
+  const [ethPositions, setEthPositions] = useState(null);
+  useEffect(() => {
+    const positions = Array.from({ length: 8 }, () => ({
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+    }));
+    setEthPositions(positions);
+  }, []);
+
   return (
     <svg
       width="100%"
@@ -33,11 +43,11 @@ function YouTubeGalleryBg() {
       ))}
 
       {/* subtle Ethereum Ξ symbols */}
-      {[...Array(8)].map((_, i) => (
+      {ethPositions && ethPositions.map((pos, i) => (
         <text
           key={i}
-          x={`${Math.random() * 100}%`}
-          y={`${Math.random() * 100}%`}
+          x={`${pos.x}%`}
+          y={`${pos.y}%`}
           fill="#38A169"
           opacity="0.05"
           fontSize="40"

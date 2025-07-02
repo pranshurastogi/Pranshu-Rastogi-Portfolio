@@ -92,4 +92,4 @@ export default function TweetsSection({ tweets = [], limit = 6 }) {
       `}</style>
     </section>
   );
-}
+} 

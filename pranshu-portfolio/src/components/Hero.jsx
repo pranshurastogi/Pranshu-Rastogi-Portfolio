@@ -321,6 +321,10 @@ export default function Hero() {
           {/* Terminal-style background and scanline */}
           <div className="absolute inset-0 rounded-3xl bg-black/80 border-2 border-[#AEEA00] z-0" />
           <div className="absolute inset-0 rounded-3xl z-0 pointer-events-none opacity-10" style={{background: 'repeating-linear-gradient(0deg, transparent, transparent 6px, #AEEA0033 7px, transparent 8px)'}} />
+          {/* Matrix rain effect inside avatar */}
+          <div className="absolute inset-0 rounded-3xl overflow-hidden z-10 pointer-events-none">
+            <MatrixRain />
+          </div>
           {/* Animated glowing, pulsing border (neon green) */}
           <motion.div
             className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-[#AEEA00] via-[#00ff99] to-[#AEEA00] blur-2xl opacity-90 z-0"
@@ -335,7 +339,7 @@ export default function Hero() {
             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
           />
           <motion.div
-            className="relative w-full h-full rounded-3xl overflow-hidden z-10"
+            className="relative w-full h-full rounded-3xl overflow-hidden z-20"
             animate={{
               rotateY: hovered ? 12 : 0,
               rotateX: hovered ? 8 : 0,

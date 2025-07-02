@@ -1,4 +1,9 @@
 // next.config.mjs
+import createBundleAnalyzer from '@next/bundle-analyzer';
+
+const withBundleAnalyzer = createBundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
@@ -43,4 +48,4 @@ const nextConfig = {
     skipTrailingSlashRedirect: true,
 };
 
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);
