@@ -30,7 +30,6 @@ export default function Home() {
       <section id="featured"><MediaSection/></section>
       <section id="tweets"><TweetsSection tweets={tweetLinks} limit={6} /></section>
       {/* <PoapSection/> */}
-      <ContactForm/>
       {/* future sections */}
     </>
   );

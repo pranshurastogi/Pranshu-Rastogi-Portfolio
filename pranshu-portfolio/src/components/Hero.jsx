@@ -1,7 +1,7 @@
 // src/components/Hero.jsx
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useAnimation } from "framer-motion";
@@ -17,6 +17,7 @@ import {
   FaCube,
 } from "react-icons/fa";
 import AnimatedPfp from "./AnimatedPfp";
+import FloatingBlockchainIcons from "./FloatingBlockchainIcons";
 
 // Update Typewriter for hacker theme
 function Typewriter({ roles, speed = 80, pause = 1200 }) {
@@ -268,6 +269,29 @@ export default function Hero() {
   const [showFullBio, setShowFullBio] = useState(false);
   const [bioVisible, setBioVisible] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const [crack, setCrack] = useState({ visible: false, x: 0, y: 0 });
+
+  // Bitcoin logo SVG as cursor
+  const bitcoinCursor = "url('data:image/svg+xml;utf8,<svg width=\"32\" height=\"32\" viewBox=\"0 0 32 32\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"16\" cy=\"16\" r=\"14\" fill=\"%23F7931A\" stroke=\"%23000\" stroke-width=\"2\"/><text x=\"10\" y=\"23\" font-size=\"16\" font-family=\"monospace\" fill=\"#fff\">฿</text></svg>') 4 4, auto";
+
+  // Gold coin drop effect state
+  const [coins, setCoins] = useState([]);
+  const handleDoubleClick = useCallback((e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    // Drop 5 coins with random horizontal offsets
+    const newCoins = Array.from({ length: 5 }).map((_, i) => ({
+      id: Date.now() + Math.random() + i,
+      x: x + (Math.random() - 0.5) * 40,
+      y: y + (Math.random() - 0.5) * 10,
+    }));
+    setCoins((prev) => [...prev, ...newCoins]);
+    setTimeout(() => {
+      setCoins((prev) => prev.slice(newCoins.length));
+    }, 1800);
+  }, []);
+
   useEffect(() => {
     const t = setTimeout(() => setBioVisible(true), 400);
     return () => clearTimeout(t);
@@ -290,12 +314,47 @@ export default function Hero() {
   return (
     <section
       className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-0"
-      style={{ fontFamily: "'JetBrains Mono', 'Fira Mono', 'Cascadia Code', 'Consolas', monospace", background: "linear-gradient(135deg, #071d16 0%, #0f3327 60%, #0a1812 100%)" }}
+      style={{ fontFamily: "'JetBrains Mono', 'Fira Mono', 'Cascadia Code', 'Consolas', monospace", background: "#070f09", cursor: bitcoinCursor }}
+      onDoubleClick={handleDoubleClick}
     >
       {/* Matrix rain hacker background */}
       <MatrixRain />
       {/* Animated mesh/cubes background and particles (now neon green/cyan/purple/blue/black) */}
       <AnimatedMeshBackground />
+      {/* Gold coin drop effect */}
+      {coins.map((coin) => (
+        <span
+          key={coin.id}
+          className="gold-coin-drop"
+          style={{ left: coin.x - 18, top: coin.y - 18 }}
+        >
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <circle cx="18" cy="18" r="16" fill="#FFD700" stroke="#B8860B" strokeWidth="2" />
+            <text x="10" y="25" fontSize="16" fontFamily="monospace" fill="#fff" fontWeight="bold">฿</text>
+          </svg>
+        </span>
+      ))}
+      {/* Glass crack effect overlay */}
+      {crack.visible && (
+        <div
+          className="pointer-events-none absolute z-40"
+          style={{
+            left: crack.x - 64,
+            top: crack.y - 64,
+            width: 128,
+            height: 128,
+            pointerEvents: "none",
+          }}
+        >
+          {/* SVG crack graphic */}
+          <svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ pointerEvents: 'none' }}>
+            <g opacity="0.85">
+              <path d="M64 0v32M64 128v-32M0 64h32M128 64h-32M32 32l16 16M96 96l-16-16M32 96l16-16M96 32l-16 16" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M64 64l-20-20M64 64l20-20M64 64l-20 20M64 64l20 20" stroke="#AEEA00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </g>
+          </svg>
+        </div>
+      )}
       {/* Subtle scanline overlay */}
       <div className="absolute inset-0 z-10 pointer-events-none">
         <div className="w-full h-full opacity-20" style={{ background: "repeating-linear-gradient(0deg, transparent, transparent 2px, #00ff99 2.5px, transparent 3px)" }} />
@@ -441,13 +500,13 @@ export default function Hero() {
           to { visibility: hidden; }
         }
         .glass-bg {
-          background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08) 60%, rgba(255,255,255,0.18) 90%, rgba(174,234,0,0.10) 100%);
-          border: 1.5px solid rgba(255,255,255,0.22);
-          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18), 0 1.5px 8px 0 rgba(174,234,0,0.08) inset;
-          backdrop-filter: blur(12px) saturate(1.1);
-          -webkit-backdrop-filter: blur(12px) saturate(1.1);
+          background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.04) 60%, rgba(255,255,255,0.13) 92%, rgba(174,234,0,0.07) 100%);
+          border: 1.5px solid rgba(255,255,255,0.18);
+          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10), 0 1.5px 8px 0 rgba(174,234,0,0.05) inset;
+          backdrop-filter: blur(8px) saturate(1.08);
+          -webkit-backdrop-filter: blur(8px) saturate(1.08);
           border-radius: 24px;
-          opacity: 0.85;
+          opacity: 0.75;
           position: absolute;
           inset: 0;
           overflow: hidden;
@@ -458,8 +517,8 @@ export default function Hero() {
           inset: 0;
           border-radius: 24px;
           pointer-events: none;
-          background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.04) 60%, rgba(255,255,255,0.18) 95%, rgba(255,255,255,0.22) 100%);
-          opacity: 0.7;
+          background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 60%, rgba(255,255,255,0.13) 98%, rgba(255,255,255,0.18) 100%);
+          opacity: 0.6;
           z-index: 1;
         }
         /* Top-left highlight */
@@ -538,6 +597,19 @@ export default function Hero() {
           height: 100%;
           mask-image: linear-gradient(120deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0) 100%);
           pointer-events: none;
+        }
+        .gold-coin-drop {
+          position: absolute;
+          z-index: 50;
+          pointer-events: none;
+          animation: coin-fall 1.6s cubic-bezier(0.4,0.7,0.6,1) forwards;
+          opacity: 0.92;
+        }
+        @keyframes coin-fall {
+          0% { transform: translateY(0) scale(1) rotate(-10deg); opacity: 1; }
+          60% { transform: translateY(80px) scale(1.08) rotate(10deg); opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(180px) scale(0.92) rotate(24deg); opacity: 0; }
         }
       `}</style>
     </section>

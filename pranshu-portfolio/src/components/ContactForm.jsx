@@ -4,6 +4,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaPaperPlane, FaTimes, FaCube } from "react-icons/fa";
+import { createPortal } from "react-dom";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -15,6 +16,7 @@ export default function ContactForm() {
   const modalRef = useRef();
   const [txHash, setTxHash] = useState("");
   const [blockNum, setBlockNum] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
   // validators
   const validators = {
@@ -85,18 +87,20 @@ export default function ContactForm() {
     setSubmitting(false);
   };
 
-  return (
+  useEffect(() => { setMounted(true); }, []);
+
+  const portalContent = (
     <>
       {/* Floating Card/Button */}
       <motion.button
-        className="fixed bottom-20 right-6 z-[9999] px-5 py-2 rounded-2xl shadow-lg flex items-center gap-2 font-mono font-bold bg-black/80 border-2 border-[#AEEA00] text-[#AEEA00] hover:text-[#39FF14] hover:border-[#39FF14] hover:scale-105 transition-all duration-200 backdrop-blur-lg neon-contact-btn"
+        className="fixed bottom-20 right-6 z-[99999] px-5 py-2 rounded-2xl shadow-lg flex items-center gap-2 font-mono font-bold bg-black/80 border-2 border-[#39FF14] text-[#39FF14] hover:text-[#AEEA00] hover:border-[#AEEA00] hover:scale-105 transition-all duration-200 backdrop-blur-lg neon-contact-btn"
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.97 }}
         onClick={() => setOpen(true)}
         aria-label="Contact Pranshu"
-        style={{ boxShadow: '0 0 16px #AEEA00, 0 0 2px #AEEA00', fontFamily: "'JetBrains Mono', 'Fira Mono', 'Cascadia Code', 'Consolas', monospace" }}
+        style={{ boxShadow: '0 0 16px #39FF14, 0 0 2px #39FF14', fontFamily: "'JetBrains Mono', 'Fira Mono', 'Cascadia Code', 'Consolas', monospace" }}
       >
-        <span className="text-2xl" style={{ color: '#AEEA00', textShadow: '0 0 8px #AEEA00, 0 0 2px #AEEA00' }}><FaCube /></span>
+        <span className="text-2xl" style={{ color: '#39FF14', textShadow: '0 0 8px #39FF14, 0 0 2px #39FF14' }}><FaCube /></span>
         <span className="hidden sm:inline">Contact Pranshu</span>
       </motion.button>
 
@@ -105,7 +109,7 @@ export default function ContactForm() {
         {open && (
           <motion.div
             ref={modalRef}
-            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-sm"
+            className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/90 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -230,7 +234,7 @@ export default function ContactForm() {
       </AnimatePresence>
       <style jsx>{`
         .neon-contact-btn {
-          text-shadow: 0 0 8px #AEEA00, 0 0 2px #AEEA00;
+          text-shadow: 0 0 8px #39FF14, 0 0 2px #39FF14;
         }
         .terminal-modal {
           box-shadow: 0 0 24px #39FF14, 0 0 2px #39FF14;
@@ -258,4 +262,8 @@ export default function ContactForm() {
       `}</style>
     </>
   );
+
+  // Use portal to render at the end of document.body
+  if (!mounted) return null;
+  return createPortal(portalContent, typeof window !== 'undefined' ? document.body : null);
 }

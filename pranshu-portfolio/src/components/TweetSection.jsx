@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaEthereum } from "react-icons/fa";
+import SectionWrapper from './SectionWrapper';
 
 // Animated SVG background (hexes + mesh + ETH icon)
 function TweetsGalleryBg() {
@@ -57,21 +58,20 @@ export default function TweetsSection({ tweets = [], limit = 6 }) {
   }, [tweets, limit]);
 
   return (
-    <section id="tweets" className="py-16 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
-      <TweetsGalleryBg />
+    <SectionWrapper>
       <div className="container mx-auto px-4">
-        <h3 className="text-3xl font-semibold text-primary text-center mb-8">
+        <h3 className="text-3xl font-semibold text-center mb-8 text-[#AEEA00] drop-shadow-lg">
           My Tweets
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
           {tweets.slice(0, limit).map((url, i) => (
             <motion.div
               key={i}
-              className="relative rounded-2xl overflow-hidden shadow-xl bg-white/70 border-2 border-indigo-100 group transition-all duration-300 p-1 backdrop-blur"
-              whileHover={{ boxShadow: '0 0 32px #805AD5', scale: 1.04 }}
+              className="relative rounded-2xl overflow-hidden shadow-xl bg-black/80 border-2 border-[#39FF14] group transition-all duration-300 p-1 backdrop-blur"
+              whileHover={{ boxShadow: '0 0 32px #39FF14', scale: 1.04 }}
             >
               {/* Floating Ethereum icon on hover */}
-              <span className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-400 animate-bounce text-2xl z-10 pointer-events-none">
+              <span className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity text-[#39FF14] animate-bounce text-2xl z-10 pointer-events-none">
                 <FaEthereum />
               </span>
               <blockquote className="twitter-tweet min-h-[350px]">
@@ -90,6 +90,6 @@ export default function TweetsSection({ tweets = [], limit = 6 }) {
           100% { transform: translateY(-10px); }
         }
       `}</style>
-    </section>
+    </SectionWrapper>
   );
 } 

@@ -7,6 +7,8 @@ import Link from "next/link";
 import { FaChevronLeft, FaChevronRight, FaEthereum, FaBitcoin } from "react-icons/fa";
 import { motion, useAnimation, useMotionValue, useTransform } from "framer-motion";
 import React from "react";
+import FloatingBlockchainIcons from "./FloatingBlockchainIcons";
+import SectionWrapper from './SectionWrapper';
 
 const mediaItems = [
   {
@@ -39,31 +41,20 @@ const mediaItems = [
 // Blockchain chain/mesh background
 function BlockchainMediaBg() {
   return (
-    <svg width="100%" height="100%" className="absolute inset-0 w-full h-full -z-10 pointer-events-none">
-      {/* Animated chain links */}
+    <svg width="100%" height="100%" className="absolute inset-0 w-full h-full pointer-events-none select-none z-0" style={{top:0,left:0}}>
       <g>
-        {[0,1,2,3,4,5,6].map((i) => (
-          <rect
-            key={i}
-            x={`${10 + i * 13}%`}
-            y={i % 2 === 0 ? "30%" : "50%"}
-            width="48"
-            height="16"
-            rx="8"
-            fill="#805AD5"
-            opacity="0.08"
-          >
-            <animate attributeName="y" values={i%2===0?"30%;40%;30%":"50%;60%;50%"} dur={`${6+i}s`} repeatCount="indefinite" />
-          </rect>
-        ))}
-        {/* Subtle mesh lines */}
-        <polyline points="0,80 100,100 200,60 300,110 400,80 500,120 600,100 700,140" fill="none" stroke="#38A169" strokeOpacity="0.04" strokeWidth="2" />
-      </g>
-      {/* Floating Ethereum logo */}
-      <g>
-        <motion.g animate={{ y: [0, 10, 0] }} transition={{ duration: 7, repeat: Infinity, repeatType: "reverse" }}>
-          <FaEthereum x="90%" y="10%" style={{ position: 'absolute', left: '90%', top: '10%', fontSize: 32, color: '#627EEA', opacity: 0.13 }} />
-        </motion.g>
+        <rect x="10%" y="30%" width="32" height="32" rx="8" fill="#00ff99" opacity="0.10">
+          <animate attributeName="y" values="30%;40%;30%" dur="7s" repeatCount="indefinite" />
+        </rect>
+        <rect x="70%" y="60%" width="28" height="28" rx="7" fill="#39FF14" opacity="0.10">
+          <animate attributeName="y" values="60%;70%;60%" dur="9s" repeatCount="indefinite" />
+        </rect>
+        <rect x="40%" y="15%" width="18" height="18" rx="5" fill="#00e0ff" opacity="0.09">
+          <animate attributeName="y" values="15%;25%;15%" dur="11s" repeatCount="indefinite" />
+        </rect>
+        <polyline points="0,80 100,100 200,60 300,110 400,80 500,120 600,100 700,140" fill="none" stroke="#AEEA00" strokeOpacity="0.06" strokeWidth="2">
+          <animate attributeName="points" values="0,80 100,100 200,60 300,110 400,80 500,120 600,100 700,140;0,90 100,110 200,70 300,120 400,90 500,130 600,110 700,150;0,80 100,100 200,60 300,110 400,80 500,120 600,100 700,140" dur="16s" repeatCount="indefinite" />
+        </polyline>
       </g>
     </svg>
   );
@@ -93,48 +84,66 @@ export default function MediaSection() {
   };
 
   return (
-    <section id="media" className="py-16 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
-      <BlockchainMediaBg />
-      <div className="container mx-auto px-4">
-        <h3 className="text-3xl font-semibold text-center mb-8 text-primary">
-          Featured In
-        </h3>
-        <div className="relative">
-          {/* Prev */}
-          <motion.button
-            whileTap={{ scale: 0.85, x: -8 }}
-            onClick={() => scrollToIdx(Math.max(0, activeIdx - 1))}
-            className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/90 p-2 rounded-full shadow z-20 hover:bg-white border-2 border-indigo-200"
-            aria-label="Scroll left"
+    <>
+      {/* Blockchain section divider (top) */}
+      <div className="w-full flex justify-center items-center py-2">
+        <svg width="120" height="24" viewBox="0 0 120 24" fill="none" className="animate-pulse">
+          <rect x="0" y="8" width="40" height="8" rx="4" fill="#39FF14" opacity="0.18" />
+          <rect x="40" y="10" width="8" height="4" rx="2" fill="#AEEA00" />
+          <rect x="56" y="10" width="8" height="4" rx="2" fill="#00e0ff" />
+          <rect x="72" y="10" width="8" height="4" rx="2" fill="#a259ff" />
+          <rect x="88" y="8" width="32" height="8" rx="4" fill="#39FF14" opacity="0.18" />
+        </svg>
+      </div>
+      <SectionWrapper>
+        <div className="container mx-auto px-4">
+          <motion.h3
+            className="text-3xl font-semibold text-center mb-8 text-[#AEEA00] drop-shadow-lg"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: 'easeOut' }}
           >
-            <FaChevronLeft size={20} />
-          </motion.button>
-          {/* Carousel - draggable */}
-          <div className="overflow-x-hidden px-8">
+            Featured In
+          </motion.h3>
+          <div className="relative">
+            {/* Prev */}
+            <motion.button
+              whileTap={{ scale: 0.85, x: -8 }}
+              onClick={() => scrollToIdx(Math.max(0, activeIdx - 1))}
+              className="absolute left-0 top-1/2 -translate-y-1/2 bg-black/80 p-2 rounded-full shadow z-20 hover:bg-[#232526] border-2 border-[#39FF14] text-[#AEEA00]"
+              aria-label="Scroll left"
+            >
+              <FaChevronLeft size={20} />
+            </motion.button>
+            {/* Carousel - draggable */}
             <motion.div
               ref={containerRef}
-              className="flex space-x-6 snap-x snap-mandatory cursor-grab active:cursor-grabbing"
-              drag="x"
-              dragConstraints={{ left: -(mediaItems.length - 1) * 280, right: 0 }}
-              style={{ x }}
-              animate={controls}
-              onDragEnd={handleDragEnd}
+              className="flex flex-row gap-8 overflow-x-auto pb-4 no-scrollbar"
+              style={{ minWidth: '100%' }}
+              animate={{ x: -activeIdx * 280 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 24 }}
             >
               {mediaItems.map((item, i) => (
                 <motion.div
                   key={i}
-                  className={`flex-none w-64 snap-start rounded-2xl overflow-hidden shadow-xl bg-white border-2 border-indigo-100 relative group transition-all duration-300 ${activeIdx === i ? 'ring-2 ring-indigo-400' : ''}`}
-                  initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                  className="relative w-64 rounded-2xl overflow-hidden shadow-xl bg-black/80 border-2 border-[#39FF14] group transition-all duration-300 flex-shrink-0"
+                  whileHover={{ boxShadow: '0 0 40px #39FF14', scale: 1.06 }}
+                  initial={{ opacity: 0, y: 40, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ delay: i * 0.12, type: 'spring', stiffness: 120 }}
-                  whileHover={{ boxShadow: '0 0 32px 0 #805AD5', scale: 1.04 }}
+                  transition={{ type: 'spring', stiffness: 120, delay: 0.05 * i }}
                 >
+                  {/* Blockchain SVG element */}
+                  <svg className="absolute -top-4 left-1/2 -translate-x-1/2 z-10" width="60" height="24" viewBox="0 0 60 24" fill="none">
+                    <rect x="0" y="8" width="60" height="8" rx="4" fill="#39FF14" opacity="0.13" />
+                    <rect x="20" y="10" width="8" height="4" rx="2" fill="#AEEA00" />
+                    <rect x="36" y="10" width="8" height="4" rx="2" fill="#00e0ff" />
+                  </svg>
                   {/* Block number/hash */}
-                  <span className="absolute top-2 left-2 bg-indigo-50 text-indigo-400 text-xs font-mono px-2 py-1 rounded-full shadow-sm z-10">
+                  <span className="absolute top-2 left-2 bg-[#232526] text-[#AEEA00] text-xs font-mono px-2 py-1 rounded-full shadow-sm z-10">
                     Block #{i + 1}
                   </span>
                   {/* Mining effect on hover */}
-                  <span className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity text-yellow-400 animate-pulse text-lg z-10">
+                  <span className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity text-[#39FF14] animate-pulse text-lg z-10">
                     ⛏️
                   </span>
                   <Link href={item.url} target="_blank" rel="noopener noreferrer">
@@ -148,35 +157,45 @@ export default function MediaSection() {
                       />
                     </div>
                     <div className="p-4">
-                      <h4 className="font-medium text-lg">{item.title}</h4>
+                      <h4 className="font-medium text-lg text-[#AEEA00]">{item.title}</h4>
                     </div>
                   </Link>
                 </motion.div>
               ))}
             </motion.div>
-          </div>
-          {/* Next */}
-          <motion.button
-            whileTap={{ scale: 0.85, x: 8 }}
-            onClick={() => scrollToIdx(Math.min(mediaItems.length - 1, activeIdx + 1))}
-            className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/90 p-2 rounded-full shadow z-20 hover:bg-white border-2 border-indigo-200"
-            aria-label="Scroll right"
-          >
-            <FaChevronRight size={20} />
-          </motion.button>
-          {/* Block indicators */}
-          <div className="flex justify-center mt-6 gap-2">
-            {mediaItems.map((_, i) => (
-              <motion.span
-                key={i}
-                className={`w-6 h-3 rounded-md ${activeIdx === i ? 'bg-indigo-400' : 'bg-indigo-100'} block transition-all`}
-                animate={{ scale: activeIdx === i ? 1.2 : 1 }}
-                transition={{ type: 'spring', stiffness: 300 }}
-              />
-            ))}
+            {/* Next */}
+            <motion.button
+              whileTap={{ scale: 0.85, x: 8 }}
+              onClick={() => scrollToIdx(Math.min(mediaItems.length - 1, activeIdx + 1))}
+              className="absolute right-0 top-1/2 -translate-y-1/2 bg-black/80 p-2 rounded-full shadow z-20 hover:bg-[#232526] border-2 border-[#39FF14] text-[#AEEA00]"
+              aria-label="Scroll right"
+            >
+              <FaChevronRight size={20} />
+            </motion.button>
+            {/* Block indicators */}
+            <div className="flex justify-center mt-6 gap-2">
+              {mediaItems.map((_, i) => (
+                <motion.span
+                  key={i}
+                  className={`w-6 h-3 rounded-md ${activeIdx === i ? 'bg-[#AEEA00]' : 'bg-[#232526]'} block transition-all`}
+                  animate={{ scale: activeIdx === i ? 1.2 : 1 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
+                />
+              ))}
+            </div>
           </div>
         </div>
+      </SectionWrapper>
+      {/* Blockchain section divider (bottom) */}
+      <div className="w-full flex justify-center items-center py-2">
+        <svg width="120" height="24" viewBox="0 0 120 24" fill="none" className="animate-pulse">
+          <rect x="0" y="8" width="40" height="8" rx="4" fill="#39FF14" opacity="0.18" />
+          <rect x="40" y="10" width="8" height="4" rx="2" fill="#AEEA00" />
+          <rect x="56" y="10" width="8" height="4" rx="2" fill="#00e0ff" />
+          <rect x="72" y="10" width="8" height="4" rx="2" fill="#a259ff" />
+          <rect x="88" y="8" width="32" height="8" rx="4" fill="#39FF14" opacity="0.18" />
+        </svg>
       </div>
-    </section>
+    </>
   );
 }

@@ -20,20 +20,20 @@ export default function Header() {
   return (
     <header className="fixed top-0 inset-x-0 z-50 font-mono">
       {/* Terminal/Blockchain Backdrop */}
-      <div className="bg-[#181c1f] border-b border-green-500/30 shadow-lg shadow-green-400/10">
+      <div className="bg-[#10151a] border-b border-[#39FF14]/30 shadow-lg shadow-[#39FF14]/10">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           {/* Terminal-style Logo */}
-          <Link href="/" className="text-lg md:text-2xl font-bold text-green-400 flex items-center gap-2 select-none">
+          <Link href="/" className="text-lg md:text-2xl font-bold text-[#AEEA00] flex items-center gap-2 select-none">
             {/* Blockchain Icon */}
             <Image src="/globe.svg" alt="blockchain" width={24} height={24} className="inline-block" />
-            <span className="text-amber-400">pranshu</span>
+            <span className="text-[#AEEA00]">pranshu</span>
             <span className="text-white">@</span>
-            <span className="text-green-400">blockchain</span>
+            <span className="text-[#39FF14]">blockchain</span>
             <span className="text-white">:~$</span>
             {/* Blinking Cursor */}
-            <span className="ml-1 text-green-400 blink-cursor">_</span>
+            <span className="ml-1 text-[#39FF14] blink-cursor">_</span>
             {/* Mock Wallet Address */}
-            <span className="ml-3 px-2 py-0.5 rounded bg-green-900/40 text-xs text-green-300 border border-green-700 select-all hidden sm:inline-flex items-center gap-1">
+            <span className="ml-3 px-2 py-0.5 rounded bg-[#232526] text-xs text-[#00e0ff] border border-[#39FF14] select-all hidden sm:inline-flex items-center gap-1">
               <Image src="/eth.svg" alt="Ethereum" width={16} height={16} className="inline-block" />
               pranshurastogi.eth
             </span>
@@ -45,19 +45,19 @@ export default function Header() {
               <Link
                 key={l.href}
                 href={l.href}
-                className="relative flex items-center gap-1 text-green-300 hover:text-amber-400 transition group text-base tracking-wide"
+                className="relative flex items-center gap-1 text-[#00ff99] hover:text-[#AEEA00] transition group text-base tracking-wide"
                 aria-current={pathname === l.href ? "page" : undefined}
               >
-                <span className="text-amber-400">&gt;</span>
+                <span className="text-[#39FF14]">&gt;</span>
                 <span className="group-hover:glow-text">{l.name}</span>
-                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-amber-400 transition-all group-hover:w-full" style={{transition: 'width 0.3s'}}></span>
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-[#AEEA00] transition-all group-hover:w-full" style={{transition: 'width 0.3s'}}></span>
               </Link>
             ))}
           </nav>
 
           {/* Mobile toggle */}
           <button
-            className="md:hidden text-green-400 hover:text-amber-400 transition font-mono border border-green-700 px-2 py-1 rounded bg-[#181c1f] shadow-inner shadow-green-400/10"
+            className="md:hidden text-[#AEEA00] hover:text-[#39FF14] transition font-mono border border-[#39FF14] px-2 py-1 rounded bg-[#10151a] shadow-inner shadow-[#39FF14]/10"
             onClick={() => setOpen((o) => !o)}
             aria-label="Toggle menu"
           >
@@ -67,7 +67,7 @@ export default function Header() {
 
         {/* Mobile menu */}
         {open && (
-          <div className="md:hidden bg-[#181c1f] border-t border-green-500/30 animate-fade-in relative overflow-hidden">
+          <div className="md:hidden bg-[#10151a] border-t border-[#39FF14]/30 animate-fade-in relative overflow-hidden">
             {/* CRT Scanline Overlay */}
             <div className="absolute inset-0 pointer-events-none z-10 scanline-overlay" />
             <div className="px-6 py-4 space-y-4 relative z-20">
@@ -76,15 +76,15 @@ export default function Header() {
                   key={l.href}
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="block text-lg text-green-300 hover:text-amber-400 transition flex items-center gap-2 font-mono"
+                  className="block text-lg text-[#00ff99] hover:text-[#AEEA00] transition flex items-center gap-2 font-mono"
                   aria-current={pathname === l.href ? "page" : undefined}
                 >
-                  <span className="text-amber-400">&gt;</span>
+                  <span className="text-[#39FF14]">&gt;</span>
                   <span>{l.name}</span>
                 </Link>
               ))}
               {/* Mock Wallet Address in Mobile */}
-              <div className="mt-6 text-xs text-green-300 bg-green-900/40 border border-green-700 rounded px-2 py-1 select-all flex items-center gap-1">
+              <div className="mt-6 text-xs text-[#00e0ff] bg-[#232526] border border-[#39FF14] rounded px-2 py-1 select-all flex items-center gap-1">
                 <Image src="/eth.svg" alt="Ethereum" width={16} height={16} className="inline-block" />
                 pranshurastogi.eth
               </div>

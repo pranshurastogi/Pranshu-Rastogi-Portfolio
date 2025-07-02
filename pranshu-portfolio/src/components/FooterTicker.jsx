@@ -24,24 +24,28 @@ export default function FooterTicker() {
       style={{
         backdropFilter: 'blur(8px)',
         WebkitBackdropFilter: 'blur(8px)',
+        background: 'linear-gradient(90deg, #0f2027 0%, #232526 100%)',
+        borderTop: '1px solid #39FF14',
+        boxShadow: '0 -2px 24px 0 #39FF1499',
+        borderRadius: '0 0 16px 16px',
       }}
     >
       {/* Subtle blockchain mesh/cubes background */}
       <svg width="100%" height="100%" className="absolute inset-0 w-full h-full pointer-events-none select-none" style={{zIndex: 0}}>
         <g>
-          <rect x="10%" y="40%" width="24" height="24" rx="6" fill="#38A169" opacity="0.08" />
-          <rect x="80%" y="60%" width="28" height="28" rx="7" fill="#805AD5" opacity="0.08" />
-          <rect x="50%" y="20%" width="18" height="18" rx="5" fill="#FBBF24" opacity="0.07" />
-          <polyline points="0,30 100,40 200,20 300,45 400,30 500,50 600,40 700,60" fill="none" stroke="#fff" strokeOpacity="0.03" strokeWidth="2" />
+          <rect x="10%" y="40%" width="24" height="24" rx="6" fill="#00ff99" opacity="0.10" />
+          <rect x="80%" y="60%" width="28" height="28" rx="7" fill="#39FF14" opacity="0.10" />
+          <rect x="50%" y="20%" width="18" height="18" rx="5" fill="#00e0ff" opacity="0.09" />
+          <polyline points="0,30 100,40 200,20 300,45 400,30 500,50 600,40 700,60" fill="none" stroke="#AEEA00" strokeOpacity="0.06" strokeWidth="2" />
         </g>
       </svg>
       <div
         className="relative w-full flex items-center overflow-hidden px-4"
         style={{
           zIndex: 1,
-          background: 'linear-gradient(90deg, rgba(56,161,105,0.32) 0%, rgba(128,90,213,0.32) 50%, rgba(251,191,36,0.32) 100%)',
-          borderTop: '1px solid rgba(128,90,213,0.22)',
-          boxShadow: '0 -2px 16px 0 rgba(0,0,0,0.10)',
+          background: 'linear-gradient(90deg, rgba(0,255,153,0.18) 0%, rgba(57,255,20,0.18) 50%, rgba(0,224,255,0.18) 100%)',
+          borderTop: '1px solid #232526',
+          boxShadow: '0 -2px 16px 0 #39FF1444',
           borderRadius: '0 0 16px 16px',
         }}
       >
@@ -57,9 +61,8 @@ export default function FooterTicker() {
           {stats.map((text, idx) => (
             <span
               key={idx}
-              className="text-xs md:text-sm font-semibold text-white px-3 py-1 rounded-lg bg-black/40 shadow border border-white/20 backdrop-blur-sm transition-all duration-200"
-              style={{letterSpacing: '0.01em'}}
-            >
+              className="text-xs md:text-sm font-semibold text-[#AEEA00] px-3 py-1 rounded-lg bg-black/60 shadow border border-[#39FF14]/30 backdrop-blur-sm transition-all duration-200"
+              style={{letterSpacing: '0.01em', textShadow: '0 0 8px #AEEA00'}}>
               {text}
             </span>
           ))}

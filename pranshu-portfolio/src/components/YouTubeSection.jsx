@@ -2,6 +2,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import FloatingBlockchainIcons from "./FloatingBlockchainIcons";
+import SectionWrapper from './SectionWrapper';
 
 function YouTubeGalleryBg() {
   // Generate random positions for Ξ symbols only on the client
@@ -93,18 +95,17 @@ export default function YouTubeSection({ videos }) {
   };
 
   return (
-    <section id="youtube" className="py-16 bg-base-100 relative overflow-hidden">
-      <YouTubeGalleryBg />
+    <SectionWrapper>
       <div className="container mx-auto px-4">
-        <h3 className="text-3xl font-semibold text-center text-primary mb-8">
+        <h3 className="text-3xl font-semibold text-center text-[#AEEA00] mb-8 drop-shadow-lg">
           Latest YouTube Videos
         </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-3xl mx-auto">
-          {visibleVideos.map((video, idx) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-8 w-full">
+          {visibleVideos.slice(0, 4).map((video, idx) => (
             <motion.div
               key={video.videoId}
-              className="relative rounded-2xl overflow-hidden shadow-xl cursor-pointer group bg-gradient-to-br from-indigo-500/30 to-purple-500/20 p-1"
-              whileHover={{ boxShadow: '0 0 32px #38A169', scale: 1.04 }}
+              className="relative rounded-2xl overflow-hidden shadow-xl cursor-pointer group bg-black/80 border-2 border-[#39FF14] p-1 transition-all duration-300"
+              whileHover={{ boxShadow: '0 0 32px #39FF14', scale: 1.04 }}
               onClick={() => setModalVideo(video)}
               initial={{ opacity: 0, y: 40, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -119,19 +120,15 @@ export default function YouTubeSection({ videos }) {
                   className="w-full h-full object-cover rounded-xl group-hover:brightness-110 group-hover:scale-105 transition duration-300"
                 />
                 {/* Web3 border animation */}
-                <div className="absolute inset-0 rounded-xl pointer-events-none border-2 border-transparent group-hover:border-green-400 group-hover:animate-pulse" />
+                <div className="absolute inset-0 rounded-xl pointer-events-none border-2 border-transparent group-hover:border-[#AEEA00] group-hover:animate-pulse" />
                 {/* Play overlay */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-40">
                   <span className="text-white text-5xl">▶</span>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2">
-                  <h4 className="text-white text-sm font-semibold line-clamp-2">
+                  <h4 className="text-[#AEEA00] text-sm font-semibold line-clamp-2">
                     {video.title}
                   </h4>
-                </div>
-                {/* Floating Ethereum icon on hover */}
-                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span className="text-green-400 text-2xl">Ξ</span>
                 </div>
               </div>
             </motion.div>
@@ -149,7 +146,7 @@ export default function YouTubeSection({ videos }) {
             onClick={() => setModalVideo(null)}
           >
             <motion.div
-              className="bg-white rounded-2xl overflow-hidden shadow-2xl max-w-2xl w-full"
+              className="bg-black rounded-2xl overflow-hidden shadow-2xl max-w-2xl w-full border-2 border-[#39FF14]"
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0.8 }}
@@ -166,9 +163,9 @@ export default function YouTubeSection({ videos }) {
                 />
               </div>
               <div className="p-4 text-center">
-                <h4 className="text-lg font-semibold mb-2">{modalVideo.title}</h4>
+                <h4 className="text-lg font-semibold mb-2 text-[#AEEA00]">{modalVideo.title}</h4>
                 <button
-                  className="px-4 py-2 bg-primary text-white rounded-lg"
+                  className="px-4 py-2 bg-[#39FF14] text-black rounded-lg hover:bg-[#AEEA00] transition"
                   onClick={() => setModalVideo(null)}
                 >
                   Close
@@ -178,6 +175,6 @@ export default function YouTubeSection({ videos }) {
           </motion.div>
         )}
       </AnimatePresence>
-    </section>
+    </SectionWrapper>
   );
 }

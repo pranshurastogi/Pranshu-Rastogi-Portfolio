@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import FooterTicker from "@/components/FooterTicker";
+import ContactForm from "@/components/ContactForm";
 
 
 export default function RootLayout({ children }) {
@@ -73,6 +74,7 @@ export default function RootLayout({ children }) {
           </motion.main>
         </AnimatePresence>
 
+        <ContactForm />
         {/* Vercel Analytics: collects pageview metrics */}
         <Analytics />
 
