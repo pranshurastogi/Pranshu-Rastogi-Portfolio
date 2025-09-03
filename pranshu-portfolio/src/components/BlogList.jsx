@@ -48,7 +48,7 @@ export default function BlogList({ posts = [] }) {
 
   return (
     <motion.div
-      className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full"
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full max-w-6xl mx-auto px-4"
       variants={container}
       initial="hidden"
       whileInView="show"
@@ -56,11 +56,22 @@ export default function BlogList({ posts = [] }) {
     >
       {posts.map((post, idx) => {
         let imgSrc;
+        let contentSnippet;
         try {
           imgSrc = post.enclosure?.url || extractFirstImage(post.content);
+          // Extract content snippet from content or use fallback
+          if (post.content) {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = post.content;
+            const textContent = tempDiv.textContent || tempDiv.innerText || '';
+            contentSnippet = textContent.substring(0, 120).trim() + (textContent.length > 120 ? '...' : '');
+          } else {
+            contentSnippet = 'Click to read more about this article...';
+          }
         } catch (e) {
           console.error("Error determining image URL for post", post, e);
           imgSrc = null;
+          contentSnippet = 'Click to read more about this article...';
         }
         
         const neonColors = ["#00ff99", "#39FF14", "#00e0ff"];
@@ -70,7 +81,7 @@ export default function BlogList({ posts = [] }) {
           <motion.div
             key={post.link}
             variants={item}
-            className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] border-2 rounded-2xl shadow-xl overflow-hidden flex flex-col w-full aspect-square group cursor-pointer"
+            className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] border-2 rounded-2xl shadow-xl overflow-hidden flex flex-col w-full h-72 sm:h-80 group cursor-pointer"
             style={{
               boxShadow: `0 4px 20px 0 ${color}66, 0 0 20px 0 ${color}33, inset 0 1px 0 rgba(255,255,255,0.1)`,
               borderColor: color,
@@ -121,7 +132,7 @@ export default function BlogList({ posts = [] }) {
               className="block h-full relative z-10"
             >
               {imgSrc && (
-                <div className="relative w-full h-2/3 overflow-hidden">
+                <div className="relative w-full h-24 sm:h-28 overflow-hidden">
                   <Image
                     src={imgSrc}
                     alt={post.title}
@@ -137,23 +148,26 @@ export default function BlogList({ posts = [] }) {
                 </div>
               )}
               
-              <div className="p-6 flex-1 flex flex-col justify-between">
+              <div className="p-3 sm:p-4 flex-1 flex flex-col justify-between">
                 <div>
-                  <h4 className="text-lg font-bold text-white mb-3 group-hover:text-[#AEEA00] transition-colors duration-300 line-clamp-2 leading-tight">
+                  <h4 className="text-sm sm:text-base font-bold text-white mb-2 group-hover:text-[#AEEA00] transition-colors duration-300 leading-tight blog-card-title">
                     {post.title}
                   </h4>
-                  <p className="text-sm text-[#39FF14] mb-4 bg-black/20 px-3 py-1 rounded-full border border-[#39FF14]/30 inline-block">
+                  <p className="text-xs text-gray-400 mb-2 blog-card-description leading-relaxed">
+                    {contentSnippet}
+                  </p>
+                  <p className="text-xs text-[#39FF14] mb-2 bg-black/20 px-2 py-1 rounded-full border border-[#39FF14]/30 inline-block">
                     {new Date(post.isoDate).toLocaleDateString()}
                   </p>
                 </div>
                 
                 {/* Read more indicator */}
-                <div className="flex items-center justify-between mt-4">
-                  <span className="text-[#AEEA00] text-sm font-medium group-hover:text-[#39FF14] transition-colors duration-300">
+                <div className="flex items-center justify-between mt-auto pt-2">
+                  <span className="text-[#AEEA00] text-xs sm:text-sm font-medium group-hover:text-[#39FF14] transition-colors duration-300">
                     Read More →
                   </span>
-                  <div className="w-6 h-6 rounded-full bg-[#39FF14]/20 border border-[#39FF14]/40 flex items-center justify-center">
-                    <div className="w-2 h-2 bg-[#39FF14] rounded-full"></div>
+                  <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#39FF14]/20 border border-[#39FF14]/40 flex items-center justify-center">
+                    <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-[#39FF14] rounded-full"></div>
                   </div>
                 </div>
               </div>

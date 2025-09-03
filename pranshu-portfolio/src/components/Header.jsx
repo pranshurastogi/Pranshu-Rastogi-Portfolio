@@ -6,13 +6,15 @@ import Link from "next/link";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import CustomLogo from "./CustomLogo";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const links = [
     { name: "Career", href: "#career" },
-    { name: "YouTube", href: "#youtube" },
+    { name: "Projects", href: "#projects" },
     { name: "Blog", href: "#blog" },
+    { name: "YouTube", href: "#youtube" },
     { name: "Featured", href: "#featured" },
   ];
   const pathname = usePathname();
@@ -24,8 +26,8 @@ export default function Header() {
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           {/* Terminal-style Logo */}
           <Link href="/" className="text-lg md:text-2xl font-bold text-[#AEEA00] flex items-center gap-2 select-none">
-            {/* Blockchain Icon */}
-            <Image src="/globe.svg" alt="blockchain" width={24} height={24} className="inline-block" />
+            {/* Custom Logo */}
+            <CustomLogo width={24} height={24} className="inline-block" />
             <span className="text-[#AEEA00]">pranshu</span>
             <span className="text-white">@</span>
             <span className="text-[#39FF14]">blockchain</span>

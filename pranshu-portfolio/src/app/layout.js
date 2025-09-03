@@ -25,6 +25,8 @@ export default function RootLayout({ children }) {
         <link rel="canonical" href="https://pranshurastogi.com/" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="alternate icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon-64.png" />
         <link rel="manifest" href="/manifest.json" />
         
         {/* Preload critical resources */}

@@ -139,7 +139,7 @@ export default async function BlogSection() {
       <Divider />
 
       {/* ----------------------- */}
-      {/* Inline keyframes */}
+      {/* Inline keyframes and utility styles */}
       {/* ----------------------- */}
       <style>
         {`
@@ -153,6 +153,33 @@ export default async function BlogSection() {
         }
         .animate-fadeIn {
           animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        /* Ensure line-clamp works across browsers */
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        
+        /* Blog card text overflow handling */
+        .blog-card-title {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          line-height: 1.4;
+          max-height: 2.8em;
+        }
+        
+        .blog-card-description {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          line-height: 1.3;
+          max-height: 2.6em;
         }
       `}
       </style>

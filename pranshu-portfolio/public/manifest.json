@@ -1,0 +1,26 @@
+{
+  "name": "Pranshu Rastogi Portfolio",
+  "short_name": "Pranshu Portfolio",
+  "description": "Pranshu Rastogi's personal portfolio - Blockchain Engineer, Speaker, Writer",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#10151a",
+  "theme_color": "#39FF14",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/favicon-64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

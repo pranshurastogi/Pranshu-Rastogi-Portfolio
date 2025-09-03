@@ -45,15 +45,15 @@ export default function Home() {
         </Suspense>
       </section>
       
-      <section id="projects">
-        <Suspense fallback={<LoadingFallback sectionName="Projects" />}>
-          <ProjectShowcase />
-        </Suspense>
-      </section>
-      
       <section id="blog">
         <Suspense fallback={<LoadingFallback sectionName="Blog" />}>
           <BlogSection />
+        </Suspense>
+      </section>
+      
+      <section id="projects">
+        <Suspense fallback={<LoadingFallback sectionName="Projects" />}>
+          <ProjectShowcase />
         </Suspense>
       </section>
       
