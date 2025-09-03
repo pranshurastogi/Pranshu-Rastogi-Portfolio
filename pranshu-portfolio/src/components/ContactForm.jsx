@@ -70,12 +70,15 @@ export default function ContactForm() {
       const fakeHash =
         "0x" + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join("");
       const fakeBlock = Math.floor(1000000 + Math.random() * 9000000);
-      const res = await fetch("https://formspree.io/f/xjkwggdp", {
+
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-      if (!res.ok) throw new Error("Network error");
+      const data = await res.json();
+      if (!res.ok || !data.ok) throw new Error("Network error");
+
       setTxHash(fakeHash);
       setBlockNum(fakeBlock);
       setStatus({ success: true, text: `Transaction mined!\nHash: ${fakeHash.slice(0, 12)}...${fakeHash.slice(-8)}\nBlock: #${fakeBlock}` });
@@ -93,7 +96,7 @@ export default function ContactForm() {
     <>
       {/* Floating Card/Button */}
       <motion.button
-        className="fixed bottom-20 right-6 z-[99999] px-5 py-2 rounded-2xl shadow-lg flex items-center gap-2 font-mono font-bold bg-black/80 border-2 border-[#39FF14] text-[#39FF14] hover:text-[#AEEA00] hover:border-[#AEEA00] hover:scale-105 transition-all duration-200 backdrop-blur-lg neon-contact-btn"
+        className="fixed bottom-20 right-6 z-[100001] px-5 py-2 rounded-2xl shadow-lg flex items-center gap-2 font-mono font-bold bg-black/80 border-2 border-[#39FF14] text-[#39FF14] hover:text-[#AEEA00] hover:border-[#AEEA00] hover:scale-105 transition-all duration-200 backdrop-blur-lg neon-contact-btn"
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.97 }}
         onClick={() => setOpen(true)}
@@ -109,7 +112,7 @@ export default function ContactForm() {
         {open && (
           <motion.div
             ref={modalRef}
-            className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/90 backdrop-blur-sm"
+            className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/90 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -140,12 +143,12 @@ export default function ContactForm() {
               {/* Fun Element: Email ASCII Art */}
               <div className="px-4 pt-3 pb-1 text-xs select-none min-h-[32px]">
                 <pre className="leading-4 text-[#AEEA00] text-xs mb-1">{`
-  
+ 
 
-  ███████████████████████████████
-  █▄─▄▄─█▄─▀█▀─▄██▀▄─██▄─▄█▄─▄███
-  ██─▄█▀██─█▄█─███─▀─███─███─██▀█
-  ▀▄▄▄▄▄▀▄▄▄▀▄▄▄▀▄▄▀▄▄▀▄▄▄▀▄▄▄▄▄▀
+ ███████████████████████████████
+ █▄─▄▄─█▄─▀█▀─▄██▀▄─██▄─▄█▄─▄███
+ ██─▄█▀██─█▄█─███─▀─███─███─██▀█
+ ▀▄▄▄▄▄▀▄▄▄▀▄▄▄▀▄▄▀▄▄▀▄▄▄▀▄▄▄▄▄▀
 `}</pre>
               </div>
               {/* Terminal Body */}
@@ -217,7 +220,7 @@ export default function ContactForm() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ duration: 0.3 }}
-                    className={`fixed left-1/2 -translate-x-1/2 bottom-8 px-6 py-3 rounded-lg text-xs font-mono shadow-lg z-[99999] border-2 ${status.success ? "bg-[#101c10] border-[#39FF14] text-[#39FF14]" : "bg-[#2a1010] border-red-500 text-red-400"}`}
+                    className={`fixed left-1/2 -translate-x-1/2 bottom-8 px-6 py-3 rounded-lg text-xs font-mono shadow-lg z-[100002] border-2 ${status.success ? "bg-[#101c10] border-[#39FF14] text-[#39FF14]" : "bg-[#2a1010] border-red-500 text-red-400"}`}
                     onAnimationComplete={() =>
                       setTimeout(() => setStatus({ success: null, text: "" }), 3500)
                     }

@@ -1,0 +1,113 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "AlphIQ",
+      "subtitle": "Alephium • Next.js • Web3",
+      "description": "The all-in-one Alephium dashboard for real-time blockchain analytics, dynamic contract insights, and gamified onchain scoring—complete with live network stats, wallet profiler, token flows, Ralph contract decoder, alerts, quests, and XP-powered achievements.",
+      "longDescription": "AlphIQ is designed to synthesize information, not just present it. The real challenge in Web3 isn’t finding data; it’s the cognitive burden of connecting disparate points: a transaction, a wallet’s history, a contract’s function, and a community campaign — into a single, understandable narrative. AlphIQ does that heavy lifting for you, weaving the data into a story and giving you a central role to play.",
+      "images": [
+        "/images/alphiq-mov.mov",
+        "/images/alphIQ-dashboard1.png",
+        "/images/alphIQ-dashboard-2.png"
+      ],
+      "technologies": ["Solidity", "Next.js", "React", "Supabase", "ANS", "Tailwind", "Lucide", "Shadcn"],
+      "features": [
+        "Real-time blockchain analytics",
+        "Real-time protocol analytics", 
+        "Dynamic contract insights",
+        "Gamified onchain scoring",
+        "Live network stats",
+        "Wallet profiler",
+        "Token flows",
+        "Ralph contract decoder",
+        "Alerts",
+        "Quests",
+        "XP-powered achievements"
+      ],
+      "github": "https://github.com/pranshurastogi/AlphIQ",
+      "live": "https://www.alphiq.xyz/",
+      "category": "Analytics",
+      "difficulty": "Intermediate",
+      "icon": "zap",
+      "gradient": "from-[#627EEA]/20 to-[#AEEA00]/10"
+    },
+    {
+      "id": 2,
+      "title": "Bloom Ideas",
+      "subtitle": "Ethereum • Solidity • Web3",
+      "description": "A decentralized platform for collaborative idea sharing and community-driven innovation, built on Etherlink blockchain with NFT rewards for contributors.",
+      "longDescription": "Bloom-Ideas is a Web3 hackathon platform that transforms idea sharing into a collaborative garden ecosystem. Users can plant ideas, nurture them through community engagement, and earn NFT rewards as their ideas bloom into successful projects.",
+      "images": [
+        "/images/Bloom-ideas-3.gif",
+        "/images/Bloom-ideas-1.png",
+        "/images/Bloom-ideas-2.png"
+      ],
+      "technologies": ["Ethereum", "Solidity", "Web3", "Next.js", "Ethers.js", "MetaMask", "Shadcn"],
+      "features": [
+        "Decentralized idea sharing",
+        "Community-driven innovation",
+        "NFT rewards for contributors",
+        "Web3 hackathon platform"
+      ],
+      "github": "https://github.com/BloomIdeas/SOC-Bloom-ideas",
+      "live": "https://soc-bloom-ideas.vercel.app/",
+      "category": "Web3 Hackathon",
+      "difficulty": "Intermediate",
+      "icon": "ethereum",
+      "gradient": "from-[#AEEA00]/20 to-[#39FF14]/10"
+    },
+    {
+      "id": 3,
+      "title": "Intellilearn",
+      "subtitle": "Turn gameplay into Onchain skills",
+      "description": "Imagine a world where learning blockchain isn't about memorizing complex concepts, but about embarking on epic quests, solving puzzles, and earning rewards that actually matter. Welcome to IntelliLearn - where every game is a lesson, every achievement is a milestone, and every player becomes a Web3 master.",
+      "longDescription": "Welcome to IntelliLearn, where the future of Web3 education unfolds. We're transforming complex blockchain concepts into an engaging adventure, powered by gamification, virality, and decentralised identity. Join us on this journey to onboard the next billion users into the Web3 universe.",
+      "images": [
+        "/images/Intellilearn-4.mov",
+        "/images/Intellilearn-1.png",
+        "/images/Intellilearn-2.png",
+        "/images/Intellilearn-3.png"
+      ],
+      "technologies": ["Open Campus", "Next.js", "GameFi", "Solidity", "Ethers.js", "MetaMask", "Shadcn"],
+      "features": [
+        "Gamification",
+        "Virality",
+        "Decentralised identity",
+        "Web3 education"
+      ],
+      "github": "https://github.com/Intellilearn-gm/IL-core",
+      "live": "https://il-core.vercel.app/login",
+      "category": "Web3 Education",
+      "difficulty": "Intermediate",
+      "icon": "snap",
+      "gradient": "from-[#a259ff]/20 to-[#F7931A]/10"
+    },
+    {
+      "id": 4,
+      "title": "AlphIQ Admin Dashboard",
+      "subtitle": "Alephium • Next.js • Web3",
+      "description": "Admin dashboard for AlphIQ helps you to see analytics, create , quests, and lot more with seamless UI.",
+      "longDescription": "AlphIQ Admin Dashboard is a powerful tool that helps you to manage your AlphIQ instance. It allows you to see analytics, create quests, and lot more with seamless UI.",
+      "images": [
+        "/images/alphiq-admin-3.gif",
+        "/images/alphiq-admin-1.png",
+        "/images/alphiq-admin-2.png"
+      ],
+      "technologies": ["TypeScript", "Next.js", "React", "Supabase", "ANS", "Tailwind", "Lucide", "Shadcn"],
+      "features": [
+        "Analytics",
+        "Quests",
+        "Alerts",
+        "XP-powered achievements",
+        "Seamless UI"
+      ],
+      "github": "https://github.com/pranshurastogi/AlphIQ-admin-panel",
+      "live": "https://admin.alphiq.xyz/",
+      "category": "Admin Dashboard",
+      "difficulty": "Intermediate",
+      "icon": "code",
+      "gradient": "from-[#F7931A]/20 to-[#627EEA]/10"
+    }
+  ]
+}

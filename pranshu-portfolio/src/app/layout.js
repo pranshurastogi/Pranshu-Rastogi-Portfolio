@@ -9,7 +9,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import FooterTicker from "@/components/FooterTicker";
 import ContactForm from "@/components/ContactForm";
-
+import PerformanceMonitor from "@/components/PerformanceMonitor";
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
@@ -22,28 +22,42 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charSet="utf-8" />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://pranshu.dev/" />
+        <link rel="canonical" href="https://pranshurastogi.com/" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="alternate icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="manifest" href="/manifest.json" />
+        
+        {/* Preload critical resources */}
+        <link rel="preload" href="/images/pfp.jpg" as="image" />
+        <link rel="preload" href="/images/cover.png" as="image" />
+        <link rel="dns-prefetch" href="//img.youtube.com" />
+        <link rel="dns-prefetch" href="//cdn-images-1.medium.com" />
+        
+        {/* Preconnect to external domains */}
+        <link rel="preconnect" href="https://img.youtube.com" />
+        <link rel="preconnect" href="https://cdn-images-1.medium.com" />
+        <link rel="preconnect" href="https://us.i.posthog.com" />
+        
         {/* Open Graph */}
         <meta property="og:title" content="Pranshu Rastogi | Blockchain Engineer, Speaker, Writer" />
         <meta property="og:description" content="Pranshu Rastogi's personal portfolio. Blockchain engineer, speaker, writer, and educator." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://pranshu.dev/" />
+        <meta property="og:url" content="https://pranshurastogi.com/" />
         <meta property="og:image" content="/images/pfp.jpg" />
+        
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Pranshu Rastogi | Blockchain Engineer, Speaker, Writer" />
         <meta name="twitter:description" content="Pranshu Rastogi's personal portfolio. Blockchain engineer, speaker, writer, and educator." />
         <meta name="twitter:image" content="/images/pfp.jpg" />
         <meta name="twitter:site" content="@pranshurastogii" />
+        
         {/* Schema.org Person JSON-LD */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           '@context': 'https://schema.org',
           '@type': 'Person',
           name: 'Pranshu Rastogi',
-          url: 'https://pranshu.dev/',
+          url: 'https://pranshurastogi.com/',
           sameAs: [
             'https://twitter.com/pranshurastogii',
             'https://github.com/pranshurastogi',
@@ -51,9 +65,9 @@ export default function RootLayout({ children }) {
             'https://medium.com/@pranshurastogi',
             'https://youtube.com/@pranshurastogi',
           ],
-          jobTitle: 'Blockchain Engineer',
-          image: 'https://pranshu.dev/images/pfp.jpg',
-          description: "Blockchain engineer, speaker, writer, and educator."
+          jobTitle: 'Head of Ecosystem & Integrations at Push Chain',
+          image: 'https://pranshurastogi.com/images/pfp.jpg',
+          description: "Head of Ecosystem & Integrations, speaker, writer, and educator."
         }) }} />
       </head>
       <body className="antialiased pt-16">
@@ -75,12 +89,16 @@ export default function RootLayout({ children }) {
         </AnimatePresence>
 
         <ContactForm />
+        
         {/* Vercel Analytics: collects pageview metrics */}
         <Analytics />
 
         {/* Vercel Speed Insights: reports LCP, TTFB, CLS, etc. */}
         <SpeedInsights />
         <FooterTicker/>
+        
+        {/* Performance monitoring (development only) */}
+        <PerformanceMonitor />
       </body>
     </html>
   );

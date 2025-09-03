@@ -4,7 +4,7 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useAnimation } from "framer-motion";
+import { motion, useAnimation, useInView } from "framer-motion";
 import {
   FaTwitter,
   FaLinkedin,
@@ -25,6 +25,7 @@ function Typewriter({ roles, speed = 80, pause = 1200 }) {
   const [roleIdx, setRoleIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
   const [deleting, setDeleting] = useState(false);
+  
   useEffect(() => {
     let timeout;
     if (!deleting && charIdx < roles[roleIdx].length) {
@@ -41,6 +42,7 @@ function Typewriter({ roles, speed = 80, pause = 1200 }) {
     }
     return () => clearTimeout(timeout);
   }, [charIdx, deleting, roleIdx, roles, speed, pause]);
+  
   return (
     <span
       className="font-mono text-[#AEEA00] text-xl md:text-2xl tracking-tight"
@@ -73,60 +75,59 @@ function GlassSocial({ href, label, children }) {
   );
 }
 
-// Animated mesh background with multiple animated gradients for hacker theme
+// Optimized animated mesh background with reduced complexity
 function AnimatedMeshBackground() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  
   return (
-    <div className="absolute inset-0 w-full h-full -z-30 pointer-events-none overflow-hidden">
-      {/* Multiple animated gradient blobs */}
+    <div ref={ref} className="absolute inset-0 w-full h-full -z-30 pointer-events-none overflow-hidden">
+      {/* Simplified animated gradient blobs */}
       <svg className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" width="1400" height="1000" viewBox="0 0 1400 1000" fill="none">
         <motion.ellipse
           cx="700" cy="500" rx="420" ry="320"
           fill="url(#hackerGradient1)"
           opacity="0.18"
-          animate={{
+          animate={isInView ? {
             rx: [420, 440, 420],
             ry: [320, 340, 320],
-            cx: [700, 720, 700],
-            cy: [500, 520, 500]
-          }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+          } : {}}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.ellipse
           cx="900" cy="300" rx="180" ry="120"
           fill="url(#hackerGradient2)"
           opacity="0.13"
-          animate={{
+          animate={isInView ? {
             rx: [180, 200, 180],
             ry: [120, 140, 120],
-            cx: [900, 940, 900],
-            cy: [300, 340, 300]
-          }}
-          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+          } : {}}
+          transition={{ duration: 25, repeat: Infinity, ease: "easeInOut", delay: 2 }}
         />
         <motion.ellipse
-          cx="400" cy="700" rx="160" ry="100"
+          cx="400" cy="200" rx="150" ry="100"
           fill="url(#hackerGradient3)"
-          opacity="0.12"
-          animate={{
-            rx: [160, 180, 160],
+          opacity="0.15"
+          animate={isInView ? {
+            rx: [150, 170, 150],
             ry: [100, 120, 100],
-            cx: [400, 420, 400],
-            cy: [700, 720, 700]
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+          } : {}}
+          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut", delay: 4 }}
         />
+        
+        {/* Gradients */}
         <defs>
-          <radialGradient id="hackerGradient1" cx="50%" cy="50%" r="80%">
-            <stop offset="0%" stopColor="#00ff99" />
-            <stop offset="100%" stopColor="#0f2027" />
+          <radialGradient id="hackerGradient1" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0%" stopColor="#4F46E5" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#4F46E5" stopOpacity="0" />
           </radialGradient>
-          <radialGradient id="hackerGradient2" cx="50%" cy="50%" r="80%">
-            <stop offset="0%" stopColor="#00e0ff" />
-            <stop offset="100%" stopColor="#232526" />
+          <radialGradient id="hackerGradient2" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#F59E0B" stopOpacity="0" />
           </radialGradient>
-          <radialGradient id="hackerGradient3" cx="50%" cy="50%" r="80%">
-            <stop offset="0%" stopColor="#a259ff" />
-            <stop offset="100%" stopColor="#092b1a" />
+          <radialGradient id="hackerGradient3" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0%" stopColor="#AEEA00" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#AEEA00" stopOpacity="0" />
           </radialGradient>
         </defs>
       </svg>
@@ -367,7 +368,7 @@ export default function Hero() {
       </div>
       {/* Main content */}
       <motion.div
-        className="relative z-30 flex flex-col md:flex-row items-center md:items-start w-full max-w-6xl gap-12 py-24"
+        className="relative z-30 flex flex-col md:flex-row items-center md:items-start w-full max-w-6xl gap-8 py-12"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}

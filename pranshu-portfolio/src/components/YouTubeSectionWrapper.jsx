@@ -3,6 +3,8 @@ import Parser from "rss-parser";
 import YouTubeSection from "./YouTubeSection";
 import React from "react";
 
+export const revalidate = 3600; // 1 hour ISR for RSS
+
 export default async function YouTubeSectionWrapper() {
   const parser = new Parser();
   try {
@@ -10,7 +12,6 @@ export default async function YouTubeSectionWrapper() {
       "https://www.youtube.com/feeds/videos.xml?channel_id=UC8INoQWXK5AwIe5Fdb0BO2Q"
     );
 
-    // map all videos, handle parsing errors
     const videos = feed.items
       .map((item) => {
         try {
@@ -19,7 +20,6 @@ export default async function YouTubeSectionWrapper() {
           if (!videoId) return null;
           return { videoId, title: item.title };
         } catch (err) {
-          console.error("YouTube item parse error:", err);
           return null;
         }
       })
@@ -29,8 +29,8 @@ export default async function YouTubeSectionWrapper() {
   } catch (error) {
     return (
       <section id="youtube" className="py-16 bg-base-100">
-        <div className="container mx-auto px-4 text-center text-red-500">
-          <p>Failed to load videos. Please try again later.</p>
+        <div className="container mx-auto px-4 text-center text-[#AEEA00]">
+          <p>Videos are cooling down. Check back soon.</p>
         </div>
       </section>
     );

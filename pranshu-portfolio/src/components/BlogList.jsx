@@ -37,110 +37,140 @@ export default function BlogList({ posts = [] }) {
   if (!Array.isArray(posts) || posts.length === 0) {
     console.warn("BlogList: no posts to display", posts);
     return (
-      <section id="blog" className="py-16 bg-gradient-to-br from-[#0f2027] to-[#232526] w-full">
-        <div className="container mx-auto px-8 text-center text-[#AEEA00]">
-          <h3 className="text-3xl font-semibold mb-4 text-[#AEEA00] drop-shadow-lg">
-            Latest Blog Posts
-          </h3>
-          <p className="bg-black/80 rounded-xl border border-[#39FF14] inline-block px-4 py-2">No blog posts available at the moment. Please check back soon!</p>
+      <div className="text-center py-8">
+        <div className="bg-[#1a1a1a]/80 border border-[#39FF14] rounded-2xl p-8 max-w-md mx-auto">
+          <div className="text-[#39FF14] text-4xl mb-4">📝</div>
+          <div className="text-[#39FF14] font-medium">No blog posts available at the moment. Please check back soon!</div>
         </div>
-      </section>
+      </div>
     );
   }
 
   return (
-    <section id="blog" className="py-20 bg-gradient-to-br from-[#0f2027] to-[#232526] w-full">
-      {/* Blockchain section divider (top) */}
-      <div className="w-full flex justify-center items-center py-2">
-        <svg width="180" height="32" viewBox="0 0 180 32" fill="none" className="animate-pulse">
-          <rect x="0" y="12" width="60" height="8" rx="4" fill="#39FF14" opacity="0.18" />
-          <rect x="60" y="14" width="16" height="4" rx="2" fill="#AEEA00" />
-          <rect x="84" y="14" width="16" height="4" rx="2" fill="#00e0ff" />
-          <rect x="108" y="14" width="16" height="4" rx="2" fill="#a259ff" />
-          <rect x="132" y="12" width="48" height="8" rx="4" fill="#39FF14" opacity="0.18" />
-        </svg>
-      </div>
-      <div className="container mx-auto px-8">
-        <h3 className="text-3xl font-semibold text-center mb-12 text-[#AEEA00] drop-shadow-lg">
-          Latest Blog Posts
-        </h3>
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full"
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          {posts.map((post, idx) => {
-            let imgSrc;
-            try {
-              imgSrc = post.enclosure?.url || extractFirstImage(post.content);
-            } catch (e) {
-              console.error("Error determining image URL for post", post, e);
-              imgSrc = null;
-            }
-            return (
-              <motion.div
-                key={post.link}
-                variants={item}
-                whileHover={{ scale: 1.07, rotate: 1, boxShadow: '0 0 40px #39FF14' }}
-                className="block-card bg-black/80 border-2 border-[#39FF14] shadow-lg rounded-2xl overflow-hidden flex flex-col w-full min-h-[440px] relative group transition-all duration-300"
-                initial={{ opacity: 0, y: 80, scale: 0.92, rotate: -4 }}
-                animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
-                transition={{ type: 'spring', stiffness: 120, delay: idx * 0.10 }}
-              >
-                {/* Blockchain SVG element */}
-                <svg className="absolute -top-4 left-1/2 -translate-x-1/2 z-10" width="60" height="24" viewBox="0 0 60 24" fill="none">
-                  <rect x="0" y="8" width="60" height="8" rx="4" fill="#39FF14" opacity="0.13" />
-                  <rect x="20" y="10" width="8" height="4" rx="2" fill="#AEEA00" />
-                  <rect x="36" y="10" width="8" height="4" rx="2" fill="#00e0ff" />
-                </svg>
-                <Link
-                  href={post.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block h-full"
-                >
-                  {imgSrc && (
-                    <div className="relative w-full h-52">
-                      <Image
-                        src={imgSrc}
-                        alt={post.title}
-                        fill
-                        className="object-cover rounded-t-2xl"
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                        onError={(e) =>
-                          console.error("Next/Image failed to load", imgSrc)
-                        }
-                      />
-                    </div>
-                  )}
-                  <div className="p-6 flex-1 flex flex-col justify-between">
-                    <h4 className="text-lg font-medium text-[#AEEA00] mb-2">
-                      {post.title}
-                    </h4>
-                    <p className="text-sm text-[#39FF14] mb-4">
-                      {new Date(post.isoDate).toLocaleDateString()}
-                    </p>
+    <motion.div
+      className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full"
+      variants={container}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.2 }}
+    >
+      {posts.map((post, idx) => {
+        let imgSrc;
+        try {
+          imgSrc = post.enclosure?.url || extractFirstImage(post.content);
+        } catch (e) {
+          console.error("Error determining image URL for post", post, e);
+          imgSrc = null;
+        }
+        
+        const neonColors = ["#00ff99", "#39FF14", "#00e0ff"];
+        const color = neonColors[idx % neonColors.length];
+        
+        return (
+          <motion.div
+            key={post.link}
+            variants={item}
+            className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] border-2 rounded-2xl shadow-xl overflow-hidden flex flex-col w-full aspect-square group cursor-pointer"
+            style={{
+              boxShadow: `0 4px 20px 0 ${color}66, 0 0 20px 0 ${color}33, inset 0 1px 0 rgba(255,255,255,0.1)`,
+              borderColor: color,
+              background: `linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 50%, #1a1a1a 100%)`
+            }}
+            whileHover={{ 
+              scale: 1.05, 
+              rotate: [0, 1, -1, 0], 
+              boxShadow: `0 8px 32px 0 ${color}aa, 0 0 48px 0 ${color}66, inset 0 1px 0 rgba(255,255,255,0.2)`,
+              y: -8,
+              borderColor: `${color}ff`
+            }}
+            whileTap={{ scale: 0.98, rotate: 0 }}
+            transition={{ duration: 0.4, type: 'spring', stiffness: 200, damping: 15 }}
+            initial={{ opacity: 0, y: 60, scale: 0.8, rotate: -6 }}
+            animate={{ opacity: 1, y: 0, scale: 1, rotate: 0 }}
+            viewport={{ once: true }}
+          >
+            {/* Blockchain connection lines */}
+            <div className="absolute -top-1 left-1/2 w-0.5 h-2 bg-gradient-to-b from-transparent to-[#39FF14] opacity-60"></div>
+            <div className="absolute -bottom-1 left-1/2 w-0.5 h-2 bg-gradient-to-t from-transparent to-[#39FF14] opacity-60"></div>
+            
+            {/* Enhanced hexagon background */}
+            <motion.div
+              className="absolute -top-4 left-1/2 -translate-x-1/2 z-0 opacity-25"
+              initial={{ scale: 0.8, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 0.25 }}
+              animate={{ rotate: [0, 3, -3, 0] }}
+              transition={{ delay: 0.2 + idx * 0.1, duration: 8, repeat: Infinity, repeatType: 'loop', ease: 'linear' }}
+              viewport={{ once: true }}
+            >
+              <svg width="48" height="42" viewBox="0 0 60 52" fill="none">
+                <polygon points="30,4 56,18 56,44 30,56 4,44 4,18" fill={color} />
+              </svg>
+            </motion.div>
+            
+            {/* Blockchain SVG element */}
+            <svg className="absolute -top-3 left-1/2 -translate-x-1/2 z-10" width="48" height="20" viewBox="0 0 48 20" fill="none">
+              <rect x="0" y="6" width="48" height="8" rx="4" fill="#39FF14" opacity="0.15" />
+              <rect x="16" y="8" width="8" height="4" rx="2" fill="#AEEA00" />
+              <rect x="28" y="8" width="8" height="4" rx="2" fill="#00e0ff" />
+            </svg>
+            
+            <Link
+              href={post.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block h-full relative z-10"
+            >
+              {imgSrc && (
+                <div className="relative w-full h-2/3 overflow-hidden">
+                  <Image
+                    src={imgSrc}
+                    alt={post.title}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    onError={(e) =>
+                      console.error("Next/Image failed to load", imgSrc)
+                    }
+                  />
+                  {/* Image overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+              )}
+              
+              <div className="p-6 flex-1 flex flex-col justify-between">
+                <div>
+                  <h4 className="text-lg font-bold text-white mb-3 group-hover:text-[#AEEA00] transition-colors duration-300 line-clamp-2 leading-tight">
+                    {post.title}
+                  </h4>
+                  <p className="text-sm text-[#39FF14] mb-4 bg-black/20 px-3 py-1 rounded-full border border-[#39FF14]/30 inline-block">
+                    {new Date(post.isoDate).toLocaleDateString()}
+                  </p>
+                </div>
+                
+                {/* Read more indicator */}
+                <div className="flex items-center justify-between mt-4">
+                  <span className="text-[#AEEA00] text-sm font-medium group-hover:text-[#39FF14] transition-colors duration-300">
+                    Read More →
+                  </span>
+                  <div className="w-6 h-6 rounded-full bg-[#39FF14]/20 border border-[#39FF14]/40 flex items-center justify-center">
+                    <div className="w-2 h-2 bg-[#39FF14] rounded-full"></div>
                   </div>
-                </Link>
-                {/* Animated mining effect */}
-                <span className="absolute top-3 right-3 text-[#39FF14] animate-pulse text-xl z-20 group-hover:opacity-100 opacity-0 transition-opacity">⛏️</span>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-      </div>
-      {/* Blockchain section divider (bottom) */}
-      <div className="w-full flex justify-center items-center py-2 mt-8">
-        <svg width="180" height="32" viewBox="0 0 180 32" fill="none" className="animate-pulse">
-          <rect x="0" y="12" width="60" height="8" rx="4" fill="#39FF14" opacity="0.18" />
-          <rect x="60" y="14" width="16" height="4" rx="2" fill="#AEEA00" />
-          <rect x="84" y="14" width="16" height="4" rx="2" fill="#00e0ff" />
-          <rect x="108" y="14" width="16" height="4" rx="2" fill="#a259ff" />
-          <rect x="132" y="12" width="48" height="8" rx="4" fill="#39FF14" opacity="0.18" />
-        </svg>
-      </div>
-    </section>
+                </div>
+              </div>
+            </Link>
+            
+            {/* Enhanced hover glow effect */}
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                 style={{
+                   background: `linear-gradient(45deg, transparent 0%, ${color}20 50%, transparent 100%)`
+                 }}>
+            </div>
+            
+            {/* Animated mining effect */}
+            <span className="absolute top-3 right-3 text-[#39FF14] animate-pulse text-lg z-20 opacity-80 group-hover:opacity-100 transition-opacity duration-300">⛏️</span>
+          </motion.div>
+        );
+      })}
+    </motion.div>
   );
 }

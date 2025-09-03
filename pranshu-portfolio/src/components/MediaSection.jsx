@@ -8,7 +8,6 @@ import { FaChevronLeft, FaChevronRight, FaEthereum, FaBitcoin } from "react-icon
 import { motion, useAnimation, useMotionValue, useTransform } from "framer-motion";
 import React from "react";
 import FloatingBlockchainIcons from "./FloatingBlockchainIcons";
-import SectionWrapper from './SectionWrapper';
 
 const mediaItems = [
   {
@@ -95,7 +94,7 @@ export default function MediaSection() {
           <rect x="88" y="8" width="32" height="8" rx="4" fill="#39FF14" opacity="0.18" />
         </svg>
       </div>
-      <SectionWrapper>
+      <div className="relative py-16 md:py-24 px-4 rounded-2xl bg-[#181a20] border-2 border-[#2d3748] shadow-lg overflow-hidden my-8">
         <div className="container mx-auto px-4">
           <motion.h3
             className="text-3xl font-semibold text-center mb-8 text-[#AEEA00] drop-shadow-lg"
@@ -185,7 +184,7 @@ export default function MediaSection() {
             </div>
           </div>
         </div>
-      </SectionWrapper>
+      </div>
       {/* Blockchain section divider (bottom) */}
       <div className="w-full flex justify-center items-center py-2">
         <svg width="120" height="24" viewBox="0 0 120 24" fill="none" className="animate-pulse">

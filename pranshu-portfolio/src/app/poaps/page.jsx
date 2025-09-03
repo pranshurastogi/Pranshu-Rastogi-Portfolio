@@ -13,7 +13,7 @@ export default function PoapsPage() {
         <meta property="og:title" content="POAPs | Pranshu Rastogi" />
         <meta property="og:description" content="Explore all POAPs (Proof of Attendance Protocol) collected by Pranshu Rastogi at blockchain events and conferences." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://pranshu.dev/poaps" />
+        <meta property="og:url" content="https://pranshurastogi.com/poaps" />
         <meta property="og:image" content="/images/pfp.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="POAPs | Pranshu Rastogi" />
