@@ -108,6 +108,38 @@
       "difficulty": "Intermediate",
       "icon": "code",
       "gradient": "from-[#F7931A]/20 to-[#627EEA]/10"
+    },
+    {
+      "id": 5,
+      "title": "EYI",
+      "subtitle": "Decentralized Identity • Web3 • ENS",
+      "description": "A comprehensive decentralized identity platform that empowers users to own, verify, and showcase their digital identity across multiple platforms. Connect your ENS to Self, GitHub, X (Twitter), and Farcaster to unlock your EYI badge and enjoy safer, smarter web3 interactions.",
+      "longDescription": "EYI is a next-generation decentralized identity platform that revolutionizes how users establish and maintain their digital presence in the web3 ecosystem. Built with privacy-first principles, EYI combines multiple verification layers to create a comprehensive identity system that's both secure and user-friendly. The platform addresses the fundamental challenge of digital identity in web3: proving you are who you say you are without compromising your privacy.",
+      "images": [
+        "/images/EYI-1.png",
+        "/images/EYI-2.png",
+        "/images/EYI-3.png",
+        "/images/EYI-4.png"
+      ],
+      "technologies": ["Next.js", "TypeScript", "React", "ENS", "Self Protocol", "Alchemy", "Privy", "Tailwind", "Farcaster"],
+      "features": [
+        "Multi-platform identity verification",
+        "ENS integration for unified web3 identity",
+        "Self Protocol for private personhood verification",
+        "GitHub integration for developer reputation",
+        "X (Twitter) integration for social verification",
+        "Farcaster integration for decentralized social identity",
+        "Portfolio dashboard with transaction analytics",
+        "EYI Ring visualization for verification status",
+        "Risk assessment and fraud detection",
+        "Public directory for verified identities"
+      ],
+      "github": "https://github.com/pranshurastogi/EYI",
+      "live": "https://eyi-two.vercel.app/",
+      "category": "Decentralized Identity",
+      "difficulty": "Advanced",
+      "icon": "shield",
+      "gradient": "from-[#8B5CF6]/20 to-[#06B6D4]/10"
     }
   ]
 }

@@ -1,3 +1,10 @@
 User-agent: *
 Allow: /
+
+# Favicon and manifest
+Allow: /favicon.ico
+Allow: /favicon.svg
+Allow: /favicon-64.png
+Allow: /manifest.json
+
 Sitemap: https://pranshurastogi.com/sitemap.xml 

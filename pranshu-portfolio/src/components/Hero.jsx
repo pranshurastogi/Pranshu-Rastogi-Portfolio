@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useState, useRef, useCallback } from "react";
-import Image from "next/image";
+import OptimizedImage from "./OptimizedImage";
 import Link from "next/link";
 import { motion, useAnimation, useInView } from "framer-motion";
 import {
@@ -15,6 +15,8 @@ import {
   FaBitcoin,
   FaLink,
   FaCube,
+  FaFileDownload,
+  FaFilePdf,
 } from "react-icons/fa";
 import AnimatedPfp from "./AnimatedPfp";
 import FloatingBlockchainIcons from "./FloatingBlockchainIcons";
@@ -306,6 +308,8 @@ export default function Hero() {
     ["https://www.youtube.com/@pranshurastogi", <FaYoutube />, "YouTube", "#FF0000"],
   ];
 
+  const resumeUrl = "/resume.pdf"; // You'll need to add your resume PDF to the public folder
+
   const roles = [
     "Head of Ecosystem & Integrations at Push Chain",
     "Web3 Builder & Community Orchestrator",
@@ -456,6 +460,29 @@ export default function Hero() {
                 {Icon}
               </GlassSocial>
             ))}
+          </motion.div>
+          
+          {/* Enhanced Resume Link */}
+          <motion.div
+            className="mt-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2.2, duration: 0.6 }}
+          >
+            <Link
+              href={resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-3 px-4 py-2 rounded-lg bg-black/40 border border-[#39FF14]/30 text-[#80CBC4] hover:text-[#AEEA00] hover:border-[#AEEA00]/50 hover:bg-black/60 transition-all duration-300 font-mono text-sm backdrop-blur-sm"
+              style={{ 
+                fontFamily: "'JetBrains Mono', 'Fira Mono', 'Cascadia Code', 'Consolas', monospace",
+                boxShadow: '0 0 8px rgba(57, 255, 20, 0.1)'
+              }}
+            >
+              <FaFilePdf className="text-base text-[#FF6B6B] group-hover:text-[#FF8E8E] transition-colors" />
+              <span className="group-hover:underline">resume.pdf</span>
+              <FaFileDownload className="text-xs opacity-60 group-hover:opacity-100 transition-opacity" />
+            </Link>
           </motion.div>
         </motion.div>
       </motion.div>

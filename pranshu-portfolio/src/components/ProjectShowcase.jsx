@@ -5,8 +5,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeftIcon, ChevronRightIcon, ExternalLinkIcon, GithubIcon, EyeIcon, ZapIcon, CubeIcon, LinkIcon, MailIcon, MessageCircleIcon, XIcon } from 'lucide-react';
 import { FaEthereum, FaBitcoin, FaCube, FaLink, FaCode, FaStar, FaTwitter } from 'react-icons/fa';
 import { SiPolygon, SiSolana } from 'react-icons/si';
+import { useRouter } from 'next/navigation';
 import projectsData from '../data/projects.json';
-import Image from 'next/image';
+import OptimizedImage from './OptimizedImage';
 
 // Blockchain-themed floating icons
 const BlockchainIcon = ({ icon, delay = 0 }) => (
@@ -79,6 +80,7 @@ const getProjectIcon = (iconName) => {
 };
 
 const ProjectShowcase = () => {
+  const router = useRouter();
   const [selectedProject, setSelectedProject] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -104,8 +106,9 @@ const ProjectShowcase = () => {
   };
 
   const openProject = (project) => {
-    setSelectedProject(project);
-    setCurrentImageIndex(0);
+    // Navigate to individual project page
+    const slug = project.title.toLowerCase().replace(/\s+/g, '-');
+    router.push(`/projects/${slug}`);
   };
 
   const closeProject = () => {
@@ -278,9 +281,9 @@ const ProjectShowcase = () => {
                             autoPlay
                           />
                         ) : (
-                          <Image 
+                          <OptimizedImage 
                             src={project.images[0]} 
-                            alt={project.title}
+                            alt={`${project.title} - ${project.subtitle} blockchain project showcase`}
                             fill
                             sizes="(max-width: 768px) 100vw, 33vw"
                             className="object-cover opacity-80"
@@ -513,9 +516,9 @@ const ProjectShowcase = () => {
                         controls
                       />
                     ) : (
-                      <Image 
+                      <OptimizedImage 
                         src={selectedProject.images[currentImageIndex]} 
-                        alt={`${selectedProject.title} - Image ${currentImageIndex + 1}`}
+                        alt={`${selectedProject.title} blockchain project - ${selectedProject.subtitle} - Image ${currentImageIndex + 1}`}
                         fill
                         sizes="(max-width: 768px) 100vw, 60vw"
                         className="object-cover opacity-90"

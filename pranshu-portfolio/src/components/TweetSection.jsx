@@ -76,15 +76,17 @@ export default function TweetsSection({ tweets = [], limit = 6 }) {
       }
     };
 
-    const existing = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
-    if (!existing) {
-      const script = document.createElement("script");
-      script.src = "https://platform.twitter.com/widgets.js";
-      script.async = true;
-      script.onload = loadWidgets;
-      document.body.appendChild(script);
-    } else {
-      loadWidgets();
+    if (typeof window !== 'undefined') {
+      const existing = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
+      if (!existing) {
+        const script = document.createElement("script");
+        script.src = "https://platform.twitter.com/widgets.js";
+        script.async = true;
+        script.onload = loadWidgets;
+        document.body.appendChild(script);
+      } else {
+        loadWidgets();
+      }
     }
   }, [isVisible, tweets, limit]);
 

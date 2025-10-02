@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
+import OptimizedImage from "./OptimizedImage";
 import { motion } from "framer-motion";
 
 export default function PoapGallery({ address, limit }) {
@@ -166,9 +166,9 @@ export default function PoapGallery({ address, limit }) {
                   <rect x="36" y="10" width="8" height="4" rx="2" fill="#00e0ff" />
                 </svg>
                 <div className="relative w-full h-40">
-                  <Image
+                  <OptimizedImage
                     src={`${poap.event.image_url}?size=small`}
-                    alt={poap.event.name}
+                    alt={`${poap.event.name} - Blockchain POAP NFT and Web3 achievement`}
                     fill
                     sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover"

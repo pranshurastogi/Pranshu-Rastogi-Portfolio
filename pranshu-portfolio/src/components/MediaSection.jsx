@@ -2,7 +2,7 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
+import OptimizedImage from "./OptimizedImage";
 import Link from "next/link";
 import { FaChevronLeft, FaChevronRight, FaEthereum, FaBitcoin } from "react-icons/fa";
 import { motion, useAnimation, useMotionValue, useTransform } from "framer-motion";
@@ -147,12 +147,13 @@ export default function MediaSection() {
                   </span>
                   <Link href={item.url} target="_blank" rel="noopener noreferrer">
                     <div className="relative w-full h-40">
-                      <Image
+                      <OptimizedImage
                         src={item.thumbnail}
-                        alt={item.title}
+                        alt={`${item.title} - Blockchain media content and speaking engagement`}
                         fill
                         className="object-cover"
                         sizes="(max-width: 640px) 50vw, 16rem"
+                        priority={i < 2}
                       />
                     </div>
                     <div className="p-4">

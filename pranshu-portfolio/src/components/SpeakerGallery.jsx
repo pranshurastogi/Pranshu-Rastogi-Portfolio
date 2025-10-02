@@ -2,7 +2,7 @@
 "use client";
 
 import { useRef, useState, useEffect, useMemo } from "react";
-import Image from "next/image";
+import OptimizedImage from "./OptimizedImage";
 import { FaEthereum, FaCube } from "react-icons/fa";
 import { SiBitcoin, SiSolana, SiPolygon } from "react-icons/si";
 import {
@@ -274,9 +274,9 @@ export default function SpeakerGallery() {
               >
                 <FaCube />
               </motion.span>
-              <Image
+              <OptimizedImage
                 src={spk.src}
-                alt={spk.name}
+                alt={`${spk.name} - Blockchain speaking engagement and conference presentation`}
                 fill
                 sizes="(max-width: 768px) 40vw, 12rem"
                 className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -325,9 +325,9 @@ export default function SpeakerGallery() {
                 transition={{ delay: 0.2, duration: 0.5 }}
               >⛏️</motion.div>
               <div className="relative w-full h-80">
-                <Image
+                <OptimizedImage
                   src={selected.src}
-                  alt={selected.name}
+                  alt={`${selected.name} - Blockchain speaking engagement and conference presentation`}
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 80vw, 600px"

@@ -89,6 +89,7 @@ export default function CareerTimeline() {
 
   useEffect(() => {
     function handleScroll() {
+      if (typeof window === 'undefined') return;
       const section = document.getElementById("career");
       if (!section) return;
       const rect = section.getBoundingClientRect();

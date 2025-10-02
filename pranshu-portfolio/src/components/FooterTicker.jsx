@@ -2,6 +2,8 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { FaFilePdf, FaFileDownload } from "react-icons/fa";
 
 export default function FooterTicker() {
   const stats = [
@@ -15,6 +17,8 @@ export default function FooterTicker() {
     "20+ published technical articles",
   ];
 
+  const resumeUrl = "/resume.pdf";
+  
   // track whether the ticker is hovered
   const [paused, setPaused] = useState(false);
 
@@ -40,7 +44,7 @@ export default function FooterTicker() {
         </g>
       </svg>
       <div
-        className="relative w-full flex items-center overflow-hidden px-4"
+        className="relative w-full flex items-center justify-between overflow-hidden px-4"
         style={{
           zIndex: 1,
           background: 'linear-gradient(90deg, rgba(0,255,153,0.18) 0%, rgba(57,255,20,0.18) 50%, rgba(0,224,255,0.18) 100%)',
@@ -49,8 +53,27 @@ export default function FooterTicker() {
           borderRadius: '0 0 16px 16px',
         }}
       >
+        {/* Resume Link - Fixed Position */}
+        <div className="flex-shrink-0 z-10">
+          <Link
+            href={resumeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-black/70 border border-[#39FF14]/40 text-[#80CBC4] hover:text-[#AEEA00] hover:border-[#AEEA00]/60 hover:bg-black/80 transition-all duration-300 font-mono text-xs backdrop-blur-sm"
+            style={{ 
+              fontFamily: "'JetBrains Mono', 'Fira Mono', 'Cascadia Code', 'Consolas', monospace",
+              boxShadow: '0 0 8px rgba(57, 255, 20, 0.15)'
+            }}
+          >
+            <FaFilePdf className="text-sm text-[#FF6B6B] group-hover:text-[#FF8E8E] transition-colors" />
+            <span className="group-hover:underline">resume.pdf</span>
+            <FaFileDownload className="text-xs opacity-60 group-hover:opacity-100 transition-opacity" />
+          </Link>
+        </div>
+
+        {/* Scrolling Stats */}
         <div
-          className="marquee space-x-12"
+          className="marquee space-x-12 flex-1"
           style={{
             animationDuration: '40s',
             animationPlayState: paused ? 'paused' : 'running',

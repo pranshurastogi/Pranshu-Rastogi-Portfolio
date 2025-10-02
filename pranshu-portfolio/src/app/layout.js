@@ -23,10 +23,15 @@ export default function RootLayout({ children }) {
         <meta charSet="utf-8" />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://pranshurastogi.com/" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="alternate icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/favicon-64.png" />
+        {/* Favicon setup with proper fallbacks and cache-busting */}
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-64.png?v=2" />
+        <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png?v=2" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon-64.png?v=2" />
+        <link rel="shortcut icon" href="/favicon.ico?v=2" />
+        <meta name="msapplication-TileColor" content="#39FF14" />
+        <meta name="theme-color" content="#39FF14" />
         <link rel="manifest" href="/manifest.json" />
         
         {/* Preload critical resources */}

@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
-import Image from "next/image";
+import OptimizedImage from "./OptimizedImage";
 
 // Slate/grey/black palette
 const BORDER_COLOR = "#6b7280"; // slate-500
@@ -140,9 +140,9 @@ export default function AnimatedPfp({
       >
         {/* Matrix/code effect now behind the image for clarity */}
         <MatrixCodeOverlay />
-        <Image
+        <OptimizedImage
           src={src}
-          alt={alt}
+          alt={`${alt} - Blockchain engineer and Web3 developer profile picture`}
           fill
           className="object-cover"
           sizes="220px"

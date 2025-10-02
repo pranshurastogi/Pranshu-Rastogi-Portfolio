@@ -5,7 +5,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
+import OptimizedImage from "./OptimizedImage";
 import CustomLogo from "./CustomLogo";
 
 export default function Header() {
@@ -36,7 +36,7 @@ export default function Header() {
             <span className="ml-1 text-[#39FF14] blink-cursor">_</span>
             {/* Mock Wallet Address */}
             <span className="ml-3 px-2 py-0.5 rounded bg-[#232526] text-xs text-[#00e0ff] border border-[#39FF14] select-all hidden sm:inline-flex items-center gap-1">
-              <Image src="/eth.svg" alt="Ethereum" width={16} height={16} className="inline-block" />
+              <OptimizedImage src="/eth.svg" alt="Ethereum blockchain network" width={16} height={16} className="inline-block" />
               pranshurastogi.eth
             </span>
           </Link>
@@ -87,7 +87,7 @@ export default function Header() {
               ))}
               {/* Mock Wallet Address in Mobile */}
               <div className="mt-6 text-xs text-[#00e0ff] bg-[#232526] border border-[#39FF14] rounded px-2 py-1 select-all flex items-center gap-1">
-                <Image src="/eth.svg" alt="Ethereum" width={16} height={16} className="inline-block" />
+                <OptimizedImage src="/eth.svg" alt="Ethereum blockchain network" width={16} height={16} className="inline-block" />
                 pranshurastogi.eth
               </div>
             </div>

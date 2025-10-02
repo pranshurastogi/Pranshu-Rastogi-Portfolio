@@ -2,7 +2,7 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
+import OptimizedImage from "./OptimizedImage";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -60,7 +60,7 @@ export default function BlogList({ posts = [] }) {
         try {
           imgSrc = post.enclosure?.url || extractFirstImage(post.content);
           // Extract content snippet from content or use fallback
-          if (post.content) {
+          if (post.content && typeof window !== 'undefined') {
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = post.content;
             const textContent = tempDiv.textContent || tempDiv.innerText || '';
@@ -133,9 +133,9 @@ export default function BlogList({ posts = [] }) {
             >
               {imgSrc && (
                 <div className="relative w-full h-24 sm:h-28 overflow-hidden">
-                  <Image
+                  <OptimizedImage
                     src={imgSrc}
-                    alt={post.title}
+                    alt={`${post.title} - Blockchain blog post and Web3 content`}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                     sizes="(max-width: 768px) 100vw, 33vw"
