@@ -6,8 +6,8 @@ import { ChevronLeftIcon, ChevronRightIcon, ExternalLinkIcon, GithubIcon, EyeIco
 import { FaEthereum, FaBitcoin, FaCube, FaLink, FaCode, FaStar, FaTwitter } from 'react-icons/fa';
 import { SiPolygon, SiSolana } from 'react-icons/si';
 import { useRouter } from 'next/navigation';
-import projectsData from '../data/projects.json';
-import OptimizedImage from './OptimizedImage';
+import projectsData from '../../data/projects.json';
+import OptimizedImage from '../ui/OptimizedImage';
 
 // Blockchain-themed floating icons
 const BlockchainIcon = ({ icon, delay = 0 }) => (

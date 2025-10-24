@@ -2,7 +2,7 @@
 import React from "react";
 import Parser from "rss-parser";
 import BlogList from "./BlogList";
-import FloatingBlockchainIcons from './FloatingBlockchainIcons';
+import FloatingBlockchainIcons from '../hero/FloatingBlockchainIcons';
 
 export const revalidate = 3600; // 1 hour cache for RSS
 

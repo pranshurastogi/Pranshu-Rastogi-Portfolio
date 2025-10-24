@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
-import OptimizedImage from "./OptimizedImage";
+import OptimizedImage from "../ui/OptimizedImage";
 
 // Slate/grey/black palette
 const BORDER_COLOR = "#6b7280"; // slate-500
@@ -58,7 +58,7 @@ function MatrixCodeOverlay({ color = "#6b7280", density = 18 }) {
 
 export default function AnimatedPfp({
   size = 224, // default 224px (w-56)
-  src = "/images/pfp.png",
+  src = "/images/pfp_new.png",
   alt = "Pranshu Rastogi",
 }) {
   const ref = useRef(null);

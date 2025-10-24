@@ -2,7 +2,7 @@
 "use client";
 
 import { useRef, useState, useEffect, useMemo } from "react";
-import OptimizedImage from "./OptimizedImage";
+import OptimizedImage from "../ui/OptimizedImage";
 import { FaEthereum, FaCube } from "react-icons/fa";
 import { SiBitcoin, SiSolana, SiPolygon } from "react-icons/si";
 import {

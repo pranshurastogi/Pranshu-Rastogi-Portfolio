@@ -2,14 +2,14 @@
 "use client";
 
 import "./globals.css";
-import Header from "@/components/Header";
+import Header from "@/components/layout/Header";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import FooterTicker from "@/components/FooterTicker";
-import ContactForm from "@/components/ContactForm";
-import PerformanceMonitor from "@/components/PerformanceMonitor";
+import FooterTicker from "@/components/layout/FooterTicker";
+import ContactForm from "@/components/forms/ContactForm";
+import PerformanceMonitor from "@/components/layout/PerformanceMonitor";
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
         <link rel="manifest" href="/manifest.json" />
         
         {/* Preload critical resources */}
-        <link rel="preload" href="/images/pfp.jpg" as="image" />
+        <link rel="preload" href="/images/pfp_new.png" as="image" />
         <link rel="preload" href="/images/cover.png" as="image" />
         <link rel="dns-prefetch" href="//img.youtube.com" />
         <link rel="dns-prefetch" href="//cdn-images-1.medium.com" />
@@ -50,13 +50,13 @@ export default function RootLayout({ children }) {
         <meta property="og:description" content="Pranshu Rastogi's personal portfolio. Blockchain engineer, speaker, writer, and educator." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://pranshurastogi.com/" />
-        <meta property="og:image" content="/images/pfp.jpg" />
+        <meta property="og:image" content="/images/pfp_new.png" />
         
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Pranshu Rastogi | Blockchain Engineer, Speaker, Writer" />
         <meta name="twitter:description" content="Pranshu Rastogi's personal portfolio. Blockchain engineer, speaker, writer, and educator." />
-        <meta name="twitter:image" content="/images/pfp.jpg" />
+        <meta name="twitter:image" content="/images/pfp_new.png" />
         <meta name="twitter:site" content="@pranshurastogii" />
         
         {/* Schema.org Person JSON-LD */}
@@ -73,7 +73,7 @@ export default function RootLayout({ children }) {
             'https://youtube.com/@pranshurastogi',
           ],
           jobTitle: 'Head of Ecosystem & Integrations at Push Chain',
-          image: 'https://pranshurastogi.com/images/pfp.jpg',
+          image: 'https://pranshurastogi.com/images/pfp_new.png',
           description: "Head of Ecosystem & Integrations, speaker, writer, and educator."
         }) }} />
       </head>

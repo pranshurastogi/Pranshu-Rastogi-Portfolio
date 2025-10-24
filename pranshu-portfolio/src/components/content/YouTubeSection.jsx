@@ -2,7 +2,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import FloatingBlockchainIcons from "./FloatingBlockchainIcons";
+import FloatingBlockchainIcons from "../hero/FloatingBlockchainIcons";
 
 function YouTubeGalleryBg() {
   // Generate random positions for Ξ symbols only on the client

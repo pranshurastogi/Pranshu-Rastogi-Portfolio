@@ -1,5 +1,5 @@
 // src/app/poaps/page.jsx
-import PoapGallery from "@/components/PoapGallery";
+import PoapGallery from "@/components/blockchain/PoapGallery";
 import Head from "next/head";
 
 const ADDRESS = "0xcB034160f7B45E41E6015ECEA09F31A66C144422";
@@ -14,11 +14,11 @@ export default function PoapsPage() {
         <meta property="og:description" content="Explore all POAPs (Proof of Attendance Protocol) collected by Pranshu Rastogi at blockchain events and conferences." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://pranshurastogi.com/poaps" />
-        <meta property="og:image" content="/images/pfp.jpg" />
+        <meta property="og:image" content="/images/pfp_new.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="POAPs | Pranshu Rastogi" />
         <meta name="twitter:description" content="Explore all POAPs (Proof of Attendance Protocol) collected by Pranshu Rastogi at blockchain events and conferences." />
-        <meta name="twitter:image" content="/images/pfp.jpg" />
+        <meta name="twitter:image" content="/images/pfp_new.png" />
       </Head>
       <section className="min-h-screen pt-16 bg-base-100">
         <div className="container mx-auto px-4 py-16">

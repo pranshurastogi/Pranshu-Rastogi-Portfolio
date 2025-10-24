@@ -5,8 +5,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { usePathname } from "next/navigation";
-import OptimizedImage from "./OptimizedImage";
-import CustomLogo from "./CustomLogo";
+import OptimizedImage from "../ui/OptimizedImage";
+import CustomLogo from "../ui/CustomLogo";
 
 export default function Header() {
   const [open, setOpen] = useState(false);

@@ -1,17 +1,17 @@
 import { Suspense, lazy } from "react";
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
+import Header from "@/components/layout/Header";
+import Hero from "@/components/hero/Hero";
 
 // Lazy load heavy components
-const ProjectShowcase = lazy(() => import("@/components/ProjectShowcase"));
-const BlogSection = lazy(() => import("@/components/BlogSection"));
-const YouTubeSectionWrapper = lazy(() => import("@/components/YouTubeSectionWrapper"));
-const SpeakerGallery = lazy(() => import("@/components/SpeakerGallery"));
-const CareerTimeline = lazy(() => import("@/components/CareerTimeline"));
-const ContactForm = lazy(() => import("@/components/ContactForm"));
-const MediaSection = lazy(() => import("@/components/MediaSection"));
-const TweetsSection = lazy(() => import("@/components/TweetSection"));
-// import PoapSection from "@/components/PoapSection";
+const ProjectShowcase = lazy(() => import("@/components/projects/ProjectShowcase"));
+const BlogSection = lazy(() => import("@/components/content/BlogSection"));
+const YouTubeSectionWrapper = lazy(() => import("@/components/content/YouTubeSectionWrapper"));
+const SpeakerGallery = lazy(() => import("@/components/content/SpeakerGallery"));
+const CareerTimeline = lazy(() => import("@/components/content/CareerTimeline"));
+const ContactForm = lazy(() => import("@/components/forms/ContactForm"));
+const MediaSection = lazy(() => import("@/components/projects/MediaSection"));
+const TweetsSection = lazy(() => import("@/components/content/TweetSection"));
+// import PoapSection from "@/components/blockchain/PoapSection";
 
 // Loading fallback component
 const LoadingFallback = ({ sectionName }) => (

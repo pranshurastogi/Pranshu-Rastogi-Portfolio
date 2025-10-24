@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import OptimizedImage from "./OptimizedImage";
+import OptimizedImage from "../ui/OptimizedImage";
 import { motion } from "framer-motion";
 
 export default function PoapGallery({ address, limit }) {

@@ -2,7 +2,7 @@
 "use client";
 
 import React from "react";
-import OptimizedImage from "./OptimizedImage";
+import OptimizedImage from "../ui/OptimizedImage";
 import Link from "next/link";
 import { motion } from "framer-motion";
 

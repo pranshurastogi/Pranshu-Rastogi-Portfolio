@@ -6,8 +6,8 @@ import { motion } from "framer-motion";
 import { FaCube, FaLink, FaCode, FaStar, FaEthereum, FaBitcoin } from "react-icons/fa";
 import { SiPolygon, SiSolana } from "react-icons/si";
 import clsx from "clsx";
-import FloatingBlockchainIcons from './FloatingBlockchainIcons';
-import SectionWrapper from './SectionWrapper';
+import FloatingBlockchainIcons from '../hero/FloatingBlockchainIcons';
+import SectionWrapper from '../ui/SectionWrapper';
 
 // Polkadot SVG
 const PolkadotSVG = () => (

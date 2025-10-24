@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useState, useRef, useCallback } from "react";
-import OptimizedImage from "./OptimizedImage";
+import OptimizedImage from "../ui/OptimizedImage";
 import Link from "next/link";
 import { motion, useAnimation, useInView } from "framer-motion";
 import {

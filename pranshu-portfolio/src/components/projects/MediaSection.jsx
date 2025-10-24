@@ -2,12 +2,12 @@
 "use client";
 
 import { useRef } from "react";
-import OptimizedImage from "./OptimizedImage";
+import OptimizedImage from "../ui/OptimizedImage";
 import Link from "next/link";
 import { FaChevronLeft, FaChevronRight, FaEthereum, FaBitcoin } from "react-icons/fa";
 import { motion, useAnimation, useMotionValue, useTransform } from "framer-motion";
 import React from "react";
-import FloatingBlockchainIcons from "./FloatingBlockchainIcons";
+import FloatingBlockchainIcons from "../hero/FloatingBlockchainIcons";
 
 const mediaItems = [
   {

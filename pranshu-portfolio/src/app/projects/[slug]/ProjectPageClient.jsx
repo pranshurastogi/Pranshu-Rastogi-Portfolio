@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLinkIcon, GithubIcon, ArrowLeftIcon } from 'lucide-react';
 import Link from 'next/link';
-import OptimizedImage from '@/components/OptimizedImage';
+import OptimizedImage from '@/components/ui/OptimizedImage';
 import projectsData from '@/data/projects.json';
 
 export default function ProjectPageClient({ project }) {
