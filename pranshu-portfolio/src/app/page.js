@@ -1,6 +1,7 @@
 import { Suspense, lazy } from "react";
 import Header from "@/components/layout/Header";
 import Hero from "@/components/hero/Hero";
+import tweetsData from "@/data/tweets.json";
 
 // Lazy load heavy components
 const ProjectShowcase = lazy(() => import("@/components/projects/ProjectShowcase"));
@@ -24,15 +25,8 @@ const LoadingFallback = ({ sectionName }) => (
 );
 
 export default function Home() {
-  const tweetLinks = [
-    "https://twitter.com/pranshurastogii/status/1896185004666814791",
-    "https://twitter.com/pranshurastogii/status/1912881709705748722",
-    "https://twitter.com/pranshurastogii/status/1833831369333469401",
-    "https://twitter.com/ETHCluj/status/1902331148891553879",
-    "https://twitter.com/pranshurastogii/status/1705287298101698736",
-    "https://twitter.com/pranshurastogii/status/1894254871517511902",
-    "https://twitter.com/pranshurastogii/status/1660440193499901953"
-  ];
+  // Get tweets from data file with fallback
+  const tweetLinks = tweetsData?.tweets || [];
   
   return (
     <>
@@ -77,7 +71,7 @@ export default function Home() {
       
       <section id="tweets">
         <Suspense fallback={<LoadingFallback sectionName="Tweets" />}>
-          <TweetsSection tweets={tweetLinks} limit={6} />
+          <TweetsSection tweets={tweetLinks} minCount={6} maxCount={9} />
         </Suspense>
       </section>
       

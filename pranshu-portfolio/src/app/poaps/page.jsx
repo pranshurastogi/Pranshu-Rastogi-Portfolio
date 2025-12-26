@@ -14,11 +14,11 @@ export default function PoapsPage() {
         <meta property="og:description" content="Explore all POAPs (Proof of Attendance Protocol) collected by Pranshu Rastogi at blockchain events and conferences." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://pranshurastogi.com/poaps" />
-        <meta property="og:image" content="/images/pfp_new.png" />
+        <meta property="og:image" content="/images/pfp-current.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="POAPs | Pranshu Rastogi" />
         <meta name="twitter:description" content="Explore all POAPs (Proof of Attendance Protocol) collected by Pranshu Rastogi at blockchain events and conferences." />
-        <meta name="twitter:image" content="/images/pfp_new.png" />
+        <meta name="twitter:image" content="/images/pfp-current.png" />
       </Head>
       <section className="min-h-screen pt-16 bg-base-100">
         <div className="container mx-auto px-4 py-16">

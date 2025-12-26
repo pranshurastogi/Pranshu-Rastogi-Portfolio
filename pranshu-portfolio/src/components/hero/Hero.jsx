@@ -46,13 +46,13 @@ function Typewriter({ roles, speed = 80, pause = 1200 }) {
   }, [charIdx, deleting, roleIdx, roles, speed, pause]);
   
   return (
-    <span
-      className="font-mono text-[#AEEA00] text-xl md:text-2xl tracking-tight"
-      style={{ fontFamily: "'JetBrains Mono', 'Fira Mono', 'Cascadia Code', 'Consolas', monospace" }}
-    >
-      {displayed}
-      <span className="terminal-cursor">█</span>
-    </span>
+      <span
+        className="font-mono text-[#AEEA00] text-base sm:text-xl md:text-2xl tracking-tight"
+        style={{ fontFamily: "'JetBrains Mono', 'Fira Mono', 'Cascadia Code', 'Consolas', monospace" }}
+      >
+        {displayed}
+        <span className="terminal-cursor">█</span>
+      </span>
   );
 }
 
@@ -244,8 +244,8 @@ function TerminalBio({ text, showFullBio, onMinimize }) {
     }
   }, [text, showFullBio]);
   return (
-    <div className="relative w-full max-w-xl mt-2 flex flex-col items-center">
-      <div className="terminal-bio px-6 py-4 rounded-2xl border-l-4 border-[#AEEA00] bg-black/80 shadow-lg backdrop-blur-sm font-mono text-[#AEEA00] text-base md:text-lg leading-relaxed whitespace-pre-line w-full">
+      <div className="relative w-full max-w-xl mt-2 flex flex-col items-center px-2 sm:px-0">
+      <div className="terminal-bio px-4 sm:px-6 py-3 sm:py-4 rounded-2xl border-l-4 border-[#AEEA00] bg-black/80 shadow-lg backdrop-blur-sm font-mono text-[#AEEA00] text-sm sm:text-base md:text-lg leading-relaxed whitespace-pre-line w-full">
         <span className="select-none text-[#39FF14]">$</span> <span>{displayed}</span><span className="terminal-cursor">█</span>
       </div>
       <div className="absolute inset-0 pointer-events-none opacity-10" style={{background: 'repeating-linear-gradient(0deg, transparent, transparent 6px, #AEEA0033 7px, transparent 8px)'}} />
@@ -318,7 +318,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-0"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden px-2 sm:px-4 md:px-0 pt-20 sm:pt-24 md:pt-0"
       style={{ fontFamily: "'JetBrains Mono', 'Fira Mono', 'Cascadia Code', 'Consolas', monospace", background: "#070f09", cursor: bitcoinCursor }}
       onDoubleClick={handleDoubleClick}
     >
@@ -372,14 +372,14 @@ export default function Hero() {
       </div>
       {/* Main content */}
       <motion.div
-        className="relative z-30 flex flex-col md:flex-row items-center md:items-start w-full max-w-6xl gap-8 py-12"
+        className="relative z-30 flex flex-col md:flex-row items-center md:items-start w-full max-w-6xl gap-4 sm:gap-6 md:gap-8 py-8 sm:py-10 md:py-12 px-4 sm:px-6"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: "easeOut" }}
       >
         {/* Avatar (hacker terminal style background) */}
         <motion.div
-          className="relative w-48 h-48 md:w-56 md:h-56 mb-8 md:mb-0 flex-shrink-0 group"
+          className="relative w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 mb-6 sm:mb-8 md:mb-0 flex-shrink-0 group mx-auto md:mx-0"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
@@ -412,7 +412,7 @@ export default function Hero() {
           transition={{ delay: 0.2, duration: 1, ease: "easeOut" }}
         >
           <motion.h1
-            className="text-5xl md:text-7xl font-normal mb-2 drop-shadow-lg neon-flicker"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-normal mb-2 drop-shadow-lg neon-flicker text-center md:text-left"
             style={{
               fontFamily: "'JetBrains Mono', 'Fira Mono', 'Cascadia Code', 'Consolas', monospace",
               color: "#AEEA00"
@@ -424,7 +424,7 @@ export default function Hero() {
             Pranshu Rastogi
           </motion.h1>
           <motion.h2
-            className="text-lg md:text-2xl mb-4 font-semibold min-h-[2.5rem]"
+            className="text-base sm:text-lg md:text-xl lg:text-2xl mb-4 font-semibold min-h-[2.5rem] text-center md:text-left px-2 sm:px-0"
             style={{
               fontFamily: "'JetBrains Mono', 'Fira Mono', 'Cascadia Code', 'Consolas', monospace",
               color: "#80CBC4"

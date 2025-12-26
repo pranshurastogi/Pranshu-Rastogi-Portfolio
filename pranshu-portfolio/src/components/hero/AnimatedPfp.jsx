@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import OptimizedImage from "../ui/OptimizedImage";
 
@@ -58,21 +58,35 @@ function MatrixCodeOverlay({ color = "#6b7280", density = 18 }) {
 
 export default function AnimatedPfp({
   size = 224, // default 224px (w-56)
-  src = "/images/pfp_new.png",
+  src = "/images/pfp-current.png",
   alt = "Pranshu Rastogi",
 }) {
   const ref = useRef(null);
   const [hovered, setHovered] = useState(false);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  // Stronger 3D tilt transforms and perspective
-  const rotateX = useTransform(y, [-100, 100], [18, -18]);
-  const rotateY = useTransform(x, [-100, 100], [-18, 18]);
+  
+  // Detect mobile on mount
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+  
+  // Reduced 3D tilt on mobile for better performance
+  const rotateX = useTransform(y, [-100, 100], isMobile ? [8, -8] : [18, -18]);
+  const rotateY = useTransform(x, [-100, 100], isMobile ? [-8, 8] : [-18, 18]);
   const shadowX = useTransform(x, [-100, 100], [32, -32]);
   const shadowY = useTransform(y, [-100, 100], [-16, 32]);
 
   function handleMouseMove(e) {
+    if (isMobile) return; // Disable mouse tracking on mobile
     const rect = ref.current.getBoundingClientRect();
     const px = e.clientX - rect.left;
     const py = e.clientY - rect.top;
@@ -82,6 +96,7 @@ export default function AnimatedPfp({
   }
 
   function handleMouseLeave() {
+    if (isMobile) return;
     x.set(0);
     y.set(0);
     setHovered(false);
@@ -89,14 +104,17 @@ export default function AnimatedPfp({
   }
 
   function handleMouseEnter() {
+    if (isMobile) return;
     setHovered(true);
   }
+
+  // Responsive size will be handled by parent container
 
   return (
     <motion.div
       ref={ref}
-      className="relative"
-      style={{ width: size, height: size, perspective: 1200 }}
+      className="relative w-full h-full"
+      style={{ perspective: isMobile ? 800 : 1200 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onMouseEnter={handleMouseEnter}
@@ -145,7 +163,7 @@ export default function AnimatedPfp({
           alt={`${alt} - Blockchain engineer and Web3 developer profile picture`}
           fill
           className="object-cover"
-          sizes="220px"
+          sizes="(max-width: 640px) 128px, (max-width: 768px) 160px, (max-width: 1024px) 192px, 224px"
           priority
         />
         {/* Glassmorphism overlay, now more subtle and above image */}

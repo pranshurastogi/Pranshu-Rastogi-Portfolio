@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeftIcon, ChevronRightIcon, ExternalLinkIcon, GithubIcon, EyeIcon, ZapIcon, CubeIcon, LinkIcon, MailIcon, MessageCircleIcon, XIcon } from 'lucide-react';
 import { FaEthereum, FaBitcoin, FaCube, FaLink, FaCode, FaStar, FaTwitter } from 'react-icons/fa';
@@ -8,6 +8,7 @@ import { SiPolygon, SiSolana } from 'react-icons/si';
 import { useRouter } from 'next/navigation';
 import projectsData from '../../data/projects.json';
 import OptimizedImage from '../ui/OptimizedImage';
+import { useSwipe } from '@/hooks/useSwipe';
 
 // Blockchain-themed floating icons
 const BlockchainIcon = ({ icon, delay = 0 }) => (
@@ -59,6 +60,16 @@ const BinaryRain = () => {
           ))}
         </motion.div>
       ))}
+    </div>
+  );
+};
+
+// Carousel container with swipe support
+const CarouselContainer = ({ children, onSwipeLeft, onSwipeRight, className }) => {
+  const swipeRef = useSwipe(onSwipeLeft, onSwipeRight, 50);
+  return (
+    <div ref={swipeRef} className={className}>
+      {children}
     </div>
   );
 };
@@ -254,14 +265,15 @@ const ProjectShowcase = () => {
                 className={`
                   bg-black/80 backdrop-blur-xl border-2 rounded-2xl p-5 h-full 
                   transition-all duration-300 relative overflow-hidden
+                  group transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[#39FF14]/20
                   ${hoveredCard === project.id 
-                    ? 'border-[#AEEA00] shadow-2xl' 
+                    ? 'border-[#AEEA00] shadow-2xl scale-105' 
                     : 'border-[#AEEA00]/30 hover:border-[#39FF14]/50'
                   }
                 `}
                 style={{ 
                   boxShadow: hoveredCard === project.id 
-                    ? '0 0 30px rgba(174, 234, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)' 
+                    ? '0 0 30px rgba(174, 234, 0, 0.3), 0 20px 40px rgba(57, 255, 20, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)' 
                     : '0 0 20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05)'
                 }}
               >
@@ -345,9 +357,10 @@ const ProjectShowcase = () => {
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        window.open(project.live, '_blank');
+                        window.open(project.live, '_blank', 'noopener,noreferrer');
                       }}
-                      className="px-3 py-1 bg-[#AEEA00]/20 hover:bg-[#AEEA00]/30 text-[#AEEA00] rounded-md border border-[#AEEA00]/50 hover:border-[#39FF14] hover:text-[#39FF14] transition-all duration-200 font-mono text-xs hover:scale-105"
+                      className="px-3 py-1 min-h-[44px] min-w-[44px] flex items-center justify-center bg-[#AEEA00]/20 hover:bg-[#AEEA00]/30 text-[#AEEA00] rounded-md border border-[#AEEA00]/50 hover:border-[#39FF14] hover:text-[#39FF14] transition-all duration-200 font-mono text-xs hover:scale-105 active:scale-95 touch-manipulation"
+                      aria-label={`Launch demo for ${project.title}`}
                     >
                       🚀 Launch Demo
                     </button>
@@ -504,7 +517,11 @@ const ProjectShowcase = () => {
                   <span className="text-[#AEEA00] ml-2 text-sm">display --preview {selectedProject.title.toLowerCase().replace(/\s+/g, '-')}</span>
                 </div>
                 <div className="relative">
-                  <div className="aspect-video bg-gradient-to-br from-[#AEEA00]/10 to-black/80 rounded-2xl overflow-hidden mb-4 border border-[#AEEA00]/30">
+                  <CarouselContainer 
+                    onSwipeLeft={nextImage}
+                    onSwipeRight={prevImage}
+                    className="aspect-video bg-gradient-to-br from-[#AEEA00]/10 to-black/80 rounded-2xl overflow-hidden mb-4 border border-[#AEEA00]/30 relative"
+                  >
                     {selectedProject.images[currentImageIndex]?.endsWith('.mov') || selectedProject.images[currentImageIndex]?.endsWith('.mp4') || selectedProject.images[currentImageIndex]?.endsWith('.webm') ? (
                       <video 
                         src={selectedProject.images[currentImageIndex]} 
@@ -530,23 +547,25 @@ const ProjectShowcase = () => {
                     <div className="absolute top-4 left-4 text-[#AEEA00] font-mono text-sm bg-black/60 px-2 py-1 rounded">
                       {currentImageIndex + 1} / {selectedProject.images.length}
                     </div>
-                  </div>
-                  
-                  {/* Hacker-style Carousel Navigation */}
-                  <div className="flex items-center justify-between absolute top-1/2 -translate-y-1/2 w-full px-4">
-                    <button
-                      onClick={prevImage}
-                      className="p-3 bg-black/70 hover:bg-[#AEEA00]/20 backdrop-blur-sm rounded-full border border-[#AEEA00]/50 text-[#AEEA00] hover:text-[#39FF14] transition-all duration-200 hover:scale-110"
-                    >
-                      <ChevronLeftIcon className="w-5 h-5" />
-                    </button>
-                    <button
-                      onClick={nextImage}
-                      className="p-3 bg-black/70 hover:bg-[#AEEA00]/20 backdrop-blur-sm rounded-full border border-[#AEEA00]/50 text-[#AEEA00] hover:text-[#39FF14] transition-all duration-200 hover:scale-110"
-                    >
-                      <ChevronRightIcon className="w-5 h-5" />
-                    </button>
-                  </div>
+                    
+                    {/* Hacker-style Carousel Navigation */}
+                    <div className="flex items-center justify-between absolute top-1/2 -translate-y-1/2 w-full px-4 pointer-events-none">
+                      <button
+                        onClick={prevImage}
+                        className="p-3 bg-black/70 hover:bg-[#AEEA00]/20 backdrop-blur-sm rounded-full border border-[#AEEA00]/50 text-[#AEEA00] hover:text-[#39FF14] transition-all duration-200 hover:scale-110 min-h-[44px] min-w-[44px] flex items-center justify-center touch-manipulation pointer-events-auto"
+                        aria-label="Previous image"
+                      >
+                        <ChevronLeftIcon className="w-5 h-5" />
+                      </button>
+                      <button
+                        onClick={nextImage}
+                        className="p-3 bg-black/70 hover:bg-[#AEEA00]/20 backdrop-blur-sm rounded-full border border-[#AEEA00]/50 text-[#AEEA00] hover:text-[#39FF14] transition-all duration-200 hover:scale-110 min-h-[44px] min-w-[44px] flex items-center justify-center touch-manipulation pointer-events-auto"
+                        aria-label="Next image"
+                      >
+                        <ChevronRightIcon className="w-5 h-5" />
+                      </button>
+                    </div>
+                  </CarouselContainer>
                   
                   {/* Blockchain-themed Image Indicators */}
                   <div className="flex items-center justify-center gap-3 mt-4">
@@ -554,11 +573,12 @@ const ProjectShowcase = () => {
                       <button
                         key={index}
                         onClick={() => setCurrentImageIndex(index)}
-                        className={`w-3 h-3 transition-all duration-200 font-mono ${
+                        className={`w-3 h-3 min-h-[44px] min-w-[44px] flex items-center justify-center transition-all duration-200 font-mono touch-manipulation ${
                           index === currentImageIndex
                             ? 'text-[#AEEA00] scale-125'
                             : 'text-[#AEEA00]/50 hover:text-[#AEEA00]'
                         }`}
+                        aria-label={`Go to image ${index + 1}`}
                       >
                         ⬡
                       </button>
