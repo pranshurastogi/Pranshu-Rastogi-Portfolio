@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeftIcon, ChevronRightIcon, ExternalLinkIcon, GithubIcon, EyeIcon, ZapIcon, CubeIcon, LinkIcon, MailIcon, MessageCircleIcon, XIcon } from 'lucide-react';
+import { ChevronLeftIcon, ChevronRightIcon, ExternalLinkIcon, GithubIcon, EyeIcon, ZapIcon, CubeIcon, LinkIcon, MailIcon, MessageCircleIcon, XIcon, BookOpenIcon, TrophyIcon } from 'lucide-react';
 import { FaEthereum, FaBitcoin, FaCube, FaLink, FaCode, FaStar, FaTwitter } from 'react-icons/fa';
 import { SiPolygon, SiSolana } from 'react-icons/si';
 import { useRouter } from 'next/navigation';
@@ -636,7 +636,7 @@ const ProjectShowcase = () => {
                 </div>
 
                 {/* Hacker-style Action Buttons */}
-                <div className="flex items-center gap-4 mt-8 pt-8 border-t border-[#AEEA00]/30">
+                <div className="flex flex-wrap items-center gap-4 mt-8 pt-8 border-t border-[#AEEA00]/30">
                   <a
                     href={selectedProject.github}
                     target="_blank"
@@ -657,6 +657,30 @@ const ProjectShowcase = () => {
                     <ExternalLinkIcon className="w-5 h-5" />
                     ./launch-demo.sh
                   </a>
+                  {selectedProject.docs && (
+                    <a
+                      href={selectedProject.docs}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 px-6 py-3 bg-black/50 hover:bg-[#AEEA00]/10 text-[#AEEA00] font-mono font-semibold rounded-xl border border-[#AEEA00]/50 hover:border-[#39FF14] hover:text-[#39FF14] transition-all duration-200 hover:scale-105"
+                      style={{ boxShadow: '0 0 20px rgba(174, 234, 0, 0.2)' }}
+                    >
+                      <BookOpenIcon className="w-5 h-5" />
+                      ./docs
+                    </a>
+                  )}
+                  {selectedProject.showcase && (
+                    <a
+                      href={selectedProject.showcase}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 px-6 py-3 bg-black/50 hover:bg-[#AEEA00]/10 text-[#AEEA00] font-mono font-semibold rounded-xl border border-[#AEEA00]/50 hover:border-[#39FF14] hover:text-[#39FF14] transition-all duration-200 hover:scale-105"
+                      style={{ boxShadow: '0 0 20px rgba(174, 234, 0, 0.2)' }}
+                    >
+                      <TrophyIcon className="w-5 h-5" />
+                      ./showcase
+                    </a>
+                  )}
                 </div>
               </div>
             </motion.div>

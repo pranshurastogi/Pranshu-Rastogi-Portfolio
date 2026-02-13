@@ -3,7 +3,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLinkIcon, GithubIcon, ArrowLeftIcon } from 'lucide-react';
+import { ExternalLinkIcon, GithubIcon, ArrowLeftIcon, ArrowRightIcon, BookOpenIcon, TrophyIcon } from 'lucide-react';
 import Link from 'next/link';
 import OptimizedImage from '@/components/ui/OptimizedImage';
 import projectsData from '@/data/projects.json';
@@ -171,16 +171,22 @@ export default function ProjectPageClient({ project }) {
                   </ul>
                 </div>
 
-                <div className="flex gap-4">
+                {/* Bento-style link grid */}
+                <div className="grid grid-cols-2 gap-3">
                   {project.live && (
                     <a
                       href={project.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 bg-[#AEEA00] text-black px-6 py-3 rounded-lg font-medium hover:bg-[#39FF14] transition-colors"
+                      className="group flex flex-col justify-between rounded-xl border border-[#AEEA00]/30 bg-[#232526]/80 p-4 min-h-[6.5rem] transition-all hover:border-[#AEEA00] hover:bg-[#AEEA00]/10"
                     >
-                      <ExternalLinkIcon className="w-4 h-4" />
-                      Live Demo
+                      <div className="flex flex-col gap-1">
+                        <ExternalLinkIcon className="h-5 w-5 text-[#AEEA00]" />
+                        <span className="text-sm font-medium text-white group-hover:text-[#39FF14]">Live Demo</span>
+                      </div>
+                      <span className="mt-2 flex items-center text-xs text-[#AEEA00]/80 group-hover:text-[#39FF14] group-hover:translate-x-0.5 transition-all">
+                        Open <ArrowRightIcon className="ml-1 h-3.5 w-3.5" />
+                      </span>
                     </a>
                   )}
                   {project.github && (
@@ -188,10 +194,47 @@ export default function ProjectPageClient({ project }) {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 bg-[#232526] text-[#AEEA00] px-6 py-3 rounded-lg font-medium border border-[#AEEA00]/30 hover:bg-[#AEEA00]/10 transition-colors"
+                      className="group flex flex-col justify-between rounded-xl border border-[#AEEA00]/30 bg-[#232526]/80 p-4 min-h-[6.5rem] transition-all hover:border-[#AEEA00] hover:bg-[#AEEA00]/10"
                     >
-                      <GithubIcon className="w-4 h-4" />
-                      View Code
+                      <div className="flex flex-col gap-1">
+                        <GithubIcon className="h-5 w-5 text-[#AEEA00]" />
+                        <span className="text-sm font-medium text-white group-hover:text-[#39FF14]">View Code</span>
+                      </div>
+                      <span className="mt-2 flex items-center text-xs text-[#AEEA00]/80 group-hover:text-[#39FF14] group-hover:translate-x-0.5 transition-all">
+                        Open <ArrowRightIcon className="ml-1 h-3.5 w-3.5" />
+                      </span>
+                    </a>
+                  )}
+                  {project.docs && (
+                    <a
+                      href={project.docs}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex flex-col justify-between rounded-xl border border-[#AEEA00]/30 bg-[#232526]/80 p-4 min-h-[6.5rem] transition-all hover:border-[#AEEA00] hover:bg-[#AEEA00]/10"
+                    >
+                      <div className="flex flex-col gap-1">
+                        <BookOpenIcon className="h-5 w-5 text-[#AEEA00]" />
+                        <span className="text-sm font-medium text-white group-hover:text-[#39FF14]">Docs</span>
+                      </div>
+                      <span className="mt-2 flex items-center text-xs text-[#AEEA00]/80 group-hover:text-[#39FF14] group-hover:translate-x-0.5 transition-all">
+                        Open <ArrowRightIcon className="ml-1 h-3.5 w-3.5" />
+                      </span>
+                    </a>
+                  )}
+                  {project.showcase && (
+                    <a
+                      href={project.showcase}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex flex-col justify-between rounded-xl border border-[#AEEA00]/30 bg-[#232526]/80 p-4 min-h-[6.5rem] transition-all hover:border-[#AEEA00] hover:bg-[#AEEA00]/10"
+                    >
+                      <div className="flex flex-col gap-1">
+                        <TrophyIcon className="h-5 w-5 text-[#AEEA00]" />
+                        <span className="text-sm font-medium text-white group-hover:text-[#39FF14]">Showcase</span>
+                      </div>
+                      <span className="mt-2 flex items-center text-xs text-[#AEEA00]/80 group-hover:text-[#39FF14] group-hover:translate-x-0.5 transition-all">
+                        Open <ArrowRightIcon className="ml-1 h-3.5 w-3.5" />
+                      </span>
                     </a>
                   )}
                 </div>
