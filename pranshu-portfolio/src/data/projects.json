@@ -140,6 +140,48 @@
       "difficulty": "Advanced",
       "icon": "shield",
       "gradient": "from-[#8B5CF6]/20 to-[#06B6D4]/10"
+    },
+    {
+      "id": 6,
+      "title": "SPECTER",
+      "subtitle": "Ethereum • Privacy • Post-Quantum Stealth",
+      "description": "Post-quantum stealth address protocol for Ethereum and Sui. Send to anyone using just their ENS (.eth) or SuiNS (.sui) name—SPECTER generates a fresh one-time stealth address for every payment. Uses ML-KEM-768 (NIST FIPS 203) so payments stay private even against quantum adversaries. Integrates with Yellow Network for private trading via off-chain state channels.",
+      "longDescription": "Onchain payments today are fully transparent; every transfer exposes both sender and recipient. SPECTER fixes this. Send to anyone using just their ENS or SuiNS name, and SPECTER generates a fresh, one-time stealth address for every payment. The recipient is the only one who can discover and spend from it—to the rest of the world it looks like funds went to a random address. The cryptography uses ML-KEM-768 (NIST FIPS 203), a post-quantum key encapsulation standard, so payments stay private even against adversaries with quantum computers. SPECTER also integrates with Yellow Network to enable private trading through off-chain state channel settlement. Built for ETHGlobal HackMoney 2026.",
+      "images": [
+        "/images/specter.png",
+        "/images/specter-1.png"
+      ],
+      "technologies": [
+        "Rust",
+        "Axum",
+        "React",
+        "Vite",
+        "TypeScript",
+        "ML-KEM-768",
+        "ENS",
+        "SuiNS",
+        "IPFS",
+        "TailwindCSS",
+        "Radix UI",
+        "viem",
+        "Framer Motion"
+      ],
+      "features": [
+        "Private payments on Ethereum and Sui",
+        "Send/receive via ENS and SuiNS names only",
+        "Post-quantum security (ML-KEM-768, NIST FIPS 203)",
+        "One-time stealth address per payment",
+        "Yellow Network integration for private trading",
+        "View tags (skips ~99.6% of announcements)",
+        "IPFS meta-address storage",
+        "Non-EVM support (Sui live)"
+      ],
+      "github": "https://github.com/pranshurastogi/SPECTER",
+      "live": "https://specter-stealth.vercel.app",
+      "category": "Privacy & Cryptography",
+      "difficulty": "Advanced",
+      "icon": "zap",
+      "gradient": "from-[#0D9488]/20 to-[#AEEA00]/10"
     }
   ]
 }

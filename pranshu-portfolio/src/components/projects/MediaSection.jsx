@@ -8,6 +8,7 @@ import { FaChevronLeft, FaChevronRight, FaEthereum, FaBitcoin } from "react-icon
 import { motion, useAnimation, useMotionValue, useTransform } from "framer-motion";
 import React from "react";
 import FloatingBlockchainIcons from "../hero/FloatingBlockchainIcons";
+import SectionDivider from "../ui/SectionDivider";
 
 const mediaItems = [
   {
@@ -84,16 +85,7 @@ export default function MediaSection() {
 
   return (
     <>
-      {/* Blockchain section divider (top) */}
-      <div className="w-full flex justify-center items-center py-2">
-        <svg width="120" height="24" viewBox="0 0 120 24" fill="none" className="animate-pulse">
-          <rect x="0" y="8" width="40" height="8" rx="4" fill="#39FF14" opacity="0.18" />
-          <rect x="40" y="10" width="8" height="4" rx="2" fill="#AEEA00" />
-          <rect x="56" y="10" width="8" height="4" rx="2" fill="#00e0ff" />
-          <rect x="72" y="10" width="8" height="4" rx="2" fill="#a259ff" />
-          <rect x="88" y="8" width="32" height="8" rx="4" fill="#39FF14" opacity="0.18" />
-        </svg>
-      </div>
+      <SectionDivider />
       <div className="relative py-16 md:py-24 px-4 rounded-2xl bg-[#181a20] border-2 border-[#2d3748] shadow-lg overflow-hidden my-8">
         <div className="container mx-auto px-4">
           <motion.h3
@@ -186,16 +178,7 @@ export default function MediaSection() {
           </div>
         </div>
       </div>
-      {/* Blockchain section divider (bottom) */}
-      <div className="w-full flex justify-center items-center py-2">
-        <svg width="120" height="24" viewBox="0 0 120 24" fill="none" className="animate-pulse">
-          <rect x="0" y="8" width="40" height="8" rx="4" fill="#39FF14" opacity="0.18" />
-          <rect x="40" y="10" width="8" height="4" rx="2" fill="#AEEA00" />
-          <rect x="56" y="10" width="8" height="4" rx="2" fill="#00e0ff" />
-          <rect x="72" y="10" width="8" height="4" rx="2" fill="#a259ff" />
-          <rect x="88" y="8" width="32" height="8" rx="4" fill="#39FF14" opacity="0.18" />
-        </svg>
-      </div>
+      <SectionDivider />
     </>
   );
 }

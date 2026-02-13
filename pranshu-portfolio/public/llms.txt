@@ -1,0 +1,40 @@
+# Pranshu Rastogi — Personal Portfolio
+
+## Who is Pranshu Rastogi?
+Pranshu Rastogi is a blockchain engineer, ecosystem builder, speaker, writer, and educator based in India. He currently serves as Head of Ecosystem & Integrations at Push Chain (formerly Push Protocol). He has over 7 years of experience in the Web3 and blockchain space.
+
+## Career
+- Head of Ecosystem & Integrations, Push Chain (Apr 2023 – Present)
+- VP of Engineering, Push Protocol (Nov 2021 – May 2023)
+- Software Engineer, Dhiway (Aug 2020 – Sep 2021)
+- Software Engineer, Terse Software Pvt. Ltd. (Apr 2019 – Jul 2020)
+
+## Expertise
+Blockchain, Web3, DeFi, Ethereum, Smart Contracts, Solidity, Ecosystem Development, Push Protocol, Next.js, React, Community Building, Technical Writing, Public Speaking
+
+## Projects
+- AlphIQ: All-in-one Alephium dashboard for real-time blockchain analytics — https://www.alphiq.xyz/
+- Bloom Ideas: Decentralized platform for collaborative idea sharing with NFT rewards — https://soc-bloom-ideas.vercel.app/
+- IntelliLearn: Gamified Web3 education platform — https://il-core.vercel.app/login
+- AlphIQ Admin Dashboard: Admin panel for managing AlphIQ — https://admin.alphiq.xyz/
+- EYI: Decentralized identity platform with ENS, GitHub, X, and Farcaster verification — https://eyi-two.vercel.app/
+
+## Achievements
+- 1,000+ integrations implemented at Push Protocol
+- Hosted 30+ hackathons globally
+- Launched the BRB Bootcamp
+- Mentored 2,500+ students via e-learning platforms
+- 30+ speaking engagements at conferences
+- 20+ published technical articles
+
+## Education
+Lovely Professional University
+
+## Contact & Social
+- Website: https://pranshurastogi.com
+- X / Twitter: https://x.com/pranshurastogii
+- LinkedIn: https://www.linkedin.com/in/rastogipranshu/
+- Medium: https://pranshurastogi.medium.com/
+- GitHub: https://github.com/pranshurastogi
+- YouTube: https://www.youtube.com/@pranshurastogi
+- Email: pranshurastogi.eth@gmail.com

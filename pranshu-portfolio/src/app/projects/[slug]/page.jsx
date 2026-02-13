@@ -9,8 +9,9 @@ import ProjectPageClient from './ProjectPageClient';
 
 // Generate metadata for each project
 export async function generateMetadata({ params }) {
-  const project = projectsData.projects.find(p => 
-    p.title.toLowerCase().replace(/\s+/g, '-') === params.slug
+  const { slug } = await params;
+  const project = projectsData.projects.find(p =>
+    p.title.toLowerCase().replace(/\s+/g, '-') === slug
   );
   
   if (!project) {
@@ -36,7 +37,7 @@ export async function generateMetadata({ params }) {
       title: `${project.title} | Blockchain Project`,
       description: project.description,
       type: 'website',
-      url: `https://pranshurastogi.com/projects/${params.slug}`,
+      url: `https://pranshurastogi.com/projects/${slug}`,
       images: [
         {
           url: project.images[0],
@@ -55,9 +56,10 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default function ProjectPage({ params }) {
-  const project = projectsData.projects.find(p => 
-    p.title.toLowerCase().replace(/\s+/g, '-') === params.slug
+export default async function ProjectPage({ params }) {
+  const { slug } = await params;
+  const project = projectsData.projects.find(p =>
+    p.title.toLowerCase().replace(/\s+/g, '-') === slug
   );
 
   if (!project) {

@@ -24,7 +24,7 @@ export default function FooterTicker() {
 
   return (
     <footer
-      className="fixed bottom-0 left-0 w-full h-14 flex items-center z-50"
+      className="fixed bottom-0 left-0 w-full h-14 items-center z-50 hidden md:flex"
       style={{
         backdropFilter: 'blur(8px)',
         WebkitBackdropFilter: 'blur(8px)',

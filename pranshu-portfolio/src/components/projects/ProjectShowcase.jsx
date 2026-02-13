@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeftIcon, ChevronRightIcon, ExternalLinkIcon, GithubIcon, EyeIcon, ZapIcon, CubeIcon, LinkIcon, MailIcon, MessageCircleIcon, XIcon } from 'lucide-react';
 import { FaEthereum, FaBitcoin, FaCube, FaLink, FaCode, FaStar, FaTwitter } from 'react-icons/fa';
@@ -31,20 +31,28 @@ const BlockchainIcon = ({ icon, delay = 0 }) => (
   </motion.div>
 );
 
-// Matrix-style binary rain for blockchain theme
+// Matrix-style binary rain for blockchain theme (hidden on mobile for performance)
 const BinaryRain = () => {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    setShow(window.innerWidth >= 768);
+  }, []);
+
+  if (!show) return null;
+
+  const columns = 12;
   const binaryChars = ['0', '1', '⬡', '⬢', '◊', '◈'];
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {Array.from({ length: 20 }).map((_, i) => (
+      {Array.from({ length: columns }).map((_, i) => (
         <motion.div
           key={i}
           className="absolute text-[#AEEA00]/10 font-mono text-sm"
-          style={{ left: `${(i / 20) * 100}%` }}
+          style={{ left: `${(i / columns) * 100}%` }}
           initial={{ y: -100, opacity: 0 }}
-          animate={{ 
-            y: '100vh', 
-            opacity: [0, 0.3, 0] 
+          animate={{
+            y: '100vh',
+            opacity: [0, 0.3, 0]
           }}
           transition={{
             duration: 10 + Math.random() * 5,
@@ -793,49 +801,15 @@ const ProjectShowcase = () => {
       
       {/* Custom CSS for unique effects */}
       <style jsx>{`
-        .neon-glow {
-          animation: neon-pulse 2s ease-in-out infinite alternate;
-        }
-        
-        @keyframes neon-pulse {
-          0% { 
-            text-shadow: 0 0 10px #AEEA00, 0 0 20px #AEEA00, 0 0 40px #AEEA00;
-          }
-          100% { 
-            text-shadow: 0 0 5px #AEEA00, 0 0 10px #AEEA00, 0 0 20px #AEEA00, 0 0 40px #39FF14;
-          }
-        }
-        
         .line-clamp-2 {
           overflow: hidden;
           display: -webkit-box;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;
         }
-        
-        /* Blockchain hexagon pattern overlay */
-        .blockchain-pattern {
-          background-image: 
-            radial-gradient(circle at 25% 25%, rgba(174, 234, 0, 0.1) 1px, transparent 1px),
-            radial-gradient(circle at 75% 75%, rgba(57, 255, 20, 0.1) 1px, transparent 1px);
-          background-size: 20px 20px;
-        }
-        
-        /* Terminal cursor blink */
-        @keyframes terminal-blink {
-          0%, 50% { opacity: 1; }
-          51%, 100% { opacity: 0; }
-        }
-        
-        .terminal-cursor {
-          animation: terminal-blink 1s infinite;
-        }
-        
-        /* Glitch effect for extra uniqueness */
         .glitch-text {
           position: relative;
         }
-        
         .glitch-text::before,
         .glitch-text::after {
           content: attr(data-text);
@@ -846,19 +820,16 @@ const ProjectShowcase = () => {
           height: 100%;
           opacity: 0;
         }
-        
         .glitch-text::before {
           animation: glitch-1 0.5s infinite linear alternate-reverse;
           color: #39FF14;
           z-index: -1;
         }
-        
         .glitch-text::after {
           animation: glitch-2 0.5s infinite linear alternate-reverse;
           color: #AEEA00;
           z-index: -2;
         }
-        
         @keyframes glitch-1 {
           0% { transform: translateX(0); }
           20% { transform: translateX(-2px); }
@@ -867,7 +838,6 @@ const ProjectShowcase = () => {
           80% { transform: translateX(2px); }
           100% { transform: translateX(0); }
         }
-        
         @keyframes glitch-2 {
           0% { transform: translateX(0); }
           20% { transform: translateX(2px); }

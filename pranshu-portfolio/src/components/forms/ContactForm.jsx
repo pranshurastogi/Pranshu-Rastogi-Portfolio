@@ -92,6 +92,8 @@ export default function ContactForm() {
 
   useEffect(() => { setMounted(true); }, []);
 
+  if (!mounted) return null;
+
   const portalContent = (
     <>
       {/* Floating Card/Button */}
@@ -242,15 +244,6 @@ export default function ContactForm() {
         .terminal-modal {
           box-shadow: 0 0 24px #39FF14, 0 0 2px #39FF14;
         }
-        .blinking-cursor {
-          display: inline-block;
-          width: 10px;
-          animation: blink 1s steps(2, start) infinite;
-        }
-        @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0; }
-        }
         .animate-typing {
           display: inline-block;
           overflow: hidden;
@@ -266,7 +259,5 @@ export default function ContactForm() {
     </>
   );
 
-  // Use portal to render at the end of document.body
-  if (!mounted) return null;
-  return createPortal(portalContent, typeof window !== 'undefined' ? document.body : null);
+  return createPortal(portalContent, document.body);
 }

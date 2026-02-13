@@ -90,25 +90,36 @@ export default function ProjectPageClient({ project }) {
               {/* Image Thumbnails */}
               {project.images.length > 1 && (
                 <div className="flex gap-2 mt-4 overflow-x-auto">
-                  {project.images.map((image, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentImageIndex(index)}
-                      className={`flex-shrink-0 w-20 h-12 rounded-lg overflow-hidden border-2 transition-colors ${
-                        currentImageIndex === index 
-                          ? 'border-[#AEEA00]' 
-                          : 'border-gray-600 hover:border-gray-400'
-                      }`}
-                    >
-                      <OptimizedImage
-                        src={image}
-                        alt={`${project.title} thumbnail ${index + 1}`}
-                        width={80}
-                        height={48}
-                        className="w-full h-full object-cover"
-                      />
-                    </button>
-                  ))}
+                  {project.images.map((image, index) => {
+                    const isVideo = image?.endsWith('.mov') || image?.endsWith('.mp4') || image?.endsWith('.webm');
+                    return (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentImageIndex(index)}
+                        className={`flex-shrink-0 w-20 h-12 rounded-lg overflow-hidden border-2 transition-colors ${
+                          currentImageIndex === index
+                            ? 'border-[#AEEA00]'
+                            : 'border-gray-600 hover:border-gray-400'
+                        }`}
+                      >
+                        {isVideo ? (
+                          <video
+                            src={image}
+                            className="w-full h-full object-cover"
+                            muted
+                          />
+                        ) : (
+                          <OptimizedImage
+                            src={image}
+                            alt={`${project.title} thumbnail ${index + 1}`}
+                            width={80}
+                            height={48}
+                            className="w-full h-full object-cover"
+                          />
+                        )}
+                      </button>
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -208,13 +219,23 @@ export default function ProjectPageClient({ project }) {
                   className="group bg-[#181a20] border border-[#AEEA00]/30 rounded-xl overflow-hidden hover:border-[#AEEA00] transition-colors"
                 >
                   <div className="aspect-video bg-gradient-to-br from-[#AEEA00]/10 to-black/50 relative">
-                    <OptimizedImage
-                      src={relatedProject.images[0]}
-                      alt={`${relatedProject.title} - ${relatedProject.subtitle}`}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-cover opacity-80 group-hover:opacity-100 transition-opacity"
-                    />
+                    {relatedProject.images[0]?.endsWith('.mov') || relatedProject.images[0]?.endsWith('.mp4') || relatedProject.images[0]?.endsWith('.webm') ? (
+                      <video
+                        src={relatedProject.images[0]}
+                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                        muted
+                        loop
+                        playsInline
+                      />
+                    ) : (
+                      <OptimizedImage
+                        src={relatedProject.images[0]}
+                        alt={`${relatedProject.title} - ${relatedProject.subtitle}`}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        className="object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                      />
+                    )}
                   </div>
                   <div className="p-4">
                     <h3 className="font-semibold text-[#AEEA00] mb-1">{relatedProject.title}</h3>

@@ -8,6 +8,8 @@ import { SiPolygon, SiSolana } from "react-icons/si";
 import clsx from "clsx";
 import FloatingBlockchainIcons from '../hero/FloatingBlockchainIcons';
 import SectionWrapper from '../ui/SectionWrapper';
+import BlockchainMeshBg from '../ui/BlockchainMeshBg';
+import SectionDivider from '../ui/SectionDivider';
 
 // Polkadot SVG
 const PolkadotSVG = () => (
@@ -142,38 +144,10 @@ export default function CareerTimeline() {
 
   return (
     <>
-      {/* Blockchain section divider (top) */}
-      <div className="w-full flex justify-center items-center py-4 md:py-6">
-        <svg width="120" height="24" viewBox="0 0 120 24" fill="none" className="animate-pulse">
-          <rect x="0" y="8" width="40" height="8" rx="4" fill="#39FF14" opacity="0.18" />
-          <rect x="40" y="10" width="8" height="4" rx="2" fill="#AEEA00" />
-          <rect x="56" y="10" width="8" height="4" rx="2" fill="#00e0ff" />
-          <rect x="72" y="10" width="8" height="4" rx="2" fill="#a259ff" />
-          <rect x="88" y="8" width="32" height="8" rx="4" fill="#39FF14" opacity="0.18" />
-        </svg>
-      </div>
+      <SectionDivider className="py-4 md:py-6" />
       <SectionWrapper>
         <div className="relative w-full bg-[#0a0a0a] border border-[#1a1a1a] rounded-2xl shadow-2xl overflow-hidden">
-          {/* Animated blockchain lines background */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" width="100%" height="100%" viewBox="0 0 1200 300">
-            {/* Main neon chain */}
-            <polyline points="60,120 180,80 320,160 500,100 700,180 900,120 1100,180" fill="none" stroke="#39FF14" strokeWidth="2.2" strokeDasharray="16 12" opacity="0.15">
-              <animate attributeName="stroke-dashoffset" values="60;0;100" dur="10s" repeatCount="indefinite" />
-            </polyline>
-            {/* Random mesh lines for blockchain effect */}
-            <polyline points="100,200 220,110 340,180 480,90 600,210 740,130 900,200 1150,140" fill="none" stroke="#AEEA00" strokeWidth="1.5" strokeDasharray="10 8" opacity="0.12">
-              <animate attributeName="stroke-dashoffset" values="40;0;60" dur="13s" repeatCount="indefinite" />
-            </polyline>
-            <polyline points="80,60 200,140 350,100 520,180 700,80 850,160 1050,100 1190,180" fill="none" stroke="#00e0ff" strokeWidth="1.2" strokeDasharray="8 7" opacity="0.10">
-              <animate attributeName="stroke-dashoffset" values="30;0;50" dur="15s" repeatCount="indefinite" />
-            </polyline>
-            <polyline points="120,180 260,90 400,160 600,120 800,200 1000,140 1150,220" fill="none" stroke="#a259ff" strokeWidth="1.1" strokeDasharray="12 10" opacity="0.08">
-              <animate attributeName="stroke-dashoffset" values="20;0;40" dur="17s" repeatCount="indefinite" />
-            </polyline>
-            <polyline points="60,220 180,160 320,240 500,180 700,260 900,200 1100,260" fill="none" stroke="#39FF14" strokeWidth="1.3" strokeDasharray="14 11" opacity="0.06">
-              <animate attributeName="stroke-dashoffset" values="10;0;30" dur="19s" repeatCount="indefinite" />
-            </polyline>
-          </svg>
+          <BlockchainMeshBg />
           {/* Subtle floating blockchain icons */}
           <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
             <FloatingBlockchainIcons interactive={false} />
@@ -189,9 +163,9 @@ export default function CareerTimeline() {
               Career Timeline
             </motion.h2>
             <div className="relative flex flex-col items-center">
-              {/* Horizontal chain spine */}
-              <div className="w-full overflow-x-auto pb-8">
-                <div className="relative flex flex-row items-center justify-center min-w-[700px] md:min-w-[900px] lg:min-w-[1100px] gap-4 mx-auto">
+              {/* Chain spine — vertical on mobile, horizontal on desktop */}
+              <div className="w-full pb-8 md:overflow-x-auto">
+                <div className="relative flex flex-col md:flex-row items-center justify-center md:min-w-[900px] lg:min-w-[1100px] gap-4 mx-auto">
                   {/* Career Genesis badge with animation */}
                   <motion.div
                     className="flex flex-col items-center relative"
@@ -250,7 +224,7 @@ export default function CareerTimeline() {
 
                         {/* Block card with advanced animation and glow */}
                         <motion.div
-                          className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] border-2 rounded-2xl shadow-xl px-6 py-6 flex flex-col items-center justify-center block-card w-[200px] h-[200px] mx-2 border-[#2a2a2a] group cursor-pointer"
+                          className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0f0f0f] border-2 rounded-2xl shadow-xl px-6 py-6 flex flex-col items-center justify-center block-card w-full md:w-[200px] h-auto md:h-[200px] mx-2 border-[#2a2a2a] group cursor-pointer"
                           style={{
                             boxShadow: `0 4px 24px 0 ${color}99, 0 0 24px 0 ${color}44, inset 0 1px 0 rgba(255,255,255,0.1)`,
                             borderColor: color,
@@ -416,16 +390,7 @@ export default function CareerTimeline() {
           </div>
         </div>
       </SectionWrapper>
-      {/* Blockchain section divider (bottom) */}
-      <div className="w-full flex justify-center items-center py-4 md:py-6">
-        <svg width="120" height="24" viewBox="0 0 120 24" fill="none" className="animate-pulse">
-          <rect x="0" y="8" width="40" height="8" rx="4" fill="#39FF14" opacity="0.18" />
-          <rect x="40" y="10" width="8" height="4" rx="2" fill="#AEEA00" />
-          <rect x="56" y="10" width="8" height="4" rx="2" fill="#00e0ff" />
-          <rect x="72" y="10" width="8" height="4" rx="2" fill="#a259ff" />
-          <rect x="88" y="8" width="32" height="8" rx="4" fill="#39FF14" opacity="0.18" />
-        </svg>
-      </div>
+      <SectionDivider className="py-4 md:py-6" />
       {/* Neon glow effect for block cards */}
       <style jsx global>{`
         .block-card-glow {

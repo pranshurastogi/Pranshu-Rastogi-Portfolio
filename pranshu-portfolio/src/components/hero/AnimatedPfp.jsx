@@ -1,6 +1,7 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import OptimizedImage from "../ui/OptimizedImage";
+import useIsMobile from "@/hooks/useIsMobile";
 
 // Slate/grey/black palette
 const BORDER_COLOR = "#6b7280"; // slate-500
@@ -28,7 +29,8 @@ function MatrixCodeOverlay({ color = "#6b7280", density = 18 }) {
           Array.from({ length: rows }).map((_, rowIdx) => {
             const delay = (colIdx * 0.2 + rowIdx * 0.13).toFixed(2);
             const duration = (2.5 + (colIdx % 3) * 0.7).toFixed(2);
-            const char = chars[Math.floor(Math.random() * chars.length)];
+            const charIndex = (colIdx * 7 + rowIdx * 11) % chars.length;
+            const char = chars[charIndex];
             return (
               <text
                 key={colIdx + "-" + rowIdx}
@@ -64,20 +66,9 @@ export default function AnimatedPfp({
   const ref = useRef(null);
   const [hovered, setHovered] = useState(false);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useIsMobile();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  
-  // Detect mobile on mount
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
   
   // Reduced 3D tilt on mobile for better performance
   const rotateX = useTransform(y, [-100, 100], isMobile ? [8, -8] : [18, -18]);
