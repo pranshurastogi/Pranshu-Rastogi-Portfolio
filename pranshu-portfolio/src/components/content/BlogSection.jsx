@@ -6,8 +6,6 @@ import FloatingBlockchainIcons from '../hero/FloatingBlockchainIcons';
 import BlockchainMeshBg from '../ui/BlockchainMeshBg';
 import SectionDivider from '../ui/SectionDivider';
 
-export const revalidate = 3600; // 1 hour cache for RSS
-
 export default async function BlogSection() {
   const parser = new Parser({
     customFields: { item: [["content:encoded", "content"]] },
@@ -16,10 +14,14 @@ export default async function BlogSection() {
   let posts = [];
   let error = null;
   try {
-    const feed = await parser.parseURL(
-      "https://pranshurastogi.medium.com/feed"
-    );
-    posts = feed.items.slice(0, 3); // Back to 3 posts
+    // Use fetch with Next.js revalidation so latest posts are always fresh
+    const res = await fetch("https://pranshurastogi.medium.com/feed", {
+      next: { revalidate: 3600 },
+    });
+    if (!res.ok) throw new Error(`RSS fetch failed: ${res.status}`);
+    const xml = await res.text();
+    const feed = await parser.parseString(xml);
+    posts = feed.items.slice(0, 3);
   } catch (err) {
     error = "Failed to load blog posts. Please try again later.";
     console.warn("Failed to fetch Medium RSS:", err);

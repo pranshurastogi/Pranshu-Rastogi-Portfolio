@@ -271,12 +271,11 @@ const ProjectShowcase = () => {
             >
               <div 
                 className={`
-                  bg-black/80 backdrop-blur-xl border-2 rounded-2xl p-5 h-full 
+                  bg-black/80 backdrop-blur-xl border-2 rounded-2xl p-5 h-full
                   transition-all duration-300 relative overflow-hidden
-                  group transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[#39FF14]/20
-                  ${hoveredCard === project.id 
-                    ? 'border-[#AEEA00] shadow-2xl scale-105' 
-                    : 'border-[#AEEA00]/30 hover:border-[#39FF14]/50'
+                  ${hoveredCard === project.id
+                    ? 'border-[#AEEA00] shadow-2xl'
+                    : 'border-[#AEEA00]/30'
                   }
                 `}
                 style={{ 
@@ -375,28 +374,10 @@ const ProjectShowcase = () => {
                   </div>
                 </div>
 
-                {/* Hover effect: terminal cursor and hacker info */}
-                {hoveredCard === project.id && (
-                  <>
-                    <div className="absolute bottom-2 right-2 text-[#AEEA00] animate-pulse">
-                      <span className="font-mono text-sm">█</span>
-                    </div>
-                    {/* Terminal-style project info overlay */}
-                    <div className="absolute inset-0 bg-black/90 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <div className="text-center p-4">
-                        <div className="text-[#39FF14] font-mono text-sm mb-2">
-                          <span className="animate-pulse">█</span> ./project-info.sh
-                        </div>
-                        <div className="text-[#AEEA00] font-mono text-xs space-y-1">
-                          <div>ID: {project.id}</div>
-                          <div>STATUS: ACTIVE</div>
-                          <div>BLOCKCHAIN: {project.category}</div>
-                          <div>COMPLEXITY: {project.technologies.length} techs</div>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                )}
+                {/* Hover cursor indicator */}
+                <div className="absolute bottom-2 right-2 text-[#AEEA00]/0 group-hover:text-[#AEEA00] animate-pulse transition-colors duration-300">
+                  <span className="font-mono text-sm">█</span>
+                </div>
               </div>
             </motion.div>
           ))}
