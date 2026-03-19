@@ -1,7 +1,6 @@
-// src/components/content/SpeakerGallery.jsx
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { CircularGallery } from "../ui/CircularGallery";
 import { Play, Pause, RotateCcw, MousePointer2 } from "lucide-react";
 import { motion } from "framer-motion";
@@ -40,19 +39,15 @@ const SPEEDS = [
 
 export default function SpeakerGallery() {
   const [radius, setRadius] = useState(720);
-  const [mode, setMode] = useState("auto"); // "auto" | "scroll"
+  const [mode, setMode] = useState("auto");
   const [paused, setPaused] = useState(false);
-  const [speedIdx, setSpeedIdx] = useState(1); // index into SPEEDS
+  const [speedIdx, setSpeedIdx] = useState(1);
   const items = toGalleryItems(SPEAKERS_RAW);
 
   useEffect(() => {
     const updateRadius = () => {
       setRadius(
-        window.innerWidth < 640
-          ? 420
-          : window.innerWidth < 1024
-          ? 560
-          : 720
+        window.innerWidth < 640 ? 420 : window.innerWidth < 1024 ? 560 : 720
       );
     };
     updateRadius();
@@ -60,7 +55,6 @@ export default function SpeakerGallery() {
     return () => window.removeEventListener("resize", updateRadius);
   }, []);
 
-  // When switching to scroll mode, reset pause
   const handleModeChange = (newMode) => {
     setMode(newMode);
     if (newMode === "scroll") setPaused(false);
@@ -68,27 +62,28 @@ export default function SpeakerGallery() {
 
   return (
     <section
-      className="py-12 sm:py-20 bg-gradient-to-b from-zinc-950 via-zinc-900/95 to-zinc-950 relative overflow-hidden"
+      className="py-16 md:py-24 relative overflow-hidden"
       aria-label="Speaker & event gallery"
     >
-      <div className="container mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-8 sm:mb-10"
+          className="text-center mb-10"
         >
-          <h2 className="text-2xl sm:text-3xl font-semibold text-[#e9d5ff] mb-2">
+          <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-3">
             Gallery
           </h2>
-          <p className="text-sm text-zinc-500">
-            Events, talks & hackathons across the web3 world
+          <div className="section-divider mb-4" />
+          <p className="text-[var(--text-muted)] text-sm max-w-md mx-auto">
+            Events, talks & hackathons across the Web3 world.
           </p>
         </motion.div>
 
-        {/* ── Controls ── */}
+        {/* Controls */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -97,13 +92,13 @@ export default function SpeakerGallery() {
           className="flex flex-wrap items-center justify-center gap-3 mb-8"
         >
           {/* Mode toggle */}
-          <div className="flex items-center gap-1 rounded-xl border border-zinc-700/60 bg-zinc-900/80 p-1 backdrop-blur">
+          <div className="flex items-center gap-1 rounded-xl border border-white/[0.08] bg-[var(--bg-secondary)] p-1">
             <button
               onClick={() => handleModeChange("auto")}
               className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
                 mode === "auto"
-                  ? "bg-[#AEEA00] text-black shadow"
-                  : "text-zinc-400 hover:text-white"
+                  ? "bg-[var(--accent-purple)] text-white shadow"
+                  : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
               }`}
             >
               <RotateCcw className="w-3.5 h-3.5" />
@@ -113,8 +108,8 @@ export default function SpeakerGallery() {
               onClick={() => handleModeChange("scroll")}
               className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
                 mode === "scroll"
-                  ? "bg-[#AEEA00] text-black shadow"
-                  : "text-zinc-400 hover:text-white"
+                  ? "bg-[var(--accent-purple)] text-white shadow"
+                  : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
               }`}
             >
               <MousePointer2 className="w-3.5 h-3.5" />
@@ -122,36 +117,36 @@ export default function SpeakerGallery() {
             </button>
           </div>
 
-          {/* Play / Pause — only shown in auto mode */}
+          {/* Play / Pause */}
           {mode === "auto" && (
             <button
               onClick={() => setPaused((p) => !p)}
-              className="flex items-center gap-1.5 rounded-xl border border-zinc-700/60 bg-zinc-900/80 px-3.5 py-2 text-xs font-medium text-zinc-300 hover:text-white hover:border-zinc-500 transition-all backdrop-blur"
+              className="flex items-center gap-1.5 rounded-xl border border-white/[0.08] bg-[var(--bg-secondary)] px-3.5 py-2 text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-white/[0.15] transition-all"
               aria-label={paused ? "Resume rotation" : "Pause rotation"}
             >
               {paused ? (
                 <>
-                  <Play className="w-3.5 h-3.5 text-[#39FF14]" /> Resume
+                  <Play className="w-3.5 h-3.5 text-[var(--accent-lime)]" /> Resume
                 </>
               ) : (
                 <>
-                  <Pause className="w-3.5 h-3.5 text-[#AEEA00]" /> Pause
+                  <Pause className="w-3.5 h-3.5 text-[var(--accent-purple)]" /> Pause
                 </>
               )}
             </button>
           )}
 
-          {/* Speed — only shown in auto mode */}
+          {/* Speed */}
           {mode === "auto" && (
-            <div className="flex items-center gap-1 rounded-xl border border-zinc-700/60 bg-zinc-900/80 p-1 backdrop-blur">
+            <div className="flex items-center gap-1 rounded-xl border border-white/[0.08] bg-[var(--bg-secondary)] p-1">
               {SPEEDS.map((s, i) => (
                 <button
                   key={s.label}
                   onClick={() => setSpeedIdx(i)}
                   className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
                     speedIdx === i
-                      ? "bg-zinc-700 text-white"
-                      : "text-zinc-500 hover:text-zinc-300"
+                      ? "bg-white/[0.08] text-[var(--text-primary)]"
+                      : "text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
                   }`}
                 >
                   {s.label}
@@ -160,15 +155,14 @@ export default function SpeakerGallery() {
             </div>
           )}
 
-          {/* Scroll hint */}
           {mode === "scroll" && (
-            <span className="text-xs text-zinc-500 italic">
+            <span className="text-xs text-[var(--text-muted)] italic">
               Scroll the page to rotate the gallery
             </span>
           )}
         </motion.div>
 
-        {/* ── Gallery ── */}
+        {/* Gallery */}
         <div
           className="relative mx-auto w-full"
           style={{ minHeight: "min(85vw, 520px)", height: "min(85vw, 520px)" }}

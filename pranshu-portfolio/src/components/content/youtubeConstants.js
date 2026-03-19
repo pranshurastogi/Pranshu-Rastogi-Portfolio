@@ -2,7 +2,7 @@
 export const MAX_VIDEOS_DISPLAY = 5;
 export const MIN_VIDEOS_DISPLAY = 5;
 
-export const NEON_COLORS = ["#00ff99", "#39FF14", "#00e0ff", "#a259ff"];
+export const NEON_COLORS = ["var(--accent-lime)", "var(--accent-cyan)", "var(--accent-purple)", "var(--accent-lime)"];
 
 export const FALLBACK_THUMB = "/images/fallback.jpg";
 

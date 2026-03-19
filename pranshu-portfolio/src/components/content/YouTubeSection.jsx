@@ -31,7 +31,7 @@ export default function YouTubeSection({ videos }) {
       className="relative w-full rounded-2xl overflow-hidden bg-gradient-to-b from-[#0c0c0c] to-[#0a0a0a] border border-white/[0.06] scroll-mt-20"
     >
       {/* Subtle top gradient */}
-      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#AEEA00]/[0.04] to-transparent pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[var(--accent-lime)]/[0.04] to-transparent pointer-events-none" />
 
       <div className="relative z-10 py-10 sm:py-14 md:py-16 px-4 sm:px-6">
         {/* Header */}
@@ -42,7 +42,7 @@ export default function YouTubeSection({ videos }) {
           <p className="text-white/50 text-sm sm:text-base mt-2 max-w-xl mx-auto">
             Talks, tutorials, and updates from the channel
           </p>
-          <div className="mt-4 h-px w-16 mx-auto bg-gradient-to-r from-transparent via-[#AEEA00]/60 to-transparent rounded-full" />
+          <div className="mt-4 h-px w-16 mx-auto bg-gradient-to-r from-transparent via-[var(--accent-lime)]/60 to-transparent rounded-full" />
         </div>
 
         {/* Video grid */}

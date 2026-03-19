@@ -1,19 +1,34 @@
 import "./globals.css";
-import { Poppins } from "next/font/google";
+import { Poppins, Victor_Mono } from "next/font/google";
 import ClientLayout from "@/components/layout/ClientLayout";
 import projectsData from "@/data/projects.json";
 
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-poppins",
 });
 
+const victorMono = Victor_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-victor-mono",
+});
+
 export const metadata = {
-  title: "Pranshu Rastogi | Blockchain Engineer, Speaker, Writer",
+  title: "Pranshu Rastogi | Blockchain Engineer, Speaker & Web3 Builder",
   description:
-    "Pranshu Rastogi's personal portfolio. Blockchain engineer, speaker, writer, and educator. Explore projects, blogs, talks, and more.",
+    "Head of Ecosystem & Integrations at Push Chain. Blockchain engineer with 7+ years in Web3, speaker at 30+ global conferences, and technical writer. Builder of SPECTER, a post-quantum stealth address protocol for private payments on Ethereum and Sui. Writes about post-quantum cryptography, onchain privacy, and the future of decentralized communication.",
+  keywords: [
+    "Pranshu Rastogi", "blockchain engineer", "Web3 builder", "Push Chain", "Push Protocol",
+    "SPECTER", "post-quantum cryptography", "stealth addresses", "ML-KEM-768", "NIST FIPS 203",
+    "onchain privacy", "Ethereum privacy", "quantum-resistant blockchain", "Solidity", "Rust",
+    "DeFi", "decentralized identity", "ecosystem development", "blockchain speaker",
+    "smart contracts", "privacy protocols", "lattice-based cryptography",
+  ],
   metadataBase: new URL("https://pranshurastogi.com"),
   alternates: { canonical: "/" },
   robots: { index: true, follow: true },
@@ -28,9 +43,9 @@ export const metadata = {
     shortcut: "/favicon.ico?v=2",
   },
   openGraph: {
-    title: "Pranshu Rastogi | Blockchain Engineer, Speaker, Writer",
+    title: "Pranshu Rastogi | Blockchain Engineer, Speaker & Web3 Builder",
     description:
-      "Head of Ecosystem & Integrations at Push Chain. Blockchain engineer, speaker, writer, and educator. Explore projects, blogs, talks, and more.",
+      "Head of Ecosystem & Integrations at Push Chain. Building SPECTER, a post-quantum stealth address protocol using ML-KEM-768 for private payments on Ethereum and Sui. Writes about post-quantum cryptography, onchain privacy, and decentralized systems. 7+ years in Web3.",
     type: "website",
     url: "https://pranshurastogi.com/",
     images: [
@@ -38,28 +53,31 @@ export const metadata = {
         url: "https://pranshurastogi.com/images/pfp-current.png",
         width: 1200,
         height: 630,
-        alt: "Pranshu Rastogi - Blockchain Engineer, Speaker, Writer",
+        alt: "Pranshu Rastogi - Blockchain Engineer & Web3 Builder",
       },
     ],
-    siteName: "Pranshu Rastogi Portfolio",
+    siteName: "Pranshu Rastogi",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pranshu Rastogi | Blockchain Engineer, Speaker, Writer",
+    title: "Pranshu Rastogi | Blockchain Engineer & Web3 Builder",
     description:
-      "Head of Ecosystem & Integrations at Push Chain. Blockchain engineer, speaker, writer, and educator.",
+      "Head of Ecosystem & Integrations at Push Chain. Building SPECTER for post-quantum private payments. 7+ years in Web3.",
     images: ["https://pranshurastogi.com/images/pfp-current.png"],
     site: "@pranshurastogii",
     creator: "@pranshurastogii",
   },
   other: {
-    "msapplication-TileColor": "#39FF14",
+    "msapplication-TileColor": "#0A0A0F",
   },
 };
 
 export const viewport = {
-  themeColor: "#39FF14",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0A0A0F" },
+    { media: "(prefers-color-scheme: light)", color: "#0A0A0F" },
+  ],
 };
 
 export default function RootLayout({ children }) {
@@ -83,15 +101,11 @@ export default function RootLayout({ children }) {
       "https://youtube.com/@pranshurastogi",
     ],
     description:
-      "Head of Ecosystem & Integrations at Push Chain. Blockchain engineer, speaker, writer, and educator.",
+      "Head of Ecosystem & Integrations at Push Chain. Blockchain engineer, post-quantum cryptography researcher, speaker at 30+ conferences, and technical writer covering onchain privacy, stealth addresses, and decentralized communication. 7+ years in Web3.",
     knowsAbout: [
-      "Blockchain",
-      "Web3",
-      "DeFi",
-      "Ethereum",
-      "Smart Contracts",
-      "Ecosystem Development",
-      "Push Protocol",
+      "Blockchain", "Web3", "DeFi", "Ethereum", "Smart Contracts",
+      "Ecosystem Development", "Push Protocol", "Onchain Privacy", "Post-Quantum Cryptography",
+      "ML-KEM-768", "Stealth Addresses", "Lattice-Based Cryptography", "Decentralized Identity",
     ],
     alumniOf: {
       "@type": "EducationalOrganization",
@@ -102,10 +116,9 @@ export default function RootLayout({ children }) {
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Pranshu Rastogi Portfolio",
+    name: "Pranshu Rastogi",
     url: "https://pranshurastogi.com",
-    description:
-      "Personal portfolio of Pranshu Rastogi - Blockchain Engineer, Speaker, Writer",
+    description: "Personal portfolio of Pranshu Rastogi — Blockchain Engineer, Speaker & Web3 Builder",
     publisher: { "@type": "Person", name: "Pranshu Rastogi" },
   };
 
@@ -123,7 +136,7 @@ export default function RootLayout({ children }) {
   const projectsSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Projects by Pranshu Rastogi",
+    name: "Blockchain Projects by Pranshu Rastogi",
     itemListElement: projectsData.projects.map((p, i) => ({
       "@type": "ListItem",
       position: i + 1,
@@ -138,42 +151,24 @@ export default function RootLayout({ children }) {
   };
 
   return (
-    <html lang="en" data-theme="pranshuTheme" className={poppins.variable}>
+    <html lang="en" className={`${poppins.variable} ${victorMono.variable}`}>
       <head>
-        {/* Preload critical resources */}
         <link rel="preload" href="/images/pfp-current.png" as="image" />
-        <link rel="preload" href="/images/cover.png" as="image" />
         <link rel="dns-prefetch" href="//img.youtube.com" />
         <link rel="dns-prefetch" href="//cdn-images-1.medium.com" />
         <link rel="preconnect" href="https://img.youtube.com" />
         <link rel="preconnect" href="https://cdn-images-1.medium.com" />
         <link rel="preconnect" href="https://us.i.posthog.com" />
+        <link rel="author" href="https://pranshurastogi.com/llms.txt" />
+        <link rel="dns-prefetch" href="//platform.twitter.com" />
+        <link rel="preconnect" href="https://platform.twitter.com" crossOrigin="anonymous" />
 
-        {/* Schema.org Person JSON-LD */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
-        />
-        {/* Website Schema */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-        />
-        {/* ProfilePage Schema */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(profileSchema) }}
-        />
-        {/* Projects ItemList Schema */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(projectsSchema) }}
-        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profileSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(projectsSchema) }} />
       </head>
-      <body
-        className={`${poppins.className} antialiased pt-16 pb-14`}
-        suppressHydrationWarning
-      >
+      <body className={`${poppins.className} ${victorMono.variable} antialiased pt-16 pb-14`} suppressHydrationWarning>
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>

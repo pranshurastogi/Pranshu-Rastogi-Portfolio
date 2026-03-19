@@ -124,19 +124,19 @@ export default function FloatingBlockchainIcons({ interactive = true }) {
         }
         .floating-icon {
           position: absolute;
-          opacity: 0.18;
-          filter: drop-shadow(0 0 8px #AEEA00) blur(0.5px);
+          opacity: 0.08;
+          filter: drop-shadow(0 0 6px rgba(255,255,255,0.1)) blur(0.5px);
           animation: float-bc-icon 18s ease-in-out infinite alternate;
           will-change: transform, opacity;
         }
         @keyframes float-bc-icon {
-          0% { transform: translateY(0px) scale(1) rotate(-8deg); opacity: 0.18; }
-          30% { opacity: 0.32; }
-          50% { transform: translateY(-32px) scale(1.08) rotate(8deg); opacity: 0.22; }
-          70% { opacity: 0.32; }
-          100% { transform: translateY(0px) scale(1) rotate(-8deg); opacity: 0.18; }
+          0% { transform: translateY(0px) scale(1) rotate(-8deg); opacity: 0.08; }
+          30% { opacity: 0.14; }
+          50% { transform: translateY(-32px) scale(1.08) rotate(8deg); opacity: 0.10; }
+          70% { opacity: 0.14; }
+          100% { transform: translateY(0px) scale(1) rotate(-8deg); opacity: 0.08; }
         }
       `}</style>
     </div>
   );
-} 
+}

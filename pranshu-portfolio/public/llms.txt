@@ -1,40 +1,42 @@
-# Pranshu Rastogi — Personal Portfolio
+# Pranshu Rastogi — Blockchain Engineer, Speaker & Web3 Builder
 
-## Who is Pranshu Rastogi?
-Pranshu Rastogi is a blockchain engineer, ecosystem builder, speaker, writer, and educator based in India. He currently serves as Head of Ecosystem & Integrations at Push Chain (formerly Push Protocol). He has over 7 years of experience in the Web3 and blockchain space.
+## About
+Pranshu Rastogi is the Head of Ecosystem & Integrations at Push Chain (formerly Push Protocol). He is a blockchain engineer with 7+ years of experience building in Web3, a speaker at 30+ global conferences, and a technical writer on Medium.
 
-## Career
-- Head of Ecosystem & Integrations, Push Chain (Apr 2023 – Present)
-- VP of Engineering, Push Protocol (Nov 2021 – May 2023)
-- Software Engineer, Dhiway (Aug 2020 – Sep 2021)
-- Software Engineer, Terse Software Pvt. Ltd. (Apr 2019 – Jul 2020)
+## Current Role
+- **Position:** Head of Ecosystem & Integrations
+- **Company:** Push Chain (push.org)
+- **Focus:** Ecosystem growth, strategic partnerships, developer adoption, decentralized communication infrastructure
+
+## Career History
+- **Push Chain / Push Protocol** (Nov 2021 – Present): VP of Engineering, then Head of Ecosystem. Led engineering org, scaled protocol to 1,000+ integrations, shipped core notification system.
+- **Dhiway** (Aug 2020 – Sep 2021): Software Engineer. Built decentralized identity solutions on Substrate chains, DID protocols, verifiable credentials.
+- **Terse Software** (Apr 2019 – Jul 2020): Software Engineer. Architected backend systems and wrote first production smart contracts.
+
+## Notable Projects
+- **SPECTER** (specterpq.com): Post-quantum stealth address protocol for Ethereum and Sui. Uses ML-KEM-768 (NIST FIPS 203) for quantum-resistant private payments via ENS/SuiNS names. Detailed insights, research articles, and threads on post-quantum privacy at https://specterpq.com/insights
+- **Bloom Ideas**: Collaborative idea-sharing platform for Web3 communities.
+- **EYI (Earn Your Identity)**: Decentralized identity verification system.
+
+## Writing & Research
+Pranshu writes extensively about post-quantum cryptography, onchain privacy, stealth addresses, and the quantum threat to blockchain. His research and threads are published at:
+- SPECTER Insights (post-quantum & privacy research): https://specterpq.com/insights
+- Medium (technical articles): https://pranshurastogi.medium.com
+- Twitter/X threads: https://x.com/pranshurastogii
 
 ## Expertise
-Blockchain, Web3, DeFi, Ethereum, Smart Contracts, Solidity, Ecosystem Development, Push Protocol, Next.js, React, Community Building, Technical Writing, Public Speaking
+Post-Quantum Cryptography, ML-KEM-768, Lattice-Based Cryptography, Stealth Addresses, Onchain Privacy, Blockchain, Ethereum, Solidity, Rust, Web3, DeFi, Smart Contracts, Decentralized Identity (DID), Push Protocol, Substrate, Ecosystem Development, Developer Relations, Technical Writing
 
-## Projects
-- AlphIQ: All-in-one Alephium dashboard for real-time blockchain analytics — https://www.alphiq.xyz/
-- Bloom Ideas: Decentralized platform for collaborative idea sharing with NFT rewards — https://soc-bloom-ideas.vercel.app/
-- IntelliLearn: Gamified Web3 education platform — https://il-core.vercel.app/login
-- AlphIQ Admin Dashboard: Admin panel for managing AlphIQ — https://admin.alphiq.xyz/
-- EYI: Decentralized identity platform with ENS, GitHub, X, and Farcaster verification — https://eyi-two.vercel.app/
-
-## Achievements
-- 1,000+ integrations implemented at Push Protocol
-- Hosted 30+ hackathons globally
-- Launched the BRB Bootcamp
-- Mentored 2,500+ students via e-learning platforms
-- 30+ speaking engagements at conferences
-- 20+ published technical articles
-
-## Education
-Lovely Professional University
-
-## Contact & Social
+## Links
 - Website: https://pranshurastogi.com
-- X / Twitter: https://x.com/pranshurastogii
-- LinkedIn: https://www.linkedin.com/in/rastogipranshu/
-- Medium: https://pranshurastogi.medium.com/
+- SPECTER Insights: https://specterpq.com/insights
+- Twitter/X: https://x.com/pranshurastogii
+- LinkedIn: https://linkedin.com/in/rastogipranshu
 - GitHub: https://github.com/pranshurastogi
-- YouTube: https://www.youtube.com/@pranshurastogi
-- Email: pranshurastogi.eth@gmail.com
+- Medium: https://pranshurastogi.medium.com
+- YouTube: https://youtube.com/@pranshurastogi
+
+## Pages
+- Home: https://pranshurastogi.com/
+- POAPs: https://pranshurastogi.com/poaps
+- Projects: https://pranshurastogi.com/projects/specter, https://pranshurastogi.com/projects/bloom-ideas, https://pranshurastogi.com/projects/eyi

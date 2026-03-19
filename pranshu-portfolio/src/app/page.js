@@ -14,8 +14,8 @@ const TweetsSection = dynamic(() => import("@/components/content/TweetSection"))
 const LoadingFallback = ({ sectionName }) => (
   <div className="min-h-[400px] flex items-center justify-center">
     <div className="text-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#AEEA00] mx-auto mb-4"></div>
-      <p className="text-[#AEEA00] font-mono">Loading {sectionName}...</p>
+      <div className="animate-spin rounded-full h-10 w-10 border-2 border-[var(--accent-purple)] border-t-transparent mx-auto mb-4" />
+      <p className="text-[var(--text-muted)] text-sm">Loading {sectionName}…</p>
     </div>
   </div>
 );
@@ -28,7 +28,7 @@ export default function Home() {
       <Hero />
 
       <section id="career">
-        <Suspense fallback={<LoadingFallback sectionName="Career Timeline" />}>
+        <Suspense fallback={<LoadingFallback sectionName="Career" />}>
           <CareerTimeline />
         </Suspense>
       </section>
@@ -46,26 +46,26 @@ export default function Home() {
       </section>
 
       <section id="gallery">
-        <Suspense fallback={<LoadingFallback sectionName="Speaker Gallery" />}>
+        <Suspense fallback={<LoadingFallback sectionName="Gallery" />}>
           <SpeakerGallery />
         </Suspense>
       </section>
 
       <section id="youtube">
-        <Suspense fallback={<LoadingFallback sectionName="YouTube Content" />}>
+        <Suspense fallback={<LoadingFallback sectionName="Videos" />}>
           <YouTubeSectionWrapper />
         </Suspense>
       </section>
 
       <section id="featured">
-        <Suspense fallback={<LoadingFallback sectionName="Media" />}>
+        <Suspense fallback={<LoadingFallback sectionName="Featured" />}>
           <MediaSection />
         </Suspense>
       </section>
 
       <section id="tweets">
         <Suspense fallback={<LoadingFallback sectionName="Tweets" />}>
-          <TweetsSection tweets={tweetLinks} minCount={6} maxCount={9} />
+          <TweetsSection tweets={tweetLinks} />
         </Suspense>
       </section>
     </>

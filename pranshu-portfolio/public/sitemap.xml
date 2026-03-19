@@ -2,8 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://pranshurastogi.com/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
   </url>
   <url>
     <loc>https://pranshurastogi.com/poaps</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
-</urlset> 
+  <url>
+    <loc>https://pranshurastogi.com/projects/specter</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pranshurastogi.com/projects/bloom-ideas</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://pranshurastogi.com/projects/eyi</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+</urlset>

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight, Github, Linkedin, Twitter, Globe } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 const listVariants = {
   hidden: { opacity: 0, y: 16 },
@@ -35,16 +35,15 @@ export function GlassmorphismPortfolioBlock({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="relative overflow-hidden rounded-3xl border border-[#AEEA00]/20 bg-black/40 p-8 backdrop-blur-2xl md:p-12"
-          style={{ boxShadow: "0 0 60px rgba(174, 234, 0, 0.05)" }}
+          className="relative overflow-hidden rounded-3xl border border-white/[0.06] bg-[var(--bg-secondary)] p-8 backdrop-blur-2xl md:p-12"
         >
           {/* Glass gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#AEEA00]/5 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent-purple)]/5 via-transparent to-transparent pointer-events-none" />
 
           <div className="relative grid gap-12 lg:grid-cols-2">
             {/* Left column */}
             <div className="space-y-8">
-              <span className="inline-flex items-center gap-2 rounded-full border border-[#AEEA00]/30 bg-black/60 px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-[#AEEA00]/70 backdrop-blur">
+              <span className="inline-flex items-center gap-2 rounded-full border border-[var(--accent-purple)]/20 bg-[var(--bg-primary)] px-4 py-1.5 text-xs uppercase tracking-[0.3em] text-[var(--accent-purple)]/70 backdrop-blur">
                 Portfolio Insight
               </span>
 
@@ -54,17 +53,17 @@ export function GlassmorphismPortfolioBlock({
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.1 }}
-                  className="text-2xl font-semibold tracking-tight text-white md:text-3xl"
+                  className="text-2xl font-semibold tracking-tight text-[var(--text-primary)] md:text-3xl"
                 >
                   {name},{" "}
-                  <span className="text-[#AEEA00]">{title}</span>
+                  <span className="text-[var(--accent-purple)]">{title}</span>
                 </motion.h2>
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.2 }}
-                  className="max-w-xl text-base leading-relaxed text-gray-400"
+                  className="max-w-xl text-base leading-relaxed text-[var(--text-muted)]"
                 >
                   {bio}
                 </motion.p>
@@ -81,13 +80,13 @@ export function GlassmorphismPortfolioBlock({
                       viewport={{ once: true }}
                       transition={{ duration: 0.4, delay: 0.1 * index }}
                       whileHover={{ y: -4 }}
-                      className="group relative overflow-hidden rounded-2xl border border-[#AEEA00]/20 bg-black/60 p-5 backdrop-blur transition-all hover:border-[#AEEA00]/40 hover:shadow-lg"
+                      className="group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[var(--bg-primary)] p-5 backdrop-blur transition-all hover:border-[var(--accent-purple)]/30 hover:shadow-lg"
                     >
                       <div className="space-y-1">
-                        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#AEEA00]/50">
+                        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--accent-purple)]/50">
                           {item.title}
                         </p>
-                        <p className="text-sm leading-relaxed text-gray-400">
+                        <p className="text-sm leading-relaxed text-[var(--text-muted)]">
                           {item.description}
                         </p>
                       </div>
@@ -104,7 +103,7 @@ export function GlassmorphismPortfolioBlock({
               >
                 <a
                   href={ctaHref}
-                  className="inline-flex items-center gap-2 rounded-full bg-[#AEEA00] px-8 py-3 text-sm font-semibold uppercase tracking-[0.15em] text-black transition-all hover:bg-[#39FF14] hover:shadow-lg hover:shadow-[#AEEA00]/30"
+                  className="inline-flex items-center gap-2 rounded-full bg-[var(--accent-purple)] px-8 py-3 text-sm font-semibold uppercase tracking-[0.15em] text-white transition-all hover:bg-[var(--accent-purple)]/90 hover:shadow-lg hover:shadow-[var(--accent-purple)]/20"
                 >
                   {ctaLabel}
                   <ArrowUpRight className="h-4 w-4" />
@@ -114,8 +113,8 @@ export function GlassmorphismPortfolioBlock({
 
             {/* Right column - Profile card */}
             <div className="relative">
-              <div className="absolute inset-0 rounded-[32px] bg-gradient-to-b from-[#AEEA00]/15 via-transparent to-transparent blur-3xl" />
-              <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[28px] border border-[#AEEA00]/20 bg-black/60 p-8 backdrop-blur-xl">
+              <div className="absolute inset-0 rounded-[32px] bg-gradient-to-b from-[var(--accent-purple)]/10 via-transparent to-transparent blur-3xl" />
+              <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[28px] border border-white/[0.06] bg-[var(--bg-primary)] p-8 backdrop-blur-xl">
                 <div className="flex flex-col items-center text-center">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
@@ -124,11 +123,11 @@ export function GlassmorphismPortfolioBlock({
                     transition={{ duration: 0.5 }}
                     className="relative mb-6"
                   >
-                    <div className="absolute left-1/2 top-1/2 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#AEEA00]/20 blur-2xl" />
+                    <div className="absolute left-1/2 top-1/2 h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--accent-purple)]/15 blur-2xl" />
                     <img
                       src={avatar}
                       alt={name}
-                      className="relative h-28 w-28 rounded-full border-2 border-[#AEEA00]/40 object-cover"
+                      className="relative h-28 w-28 rounded-full border-2 border-[var(--accent-purple)]/30 object-cover"
                     />
                   </motion.div>
 
@@ -139,8 +138,10 @@ export function GlassmorphismPortfolioBlock({
                     transition={{ duration: 0.5, delay: 0.2 }}
                     className="space-y-1"
                   >
-                    <h3 className="text-xl font-semibold text-white">{name}</h3>
-                    <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#AEEA00]/60">
+                    <h3 className="text-xl font-semibold text-[var(--text-primary)]">
+                      {name}
+                    </h3>
+                    <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--accent-purple)]/60">
                       {title}
                     </p>
                   </motion.div>
@@ -163,20 +164,24 @@ export function GlassmorphismPortfolioBlock({
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex items-center justify-between rounded-2xl border border-[#AEEA00]/20 bg-black/60 px-4 py-3 text-left transition-all hover:-translate-y-0.5 hover:border-[#AEEA00]/40 hover:bg-black/80 hover:shadow-md"
+                        className="group flex items-center justify-between rounded-2xl border border-white/[0.06] bg-[var(--bg-secondary)] px-4 py-3 text-left transition-all hover:-translate-y-0.5 hover:border-[var(--accent-purple)]/30 hover:shadow-md"
                         whileHover={{ scale: 1.01 }}
                         whileTap={{ scale: 0.985 }}
                       >
                         <div className="flex items-center gap-3">
-                          <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#AEEA00]/30 bg-[#AEEA00]/10 text-[#AEEA00]">
+                          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--accent-purple-dim)] text-[var(--accent-purple)]">
                             <Icon className="h-4 w-4" />
                           </span>
                           <div>
-                            <p className="text-sm font-semibold text-white">{social.label}</p>
-                            <p className="text-xs text-gray-500">{social.handle}</p>
+                            <p className="text-sm font-semibold text-[var(--text-primary)]">
+                              {social.label}
+                            </p>
+                            <p className="text-xs text-[var(--text-muted)]">
+                              {social.handle}
+                            </p>
                           </div>
                         </div>
-                        <ArrowUpRight className="h-4 w-4 text-gray-600 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#AEEA00]" />
+                        <ArrowUpRight className="h-4 w-4 text-[var(--text-muted)] transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--accent-purple)]" />
                       </motion.a>
                     );
                   })}

@@ -16,7 +16,7 @@ export default function YouTubeVideoCard({ video, index, onSelect }) {
 
   return (
     <motion.article
-      className="group rounded-2xl overflow-hidden bg-[#111] border border-white/[0.06] hover:border-[#39FF14]/40 transition-colors duration-300 cursor-pointer min-w-0"
+      className="group rounded-2xl overflow-hidden bg-[#111] border border-white/[0.06] hover:border-[var(--accent-cyan)]/40 transition-colors duration-300 cursor-pointer min-w-0"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, delay: index * 0.05 }}

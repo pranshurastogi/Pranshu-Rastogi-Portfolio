@@ -1,15 +1,76 @@
 @import "tailwindcss";
 
-/* Custom animations */
+/* ── Design System: "Neo-Bat" Palette ── */
+:root {
+  --bg-primary: #0A0A0F;
+  --bg-secondary: #14141A;
+  --bg-card: #1A1A24;
+  --text-primary: #E8EDF5;
+  --text-secondary: #9CA3B0;
+  --text-muted: #6B7280;
+  --accent-purple: #9F4EFF;
+  --accent-cyan: #00F5FF;
+  --accent-lime: #39FF9E;
+  --accent-purple-dim: rgba(159, 78, 255, 0.15);
+  --accent-cyan-dim: rgba(0, 245, 255, 0.10);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.12);
+}
+
+/* shadcn/radix CSS variable bridge for dark theme */
+:root {
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
+  --card: var(--bg-secondary);
+  --card-foreground: var(--text-primary);
+  --primary: var(--accent-purple);
+  --primary-foreground: #ffffff;
+  --secondary: var(--bg-card);
+  --secondary-foreground: var(--text-primary);
+  --muted: var(--bg-card);
+  --muted-foreground: var(--text-muted);
+  --accent: var(--accent-purple-dim);
+  --accent-foreground: var(--accent-purple);
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: var(--border-subtle);
+  --input: var(--border-subtle);
+  --ring: var(--accent-purple);
+  --radius: 0.75rem;
+}
+
+/* ── Base ── */
+html {
+  font-family: var(--font-poppins), 'Poppins', system-ui, sans-serif;
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* ── Typography ── */
+/* Victor Mono for code, terminals, accents — cursive italics + sharp regular */
+.font-mono,
+code, pre, kbd {
+  font-family: var(--font-victor-mono, var(--font-mono, 'Victor Mono')), 'JetBrains Mono', 'Fira Mono', 'Cascadia Code', 'Consolas', monospace;
+}
+
+/* Italic mono accent for special text */
+.font-mono-italic {
+  font-family: var(--font-victor-mono, var(--font-mono, 'Victor Mono')), monospace;
+  font-style: italic;
+}
+
+/* ── Animations ── */
 @keyframes spin-slow {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
-.animate-spin-slow {
-  animation: spin-slow 6s linear infinite;
-}
+.animate-spin-slow { animation: spin-slow 6s linear infinite; }
 
-/* Slow gradient shift */
 @keyframes gradient-slow {
   0%   { background-position: 0% 50%; }
   50%  { background-position: 100% 50%; }
@@ -20,71 +81,87 @@
   animation: gradient-slow 20s ease infinite;
 }
 
-html {
-  font-family: var(--font-poppins), 'Poppins', sans-serif;
-  scroll-behavior: smooth;
-}
-
-/* Marquee animation for FooterTicker */
 @keyframes marquee {
   0%   { transform: translateX(100%); }
   100% { transform: translateX(-100%); }
 }
-
 .marquee {
   display: inline-flex;
   white-space: nowrap;
   animation: marquee 40s linear infinite;
 }
 
-/* Shared blink keyframe — used by terminal cursors in Hero, Header, ContactForm */
 @keyframes blink {
   to { visibility: hidden; }
 }
-
 .terminal-cursor,
-.hacker-cursor,
-.blink-cursor,
-.blinking-cursor {
+.blink-cursor {
   animation: blink 1s steps(2, start) infinite;
 }
 
-/* Shared fade-in */
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(-10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.animate-fade-in {
-  animation: fade-in 0.3s ease;
+.animate-fade-in { animation: fade-in 0.3s ease; }
+
+@keyframes float-subtle {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
 }
 
-/* Shared neon-pulse keyframe */
-@keyframes neon-pulse {
-  0% {
-    text-shadow: 0 0 10px #AEEA00, 0 0 20px #AEEA00, 0 0 40px #AEEA00;
-  }
-  100% {
-    text-shadow: 0 0 5px #AEEA00, 0 0 10px #AEEA00, 0 0 20px #AEEA00, 0 0 40px #39FF14;
-  }
-}
-.neon-glow {
-  animation: neon-pulse 2s ease-in-out infinite alternate;
-}
-
-/* Floating crypto icon CSS animation — replaces framer-motion animate */
 @keyframes float-crypto {
   0%, 100% { transform: translateY(0) translateX(0); }
-  50% { transform: translateY(-14px) translateX(8px); }
+  50%      { transform: translateY(-14px) translateX(8px); }
 }
-
 .floating-crypto-icon {
   animation: float-crypto var(--float-duration, 16s) ease-in-out var(--float-delay, 0s) infinite;
 }
 
-/* Accessibility: visible focus ring for links and buttons */
-a:focus, button:focus, [tabindex]:focus {
-  outline: 2px solid #AEEA00 !important;
+/* ── Accessibility ── */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent-purple);
   outline-offset: 2px;
-  box-shadow: 0 0 0 2px #39FF14;
+  box-shadow: 0 0 0 4px var(--accent-purple-dim);
   z-index: 2;
+}
+
+/* ── Utility ── */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Remove scrollbar in carousels */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Section separator */
+.section-divider {
+  height: 1px;
+  max-width: 8rem;
+  margin: 0 auto;
+  background: linear-gradient(90deg, transparent, var(--accent-purple-dim), transparent);
+}
+
+/* Orbital timeline shadow */
+.shadow-orbital {
+  box-shadow: 0 0 15px rgba(159, 78, 255, 0.1);
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }

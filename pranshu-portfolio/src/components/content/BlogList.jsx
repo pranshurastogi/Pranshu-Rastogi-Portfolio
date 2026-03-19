@@ -25,17 +25,7 @@ function extractFirstImage(html = "") {
   }
 }
 
-// Estimate read time from HTML content
-function estimateReadTime(html = "") {
-  try {
-    const text = html.replace(/<[^>]*>/g, " ");
-    const words = text.trim().split(/\s+/).length;
-    const minutes = Math.max(1, Math.round(words / 200));
-    return `${minutes} min read`;
-  } catch {
-    return null;
-  }
-}
+// Read time removed — RSS content snippets don't reflect full article length
 
 // Strip HTML and get plain text excerpt
 function getExcerpt(html = "", maxLength = 120) {
@@ -51,9 +41,9 @@ export default function BlogList({ posts = [] }) {
   if (!Array.isArray(posts) || posts.length === 0) {
     return (
       <div className="text-center py-8">
-        <div className="bg-[#1a1a1a]/80 border border-[#39FF14] rounded-2xl p-8 max-w-md mx-auto">
-          <div className="text-[#39FF14] text-4xl mb-4">📝</div>
-          <div className="text-[#39FF14] font-medium">
+        <div className="bg-[var(--bg-secondary)]/80 border border-white/[0.06] rounded-2xl p-8 max-w-md mx-auto">
+          <div className="text-[var(--accent-lime)] text-4xl mb-4">📝</div>
+          <div className="text-[var(--text-muted)] font-medium">
             No blog posts available at the moment. Please check back soon!
           </div>
         </div>
@@ -72,7 +62,7 @@ export default function BlogList({ posts = [] }) {
       {posts.map((post, idx) => {
         const imgSrc = post.enclosure?.url || extractFirstImage(post.content);
         const excerpt = getExcerpt(post.content || post.contentSnippet || "");
-        const readTime = estimateReadTime(post.content || "");
+        const readTime = null;
         const tags = Array.isArray(post.categories) ? post.categories : [];
         const date = post.isoDate
           ? new Date(post.isoDate).toLocaleDateString("en-US", {

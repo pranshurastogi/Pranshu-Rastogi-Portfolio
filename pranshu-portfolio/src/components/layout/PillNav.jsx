@@ -21,27 +21,22 @@ function scrollToSection(id) {
   if (el) el.scrollIntoView({ behavior: "smooth" });
 }
 
-/**
- * Dark-theme pill nav – matches site (#10151a, #AEEA00, #39FF14).
- */
 export default function PillNav() {
   const [activeSection, setActiveSection] = useState("home");
   const [expanded, setExpanded] = useState(false);
   const [hovering, setHovering] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const hoverTimeoutRef = useRef(null);
-
-  const pillWidth = useSpring(140, { stiffness: 220, damping: 25, mass: 1 });
+  const pillWidth = useSpring(120, { stiffness: 220, damping: 25, mass: 1 });
 
   useEffect(() => {
     if (hovering) {
       setExpanded(true);
-      pillWidth.set(640);
+      pillWidth.set(580);
       if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     } else {
       hoverTimeoutRef.current = setTimeout(() => {
         setExpanded(false);
-        pillWidth.set(140);
+        pillWidth.set(120);
       }, 600);
     }
     return () => {
@@ -49,29 +44,26 @@ export default function PillNav() {
     };
   }, [hovering, pillWidth]);
 
-  const handleSectionClick = (sectionId) => {
-    setIsTransitioning(true);
-    setActiveSection(sectionId);
+  const handleClick = (id) => {
+    setActiveSection(id);
     setHovering(false);
-    scrollToSection(sectionId);
-    setTimeout(() => setIsTransitioning(false), 400);
+    scrollToSection(id);
   };
 
-  const activeItem = navItems.find((item) => item.id === activeSection);
+  const activeItem = navItems.find((i) => i.id === activeSection);
 
   return (
     <motion.nav
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
-      className="relative rounded-full border border-[#39FF14]/40"
+      className="relative rounded-full border border-white/[0.08]"
       style={{
         width: pillWidth,
-        height: "48px",
-        background:
-          "linear-gradient(180deg, #1a1f26 0%, #151a20 50%, #0f1318 100%)",
+        height: 44,
+        background: "linear-gradient(180deg, #18181F 0%, #111116 100%)",
         boxShadow: expanded
-          ? "0 0 20px rgba(57, 255, 20, 0.15), inset 0 1px 0 rgba(57, 255, 20, 0.1)"
-          : "0 0 12px rgba(57, 255, 20, 0.08), inset 0 1px 0 rgba(57, 255, 20, 0.06)",
+          ? "0 0 24px rgba(159,78,255,0.08), inset 0 1px 0 rgba(255,255,255,0.04)"
+          : "0 0 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03)",
         overflow: "hidden",
         transition: "box-shadow 0.25s ease-out",
       }}
@@ -79,33 +71,25 @@ export default function PillNav() {
       {/* Top edge glow */}
       <div
         className="absolute inset-x-0 top-0 rounded-t-full pointer-events-none h-px"
-        style={{
-          background:
-            "linear-gradient(90deg, transparent 0%, rgba(57, 255, 20, 0.5) 50%, transparent 100%)",
-        }}
+        style={{ background: "linear-gradient(90deg, transparent 0%, rgba(159,78,255,0.3) 50%, transparent 100%)" }}
       />
 
-      <div className="relative z-10 h-full flex items-center justify-center px-5 font-mono">
+      <div className="relative z-10 h-full flex items-center justify-center px-4">
         {!expanded && (
-          <div className="flex items-center relative">
-            <AnimatePresence mode="wait">
-              {activeItem && (
-                <motion.span
-                  key={activeItem.id}
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -6 }}
-                  transition={{ duration: 0.25, ease: "easeOut" }}
-                  className="text-[#AEEA00] font-semibold text-sm tracking-wide whitespace-nowrap"
-                  style={{
-                    textShadow: "0 0 12px rgba(174, 234, 0, 0.4)",
-                  }}
-                >
-                  {activeItem.label}
-                </motion.span>
-              )}
-            </AnimatePresence>
-          </div>
+          <AnimatePresence mode="wait">
+            {activeItem && (
+              <motion.span
+                key={activeItem.id}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.2 }}
+                className="text-[var(--accent-purple)] font-medium text-sm tracking-wide whitespace-nowrap"
+              >
+                {activeItem.label}
+              </motion.span>
+            )}
+          </AnimatePresence>
         )}
 
         {expanded && (
@@ -116,25 +100,15 @@ export default function PillNav() {
                 <motion.button
                   key={item.id}
                   type="button"
-                  initial={{ opacity: 0, x: -8 }}
+                  initial={{ opacity: 0, x: -6 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{
-                    delay: index * 0.05,
-                    duration: 0.2,
-                    ease: "easeOut",
-                  }}
-                  onClick={() => handleSectionClick(item.id)}
-                  className={`relative cursor-pointer transition-all duration-200 rounded-lg px-3 py-2 border-none outline-none whitespace-nowrap text-sm font-medium ${
+                  transition={{ delay: index * 0.04, duration: 0.15 }}
+                  onClick={() => handleClick(item.id)}
+                  className={`cursor-pointer transition-all duration-200 rounded-lg px-3 py-1.5 text-sm font-medium whitespace-nowrap ${
                     isActive
-                      ? "text-[#AEEA00]"
-                      : "text-[#00ff99]/80 hover:text-[#AEEA00]"
+                      ? "text-[var(--accent-purple)] bg-[var(--accent-purple-dim)]"
+                      : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
                   }`}
-                  style={{
-                    background: isActive ? "rgba(57, 255, 20, 0.08)" : "transparent",
-                    textShadow: isActive
-                      ? "0 0 10px rgba(174, 234, 0, 0.35)"
-                      : "none",
-                  }}
                 >
                   {item.label}
                 </motion.button>
