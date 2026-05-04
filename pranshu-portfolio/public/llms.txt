@@ -1,7 +1,7 @@
 # Pranshu Rastogi — Blockchain Engineer, Speaker & Web3 Builder
 
 ## About
-Pranshu Rastogi is the Head of Ecosystem & Integrations at Push Chain (formerly Push Protocol). He is a blockchain engineer with 7+ years of experience building in Web3, a speaker at 30+ global conferences, and a technical writer on Medium.
+Pranshu Rastogi is the Head of Ecosystem & Integrations at Push Chain (formerly Push Protocol). He is a blockchain engineer with 7+ years of experience building in Web3, a speaker at 30+ global conferences, and a technical writer on Medium. Find him on X at @pranshurastogii and on LinkedIn at linkedin.com/in/rastogipranshu.
 
 ## Current Role
 - **Position:** Head of Ecosystem & Integrations
@@ -14,29 +14,44 @@ Pranshu Rastogi is the Head of Ecosystem & Integrations at Push Chain (formerly 
 - **Terse Software** (Apr 2019 – Jul 2020): Software Engineer. Architected backend systems and wrote first production smart contracts.
 
 ## Notable Projects
-- **SPECTER** (specterpq.com): Post-quantum stealth address protocol for Ethereum and Sui. Uses ML-KEM-768 (NIST FIPS 203) for quantum-resistant private payments via ENS/SuiNS names. Detailed insights, research articles, and threads on post-quantum privacy at https://specterpq.com/insights
-- **Bloom Ideas**: Collaborative idea-sharing platform for Web3 communities.
-- **EYI (Earn Your Identity)**: Decentralized identity verification system.
+
+### SPECTER (specterpq.com)
+Post-quantum stealth address protocol for Ethereum and Sui. Uses ML-KEM-768 (NIST FIPS 203) for quantum-resistant private payments via ENS/SuiNS names. Every payment goes to a fresh one-time stealth address — the sender and recipient stay completely private onchain. Integrates with Yellow Network for private off-chain trading. Research and insights: https://specterpq.com/insights
+
+### VANTA (github.com/pranshurastogi/VANTA)
+A transaction firewall that sits between AI agents and the blockchain. Every proposed transaction is scored through a policy engine and AI risk scanner before it can execute. No prompt injection, no urgency signal, and no model error can bypass the gate — only tiered human confirmation can. VANTA makes AI-powered blockchain interactions safe by default, preventing autonomous agents from draining wallets or triggering irreversible on-chain actions.
+
+### AlphIQ (alphiq.xyz)
+All-in-one Alephium blockchain analytics dashboard with real-time network stats, wallet profiling, Ralph contract decoder, gamified quests, and XP-powered achievements.
+
+### EYI — Earn Your Identity
+Decentralized identity verification platform. Connect ENS, GitHub, X, and Farcaster to build a verified, privacy-respecting Web3 identity with risk assessment and fraud detection.
+
+### Bloom Ideas
+Collaborative idea-sharing platform built on Etherlink. Users plant ideas, grow them via community engagement, and earn NFT rewards.
+
+### Intellilearn
+Gamified Web3 education platform that transforms blockchain learning into epic quests with decentralized identity and XP rewards.
 
 ## Writing & Research
-Pranshu writes extensively about post-quantum cryptography, onchain privacy, stealth addresses, and the quantum threat to blockchain. His research and threads are published at:
+Pranshu writes about post-quantum cryptography, AI agent security, onchain privacy, stealth addresses, and the quantum threat to blockchain:
 - SPECTER Insights (post-quantum & privacy research): https://specterpq.com/insights
 - Medium (technical articles): https://pranshurastogi.medium.com
 - Twitter/X threads: https://x.com/pranshurastogii
 
 ## Expertise
-Post-Quantum Cryptography, ML-KEM-768, Lattice-Based Cryptography, Stealth Addresses, Onchain Privacy, Blockchain, Ethereum, Solidity, Rust, Web3, DeFi, Smart Contracts, Decentralized Identity (DID), Push Protocol, Substrate, Ecosystem Development, Developer Relations, Technical Writing
+Post-Quantum Cryptography, ML-KEM-768, Lattice-Based Cryptography, Stealth Addresses, Onchain Privacy, AI Agent Security, Transaction Firewall, Policy Engine, AI Risk Scoring, Blockchain, Ethereum, Solidity, Rust, Web3, DeFi, Smart Contracts, Decentralized Identity (DID), Push Protocol, Substrate, Ecosystem Development, Developer Relations, Technical Writing
 
-## Links
+## Social & Contact
 - Website: https://pranshurastogi.com
-- SPECTER Insights: https://specterpq.com/insights
-- Twitter/X: https://x.com/pranshurastogii
+- Twitter/X: https://x.com/pranshurastogii (@pranshurastogii)
 - LinkedIn: https://linkedin.com/in/rastogipranshu
 - GitHub: https://github.com/pranshurastogi
 - Medium: https://pranshurastogi.medium.com
 - YouTube: https://youtube.com/@pranshurastogi
+- SPECTER Insights: https://specterpq.com/insights
 
 ## Pages
 - Home: https://pranshurastogi.com/
 - POAPs: https://pranshurastogi.com/poaps
-- Projects: https://pranshurastogi.com/projects/specter, https://pranshurastogi.com/projects/bloom-ideas, https://pranshurastogi.com/projects/eyi
+- Projects: https://pranshurastogi.com/projects/specter, https://pranshurastogi.com/projects/vanta, https://pranshurastogi.com/projects/alphiq, https://pranshurastogi.com/projects/bloom-ideas, https://pranshurastogi.com/projects/eyi, https://pranshurastogi.com/projects/intellilearn

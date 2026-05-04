@@ -165,3 +165,122 @@ button:focus-visible,
   white-space: nowrap;
   border-width: 0;
 }
+
+/* ── Space / Cosmic Theme Animations ── */
+
+/* Star twinkling — five variations so they feel organic */
+@keyframes twinkle-1 {
+  0%, 100% { opacity: 0.08; } 50% { opacity: 0.92; }
+}
+@keyframes twinkle-2 {
+  0%, 100% { opacity: 0.18; } 50% { opacity: 0.72; }
+}
+@keyframes twinkle-3 {
+  0%, 100% { opacity: 0.05; } 50% { opacity: 0.58; }
+}
+@keyframes twinkle-4 {
+  0%, 100% { opacity: 0.22; } 50% { opacity: 0.88; }
+}
+@keyframes twinkle-5 {
+  0%, 100% { opacity: 0.12; } 50% { opacity: 0.65; }
+}
+
+.star-twinkle-1 { animation: twinkle-1 2.8s ease-in-out infinite; }
+.star-twinkle-2 { animation: twinkle-2 4.1s 0.9s ease-in-out infinite; }
+.star-twinkle-3 { animation: twinkle-3 3.5s 1.8s ease-in-out infinite; }
+.star-twinkle-4 { animation: twinkle-4 5.2s 0.4s ease-in-out infinite; }
+.star-twinkle-5 { animation: twinkle-5 6.4s 2.6s ease-in-out infinite; }
+
+/* Nebula breathing animations */
+@keyframes nebula-pulse {
+  0%, 100% { opacity: 1;   transform: scale(1);    }
+  50%       { opacity: 0.7; transform: scale(1.07); }
+}
+@keyframes nebula-pulse-slow {
+  0%, 100% { opacity: 1;   transform: scale(1);    }
+  50%       { opacity: 0.8; transform: scale(0.94); }
+}
+@keyframes nebula-drift {
+  0%,  100% { opacity: 1;   transform: translate(0,    0);   }
+  33%        { opacity: 0.8; transform: translate(2%, -1.5%); }
+  66%        { opacity: 0.9; transform: translate(-1%, 2%);   }
+}
+
+.animate-nebula-pulse      { animation: nebula-pulse      14s ease-in-out infinite; }
+.animate-nebula-pulse-slow { animation: nebula-pulse-slow 19s ease-in-out infinite; }
+.animate-nebula-drift      { animation: nebula-drift      24s ease-in-out infinite; }
+
+/* Aurora top-strip wave */
+@keyframes aurora {
+  0%,  100% { opacity: 1;   transform: scaleX(1)    translateY(0);   }
+  33%        { opacity: 0.7; transform: scaleX(1.04) translateY(-5px); }
+  66%        { opacity: 0.9; transform: scaleX(0.97) translateY(4px); }
+}
+.animate-aurora { animation: aurora 26s ease-in-out infinite; }
+
+/* Section heading cosmic shimmer */
+@keyframes shimmer-across {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+.cosmic-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--text-primary) 30%,
+    var(--accent-purple) 50%,
+    var(--accent-cyan)   60%,
+    var(--text-primary) 70%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer-across 6s linear infinite;
+}
+
+/* Orbit ring decoration */
+@keyframes orbit-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.animate-orbit         { animation: orbit-spin 20s linear infinite; }
+.animate-orbit-reverse { animation: orbit-spin 15s linear infinite reverse; }
+
+/* Cosmic card glow pulse on hover */
+@keyframes cosmic-glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(159, 78, 255, 0.06); }
+  50%       { box-shadow: 0 0 45px rgba(159, 78, 255, 0.18); }
+}
+.cosmic-card-hover:hover {
+  animation: cosmic-glow-pulse 2.5s ease-in-out infinite;
+}
+
+/* Enhanced section divider with cosmic glow */
+.section-divider-cosmic {
+  height: 1px;
+  max-width: 12rem;
+  margin: 0 auto;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(159, 78, 255, 0.5),
+    rgba(0, 245, 255, 0.4),
+    transparent
+  );
+  box-shadow: 0 0 8px rgba(159, 78, 255, 0.3);
+}
+
+/* Floating planet animation */
+@keyframes float-planet {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%       { transform: translateY(-10px) rotate(3deg); }
+}
+.animate-float-planet { animation: float-planet 8s ease-in-out infinite; }
+
+/* Smooth page scroll hint */
+@keyframes scroll-hint {
+  0%   { opacity: 0.8; transform: translateY(0); }
+  50%  { opacity: 0.4; transform: translateY(6px); }
+  100% { opacity: 0.8; transform: translateY(0); }
+}
+.animate-scroll-hint { animation: scroll-hint 2s ease-in-out infinite; }

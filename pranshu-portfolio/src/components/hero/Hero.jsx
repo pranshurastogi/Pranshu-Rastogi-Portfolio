@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import {
   FaTwitter, FaLinkedin, FaMedium, FaGithub, FaYoutube,
 } from "react-icons/fa";
-import { FileText, Download, ChevronDown, ChevronUp } from "lucide-react";
+import { FileText, Download, ChevronDown, ChevronUp, ChevronsDown } from "lucide-react";
 import AnimatedPfp from "./AnimatedPfp";
 
 /* ── Typewriter ── */
@@ -93,24 +93,30 @@ export default function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        {/* Avatar */}
+        {/* Avatar with orbit ring */}
         <motion.div
-          className="relative w-36 h-36 sm:w-44 sm:h-44 md:w-52 md:h-52 flex-shrink-0 mx-auto md:mx-0"
+          className="relative flex-shrink-0 mx-auto md:mx-0"
           initial={{ scale: 0.85, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.1 }}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
-          style={{ perspective: 800 }}
+          style={{ perspective: 800, width: "fit-content" }}
         >
-          <div className="absolute inset-0 rounded-3xl border-2 border-[var(--accent-purple)]/20 shadow-[0_0_40px_rgba(159,78,255,0.12)]" />
-          <motion.div
-            className="relative w-full h-full rounded-3xl overflow-hidden"
-            animate={{ rotateY: hovered ? 8 : 0, rotateX: hovered ? 4 : 0, scale: hovered ? 1.03 : 1 }}
-            transition={{ type: "spring", stiffness: 120, damping: 12 }}
-          >
-            <AnimatedPfp />
-          </motion.div>
+          {/* Outer orbit ring */}
+          <div className="absolute inset-[-18px] rounded-full border border-[var(--accent-purple)]/10 animate-orbit pointer-events-none" />
+          <div className="absolute inset-[-10px] rounded-full border border-dashed border-[var(--accent-cyan)]/08 animate-orbit-reverse pointer-events-none" />
+
+          <div className="relative w-36 h-36 sm:w-44 sm:h-44 md:w-52 md:h-52">
+            <div className="absolute inset-0 rounded-3xl border-2 border-[var(--accent-purple)]/20 shadow-[0_0_50px_rgba(159,78,255,0.15)]" />
+            <motion.div
+              className="relative w-full h-full rounded-3xl overflow-hidden"
+              animate={{ rotateY: hovered ? 8 : 0, rotateX: hovered ? 4 : 0, scale: hovered ? 1.03 : 1 }}
+              transition={{ type: "spring", stiffness: 120, damping: 12 }}
+            >
+              <AnimatedPfp />
+            </motion.div>
+          </div>
         </motion.div>
 
         {/* Text */}
@@ -194,6 +200,16 @@ export default function Hero() {
             </Link>
           </motion.div>
         </motion.div>
+      </motion.div>
+      {/* Scroll indicator */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-[var(--text-muted)]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2.2, duration: 0.8 }}
+      >
+        <span className="text-[10px] font-mono tracking-[0.2em] uppercase opacity-60">Explore</span>
+        <ChevronsDown className="w-4 h-4 animate-scroll-hint" />
       </motion.div>
     </section>
   );

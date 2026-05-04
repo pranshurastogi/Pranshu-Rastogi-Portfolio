@@ -3,24 +3,51 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  ExternalLinkIcon, GithubIcon, EyeIcon, BookOpenIcon, TrophyIcon,
-  XIcon, MessageCircleIcon, MailIcon,
+  ExternalLinkIcon, GithubIcon, EyeIcon, XIcon, MailIcon, ChevronLeftIcon, ChevronRightIcon,
 } from "lucide-react";
 import { FaTwitter } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import projectsData from "../../data/projects.json";
 import OptimizedImage from "../ui/OptimizedImage";
 
-const ProjectShowcase = () => {
+const PROJECTS_PER_PAGE = 6;
+
+const pageVariants = {
+  enter: (dir) => ({ opacity: 0, x: dir > 0 ? 50 : -50 }),
+  center: { opacity: 1, x: 0, transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] } },
+  exit: (dir) => ({ opacity: 0, x: dir > 0 ? -50 : 50, transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] } }),
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45, delay: i * 0.07, ease: [0.25, 0.46, 0.45, 0.94] },
+  }),
+};
+
+export default function ProjectShowcase() {
   const router = useRouter();
   const [hoveredCard, setHoveredCard] = useState(null);
   const [showCollabModal, setShowCollabModal] = useState(false);
-  const projects = projectsData.projects;
+  const [page, setPage] = useState(0);
+  const [dir, setDir] = useState(1);
 
-  const openProject = (project) => {
+  const projects = projectsData.projects;
+  const totalPages = Math.ceil(projects.length / PROJECTS_PER_PAGE);
+  const pageProjects = projects.slice(page * PROJECTS_PER_PAGE, (page + 1) * PROJECTS_PER_PAGE);
+
+  function changePage(newPage) {
+    setDir(newPage > page ? 1 : -1);
+    setPage(newPage);
+    document.getElementById("projects")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function openProject(project) {
     const slug = project.title.toLowerCase().replace(/\s+/g, "-");
     router.push(`/projects/${slug}`);
-  };
+  }
 
   return (
     <div className="py-16 md:py-24">
@@ -33,115 +60,205 @@ const ProjectShowcase = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-3">
+          <div className="inline-flex items-center gap-2 mb-3">
+            <span className="text-[10px] font-mono tracking-[0.2em] text-[var(--accent-purple)] uppercase opacity-70">
+              {page === 0 ? "★ Featured Builds" : "★ More Projects"}
+            </span>
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold mb-3 tracking-tight cosmic-shimmer">
             Projects
           </h2>
-          <div className="section-divider mb-4" />
+          <div className="section-divider-cosmic mb-4" />
           <p className="text-[var(--text-muted)] text-sm max-w-lg mx-auto">
-            Building privacy protocols, DeFi infrastructure, and decentralized identity across multiple chains.
+            Building privacy protocols, AI security infrastructure, and decentralized identity across multiple chains.
           </p>
         </motion.div>
 
-        {/* Project grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
-          {projects.map((project, index) => (
-            <motion.article
-              key={project.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.08 }}
-              whileHover={{ y: -6 }}
-              className="group cursor-pointer"
-              onClick={() => openProject(project)}
-              onMouseEnter={() => setHoveredCard(project.id)}
-              onMouseLeave={() => setHoveredCard(null)}
-            >
-              <div
-                className={`bg-[var(--bg-secondary)] border rounded-2xl p-0 h-full transition-all duration-300 overflow-hidden ${
-                  hoveredCard === project.id
-                    ? "border-[var(--accent-purple)]/30 shadow-lg shadow-[var(--accent-purple)]/5"
-                    : "border-white/[0.06]"
-                }`}
+        {/* Project grid with AnimatePresence for page transitions */}
+        <AnimatePresence mode="wait" custom={dir}>
+          <motion.div
+            key={page}
+            custom={dir}
+            variants={pageVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10"
+          >
+            {pageProjects.map((project, index) => (
+              <motion.article
+                key={project.id}
+                custom={index}
+                variants={cardVariants}
+                initial="hidden"
+                animate="visible"
+                whileHover={{ y: -6, transition: { duration: 0.2 } }}
+                className="group cursor-pointer"
+                onClick={() => openProject(project)}
+                onMouseEnter={() => setHoveredCard(project.id)}
+                onMouseLeave={() => setHoveredCard(null)}
               >
-                {/* Image */}
-                <div className="relative aspect-video overflow-hidden">
-                  {project.images[0]?.match(/\.(mov|mp4|webm)$/) ? (
-                    <video
-                      src={project.images[0]}
-                      className="w-full h-full object-cover"
-                      muted loop playsInline autoPlay
-                    />
-                  ) : (
-                    <OptimizedImage
-                      src={project.images[0]}
-                      alt={`${project.title} — ${project.subtitle}`}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-cover"
-                    />
-                  )}
-                  {/* Hover overlay */}
-                  <div className="absolute inset-0 bg-[var(--bg-primary)]/60 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <div className="bg-white/10 backdrop-blur rounded-full p-3 border border-white/20">
-                      <EyeIcon className="w-5 h-5 text-white" />
+                <div
+                  className={`relative bg-[var(--bg-secondary)] border rounded-2xl p-0 h-full transition-all duration-300 overflow-hidden ${
+                    hoveredCard === project.id
+                      ? "border-[var(--accent-purple)]/40 shadow-[0_8px_40px_rgba(159,78,255,0.12)]"
+                      : "border-white/[0.06]"
+                  }`}
+                >
+                  {/* Cosmic glow overlay on hover */}
+                  <div
+                    className={`absolute inset-0 pointer-events-none transition-opacity duration-500 rounded-2xl ${
+                      hoveredCard === project.id ? "opacity-100" : "opacity-0"
+                    }`}
+                    style={{
+                      background: `radial-gradient(ellipse at 50% 0%, rgba(159,78,255,0.08) 0%, transparent 70%)`,
+                    }}
+                  />
+
+                  {/* Image */}
+                  <div className="relative aspect-video overflow-hidden">
+                    {project.images[0]?.match(/\.(mov|mp4|webm)$/) ? (
+                      <video
+                        src={project.images[0]}
+                        className="w-full h-full object-cover"
+                        muted loop playsInline autoPlay
+                      />
+                    ) : (
+                      <OptimizedImage
+                        src={project.images[0]}
+                        alt={`${project.title} — ${project.subtitle}`}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                      />
+                    )}
+                    {/* Hover overlay */}
+                    <div className="absolute inset-0 bg-[var(--bg-primary)]/60 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <div className="bg-white/10 backdrop-blur rounded-full p-3 border border-white/20">
+                        <EyeIcon className="w-5 h-5 text-white" />
+                      </div>
                     </div>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-5 space-y-3">
-                  <div>
-                    <h3 className={`text-base font-semibold mb-1 transition-colors ${
-                      hoveredCard === project.id ? "text-[var(--accent-purple)]" : "text-[var(--text-primary)]"
-                    }`}>
-                      {project.title}
-                    </h3>
-                    <p className="text-[var(--text-muted)] text-xs">{project.subtitle}</p>
-                  </div>
-
-                  <p className="text-[var(--text-secondary)] text-sm leading-relaxed line-clamp-2">
-                    {project.description}
-                  </p>
-
-                  {/* Tech tags */}
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.technologies.slice(0, 3).map((tech, i) => (
-                      <span
-                        key={i}
-                        className="px-2 py-0.5 bg-[var(--accent-purple-dim)] text-[var(--accent-purple)] text-[10px] rounded-md font-medium"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                    {project.technologies.length > 3 && (
-                      <span className="px-2 py-0.5 bg-white/[0.03] text-[var(--text-muted)] text-[10px] rounded-md">
-                        +{project.technologies.length - 3}
-                      </span>
+                    {/* Difficulty badge */}
+                    {project.difficulty === "Advanced" && (
+                      <div className="absolute top-2 right-2 px-2 py-0.5 bg-black/60 backdrop-blur rounded-md border border-[var(--accent-purple)]/30 text-[9px] font-mono text-[var(--accent-purple)] uppercase tracking-wider">
+                        Advanced
+                      </div>
                     )}
                   </div>
 
-                  {/* Footer */}
-                  <div className="flex items-center justify-between pt-2 border-t border-white/[0.04]">
-                    <span className="px-2 py-0.5 bg-[var(--accent-cyan-dim)] text-[var(--accent-cyan)] text-[10px] rounded-md font-medium">
-                      {project.category}
-                    </span>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.open(project.live, "_blank", "noopener,noreferrer");
-                      }}
-                      className="px-3 py-1.5 bg-[var(--accent-purple-dim)] text-[var(--accent-purple)] text-xs rounded-lg font-medium hover:bg-[var(--accent-purple)]/20 transition-colors min-h-[36px]"
-                      aria-label={`Launch demo for ${project.title}`}
-                    >
-                      Live Demo →
-                    </button>
+                  {/* Content */}
+                  <div className="p-5 space-y-3">
+                    <div>
+                      <h3 className={`text-base font-semibold mb-1 transition-colors ${
+                        hoveredCard === project.id ? "text-[var(--accent-purple)]" : "text-[var(--text-primary)]"
+                      }`}>
+                        {project.title}
+                      </h3>
+                      <p className="text-[var(--text-muted)] text-xs">{project.subtitle}</p>
+                    </div>
+
+                    <p className="text-[var(--text-secondary)] text-sm leading-relaxed line-clamp-2">
+                      {project.description}
+                    </p>
+
+                    {/* Tech tags */}
+                    <div className="flex flex-wrap gap-1.5">
+                      {project.technologies.slice(0, 3).map((tech, i) => (
+                        <span
+                          key={i}
+                          className="px-2 py-0.5 bg-[var(--accent-purple-dim)] text-[var(--accent-purple)] text-[10px] rounded-md font-medium"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      {project.technologies.length > 3 && (
+                        <span className="px-2 py-0.5 bg-white/[0.03] text-[var(--text-muted)] text-[10px] rounded-md">
+                          +{project.technologies.length - 3}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Footer */}
+                    <div className="flex items-center justify-between pt-2 border-t border-white/[0.04]">
+                      <span className="px-2 py-0.5 bg-[var(--accent-cyan-dim)] text-[var(--accent-cyan)] text-[10px] rounded-md font-medium">
+                        {project.category}
+                      </span>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(project.live, "_blank", "noopener,noreferrer");
+                        }}
+                        className="px-3 py-1.5 bg-[var(--accent-purple-dim)] text-[var(--accent-purple)] text-xs rounded-lg font-medium hover:bg-[var(--accent-purple)]/20 transition-colors min-h-[36px]"
+                        aria-label={`Launch demo for ${project.title}`}
+                      >
+                        {project.live?.includes("github.com") ? "GitHub →" : "Live Demo →"}
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.article>
-          ))}
-        </div>
+              </motion.article>
+            ))}
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <motion.div
+            className="flex items-center justify-center gap-6 mb-12"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <button
+              onClick={() => changePage(page - 1)}
+              disabled={page === 0}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl border text-sm font-medium transition-all ${
+                page === 0
+                  ? "border-white/[0.04] text-[var(--text-muted)] opacity-40 cursor-not-allowed"
+                  : "border-white/[0.08] text-[var(--text-secondary)] hover:border-[var(--accent-purple)]/40 hover:text-[var(--accent-purple)] hover:bg-[var(--accent-purple-dim)]"
+              }`}
+              aria-label="Previous page"
+            >
+              <ChevronLeftIcon className="w-4 h-4" />
+              Prev
+            </button>
+
+            {/* Cosmic dot indicators */}
+            <div className="flex items-center gap-2.5">
+              {Array.from({ length: totalPages }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => changePage(i)}
+                  aria-label={`Go to page ${i + 1}`}
+                  className="relative"
+                >
+                  <span
+                    className={`block rounded-full transition-all duration-300 ${
+                      i === page
+                        ? "w-6 h-2 bg-[var(--accent-purple)] shadow-[0_0_8px_rgba(159,78,255,0.8)]"
+                        : "w-2 h-2 bg-white/20 hover:bg-white/40"
+                    }`}
+                  />
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={() => changePage(page + 1)}
+              disabled={page === totalPages - 1}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl border text-sm font-medium transition-all ${
+                page === totalPages - 1
+                  ? "border-white/[0.04] text-[var(--text-muted)] opacity-40 cursor-not-allowed"
+                  : "border-white/[0.08] text-[var(--text-secondary)] hover:border-[var(--accent-purple)]/40 hover:text-[var(--accent-purple)] hover:bg-[var(--accent-purple-dim)]"
+              }`}
+              aria-label="Next page"
+            >
+              Next
+              <ChevronRightIcon className="w-4 h-4" />
+            </button>
+          </motion.div>
+        )}
 
         {/* CTA */}
         <motion.div
@@ -151,13 +268,20 @@ const ProjectShowcase = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <div className="bg-[var(--bg-secondary)] border border-white/[0.06] rounded-2xl p-8 max-w-lg mx-auto">
-            <p className="text-[var(--text-secondary)] mb-5 text-sm">
-              Interested in collaborating on blockchain projects?
+          <div className="relative bg-[var(--bg-secondary)] border border-white/[0.06] rounded-2xl p-8 max-w-lg mx-auto overflow-hidden">
+            {/* Nebula glow inside CTA */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: "radial-gradient(ellipse at 50% 100%, rgba(159,78,255,0.06) 0%, transparent 70%)",
+              }}
+            />
+            <p className="text-[var(--text-secondary)] mb-5 text-sm relative z-10">
+              Interested in collaborating on blockchain or AI security projects?
             </p>
             <button
               onClick={() => setShowCollabModal(true)}
-              className="px-6 py-2.5 bg-[var(--accent-purple)] text-white font-medium rounded-xl hover:bg-[var(--accent-purple)]/90 transition-all hover:shadow-lg hover:shadow-[var(--accent-purple)]/20 text-sm"
+              className="relative z-10 px-6 py-2.5 bg-[var(--accent-purple)] text-white font-medium rounded-xl hover:bg-[var(--accent-purple)]/90 transition-all hover:shadow-lg hover:shadow-[var(--accent-purple)]/20 text-sm"
             >
               Let's Build Together
             </button>
@@ -183,7 +307,6 @@ const ProjectShowcase = () => {
               className="bg-[var(--bg-secondary)] border border-white/[0.08] rounded-2xl max-w-lg w-full overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Header */}
               <div className="p-6 border-b border-white/[0.06]">
                 <div className="flex items-start justify-between mb-4">
                   <div>
@@ -203,7 +326,6 @@ const ProjectShowcase = () => {
                 </div>
               </div>
 
-              {/* Connect options */}
               <div className="p-6 space-y-4">
                 <a
                   href="https://x.com/pranshurastogii"
@@ -216,7 +338,7 @@ const ProjectShowcase = () => {
                   </div>
                   <div className="flex-1">
                     <p className="text-sm font-semibold text-[var(--text-primary)]">Connect on X</p>
-                    <p className="text-xs text-[var(--text-muted)]">DM for real-time conversations</p>
+                    <p className="text-xs text-[var(--text-muted)]">@pranshurastogii — DM for real-time conversations</p>
                   </div>
                   <ExternalLinkIcon className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--accent-purple)] transition-colors" />
                 </a>
@@ -245,6 +367,4 @@ const ProjectShowcase = () => {
       </AnimatePresence>
     </div>
   );
-};
-
-export default ProjectShowcase;
+}

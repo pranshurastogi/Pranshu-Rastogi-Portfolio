@@ -21,13 +21,15 @@ const victorMono = Victor_Mono({
 export const metadata = {
   title: "Pranshu Rastogi | Blockchain Engineer, Speaker & Web3 Builder",
   description:
-    "Head of Ecosystem & Integrations at Push Chain. Blockchain engineer with 7+ years in Web3, speaker at 30+ global conferences, and technical writer. Builder of SPECTER, a post-quantum stealth address protocol for private payments on Ethereum and Sui. Writes about post-quantum cryptography, onchain privacy, and the future of decentralized communication.",
+    "Head of Ecosystem & Integrations at Push Chain. Blockchain engineer with 7+ years in Web3, speaker at 30+ global conferences, and technical writer. Builder of SPECTER (post-quantum stealth address protocol) and VANTA (AI transaction firewall for blockchain). Writes about post-quantum cryptography, AI agent security, onchain privacy, and the future of decentralized communication.",
   keywords: [
     "Pranshu Rastogi", "blockchain engineer", "Web3 builder", "Push Chain", "Push Protocol",
     "SPECTER", "post-quantum cryptography", "stealth addresses", "ML-KEM-768", "NIST FIPS 203",
+    "VANTA", "AI transaction firewall", "AI agent security", "blockchain firewall",
     "onchain privacy", "Ethereum privacy", "quantum-resistant blockchain", "Solidity", "Rust",
     "DeFi", "decentralized identity", "ecosystem development", "blockchain speaker",
     "smart contracts", "privacy protocols", "lattice-based cryptography",
+    "policy engine", "AI risk scanner", "Web3 AI security",
   ],
   metadataBase: new URL("https://pranshurastogi.com"),
   alternates: { canonical: "/" },
@@ -45,7 +47,7 @@ export const metadata = {
   openGraph: {
     title: "Pranshu Rastogi | Blockchain Engineer, Speaker & Web3 Builder",
     description:
-      "Head of Ecosystem & Integrations at Push Chain. Building SPECTER, a post-quantum stealth address protocol using ML-KEM-768 for private payments on Ethereum and Sui. Writes about post-quantum cryptography, onchain privacy, and decentralized systems. 7+ years in Web3.",
+      "Head of Ecosystem & Integrations at Push Chain. Builder of SPECTER (post-quantum private payments) and VANTA (AI transaction firewall). Writes about post-quantum cryptography, AI agent security, onchain privacy, and decentralized systems. 7+ years in Web3.",
     type: "website",
     url: "https://pranshurastogi.com/",
     images: [
@@ -63,7 +65,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Pranshu Rastogi | Blockchain Engineer & Web3 Builder",
     description:
-      "Head of Ecosystem & Integrations at Push Chain. Building SPECTER for post-quantum private payments. 7+ years in Web3.",
+      "Head of Ecosystem & Integrations at Push Chain. Builder of SPECTER & VANTA — post-quantum privacy and AI blockchain security. 7+ years in Web3.",
     images: ["https://pranshurastogi.com/images/pfp-current.png"],
     site: "@pranshurastogii",
     creator: "@pranshurastogii",
@@ -106,6 +108,7 @@ export default function RootLayout({ children }) {
       "Blockchain", "Web3", "DeFi", "Ethereum", "Smart Contracts",
       "Ecosystem Development", "Push Protocol", "Onchain Privacy", "Post-Quantum Cryptography",
       "ML-KEM-768", "Stealth Addresses", "Lattice-Based Cryptography", "Decentralized Identity",
+      "AI Agent Security", "Transaction Firewall", "Policy Engine", "AI Risk Scoring",
     ],
     alumniOf: {
       "@type": "EducationalOrganization",
