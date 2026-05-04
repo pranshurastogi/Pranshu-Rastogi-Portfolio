@@ -20,6 +20,8 @@ const SPEAKERS_RAW = [
   { src: "/images/pg-dtp.png", name: "Intro to web3 - DYP" },
   { src: "/images/pg-fipkart.JPG", name: "Polygon X Flipkart" },
   { src: "/images/pg-vietnam.png", name: "BUIDL ASIA, Vietnam" },
+  { src: "/images/pg-buidl-vietnam.jpeg", name: "BUIDL Asia Community" },
+  { src: "/images/pg-talent-of-the-week.jpeg", name: "Talent of the Week" },
   { src: "/images/pg-w3c.jpeg", name: "Web3 Conf Goa" },
 ];
 

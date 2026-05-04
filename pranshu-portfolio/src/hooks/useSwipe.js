@@ -1,52 +1,44 @@
-// Custom hook for swipe gestures (mobile-friendly)
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 
 export function useSwipe(onSwipeLeft, onSwipeRight, threshold = 50) {
-  const [touchStart, setTouchStart] = useState(null);
-  const [touchEnd, setTouchEnd] = useState(null);
   const elementRef = useRef(null);
-
-  const minSwipeDistance = threshold;
-
-  const onTouchStart = (e) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-
-    if (isLeftSwipe && onSwipeLeft) {
-      onSwipeLeft();
-    }
-    if (isRightSwipe && onSwipeRight) {
-      onSwipeRight();
-    }
-  };
+  const touchStartRef = useRef(null);
+  const touchEndRef = useRef(null);
+  // Keep callbacks fresh without triggering effect re-runs
+  const callbacksRef = useRef({ onSwipeLeft, onSwipeRight });
 
   useEffect(() => {
-    const element = elementRef.current;
-    if (!element) return;
+    callbacksRef.current = { onSwipeLeft, onSwipeRight };
+  }, [onSwipeLeft, onSwipeRight]);
 
-    element.addEventListener('touchstart', onTouchStart, { passive: true });
-    element.addEventListener('touchmove', onTouchMove, { passive: true });
-    element.addEventListener('touchend', onTouchEnd, { passive: true });
+  useEffect(() => {
+    const el = elementRef.current;
+    if (!el) return;
+
+    const handleStart = (e) => {
+      touchEndRef.current = null;
+      touchStartRef.current = e.targetTouches[0].clientX;
+    };
+    const handleMove = (e) => {
+      touchEndRef.current = e.targetTouches[0].clientX;
+    };
+    const handleEnd = () => {
+      if (touchStartRef.current === null || touchEndRef.current === null) return;
+      const distance = touchStartRef.current - touchEndRef.current;
+      if (distance > threshold) callbacksRef.current.onSwipeLeft?.();
+      else if (distance < -threshold) callbacksRef.current.onSwipeRight?.();
+    };
+
+    el.addEventListener('touchstart', handleStart, { passive: true });
+    el.addEventListener('touchmove',  handleMove,  { passive: true });
+    el.addEventListener('touchend',   handleEnd,   { passive: true });
 
     return () => {
-      element.removeEventListener('touchstart', onTouchStart);
-      element.removeEventListener('touchmove', onTouchMove);
-      element.removeEventListener('touchend', onTouchEnd);
+      el.removeEventListener('touchstart', handleStart);
+      el.removeEventListener('touchmove',  handleMove);
+      el.removeEventListener('touchend',   handleEnd);
     };
-  }, [touchStart, touchEnd]);
+  }, [threshold]); // listeners only re-attach if threshold changes
 
   return elementRef;
 }
-

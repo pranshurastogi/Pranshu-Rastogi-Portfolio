@@ -7,6 +7,9 @@ import YouTubeVideoCard from "./YouTubeVideoCard";
 import { X } from "lucide-react";
 
 export default function YouTubeSection({ videos }) {
+  // Hook must be at the top level — before any early returns
+  const [modalVideo, setModalVideo] = useState(null);
+
   if (!Array.isArray(videos)) {
     return (
       <div className="text-center py-12 text-white/70">
@@ -22,7 +25,6 @@ export default function YouTubeSection({ videos }) {
     );
   }
 
-  const [modalVideo, setModalVideo] = useState(null);
   const visibleVideos = getVisibleVideos(videos);
 
   return (

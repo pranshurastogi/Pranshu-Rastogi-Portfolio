@@ -4,7 +4,9 @@ export const MIN_VIDEOS_DISPLAY = 5;
 
 export const NEON_COLORS = ["var(--accent-lime)", "var(--accent-cyan)", "var(--accent-purple)", "var(--accent-lime)"];
 
-export const FALLBACK_THUMB = "/images/fallback.jpg";
+// Inline SVG — no external file, never produces a 404
+export const FALLBACK_THUMB =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='360'%3E%3Crect width='640' height='360' fill='%23111111'/%3E%3Ccircle cx='320' cy='180' r='36' fill='%23222222'/%3E%3Cpolygon points='308%2C162 308%2C198 344%2C180' fill='%23444444'/%3E%3C/svg%3E";
 
 /**
  * @param {string} videoId - YouTube video ID

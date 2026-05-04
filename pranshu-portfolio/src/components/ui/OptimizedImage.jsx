@@ -20,6 +20,7 @@ const OptimizedImage = ({
   ...props
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const [isInView, setIsInView] = useState(priority);
   const imgRef = useRef(null);
 
@@ -91,7 +92,7 @@ const OptimizedImage = ({
       className={`relative overflow-hidden ${className}`}
       style={{ width: fill ? '100%' : width, height: fill ? '100%' : height }}
     >
-      {isInView && (
+      {isInView && !hasError && (
         <Image
           src={optimizedSrc}
           alt={enhancedAlt}
@@ -104,17 +105,25 @@ const OptimizedImage = ({
           placeholder={placeholder}
           blurDataURL={getBlurDataURL()}
           onLoad={() => setIsLoaded(true)}
+          onError={() => { setIsLoaded(true); setHasError(true); }}
           className={`transition-opacity duration-300 ${
             isLoaded ? 'opacity-100' : 'opacity-0'
           } ${className}`}
           {...props}
         />
       )}
-      
+
+      {/* Error fallback */}
+      {hasError && (
+        <div className="absolute inset-0 bg-[var(--bg-card)] flex flex-col items-center justify-center gap-1.5">
+          <span className="text-[var(--text-muted)] text-xs opacity-50">Image unavailable</span>
+        </div>
+      )}
+
       {/* Loading skeleton */}
-      {!isLoaded && isInView && (
-        <div className="absolute inset-0 bg-gradient-to-br from-[#AEEA00]/10 to-black/50 animate-pulse flex items-center justify-center">
-          <div className="w-8 h-8 border-2 border-[#AEEA00]/30 border-t-[#AEEA00] rounded-full animate-spin"></div>
+      {!isLoaded && isInView && !hasError && (
+        <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent-purple-dim)] to-black/50 animate-pulse flex items-center justify-center">
+          <div className="w-6 h-6 border-2 border-[var(--accent-purple)]/30 border-t-[var(--accent-purple)] rounded-full animate-spin" />
         </div>
       )}
     </div>

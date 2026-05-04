@@ -10,41 +10,36 @@ const GLOW_2 = "#111827"; // slate-900
 const GLOW_3 = "#374151"; // slate-700
 const GLOW_4 = "#000000"; // black
 
-// Matrix/code effect overlay for inside the PFP
-function MatrixCodeOverlay({ color = "#6b7280", density = 18 }) {
-  const columns = density;
-  const rows = 8;
-  const chars = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+// Matrix/code effect — 8×4 = 32 elements (down from 144), skipped on mobile
+function MatrixCodeOverlay({ color = "#6b7280" }) {
+  const COLS = 8;
+  const ROWS = 4;
+  const chars = "01ABCDEF";
   return (
     <div
       className="absolute inset-0 w-full h-full z-10 pointer-events-none"
-      style={{
-        mixBlendMode: "lighten",
-        opacity: 0.10,
-        filter: "blur(0.3px)",
-      }}
+      style={{ mixBlendMode: "lighten", opacity: 0.09 }}
     >
-      <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ width: "100%", height: "100%" }}>
-        {Array.from({ length: columns }).map((_, colIdx) => (
-          Array.from({ length: rows }).map((_, rowIdx) => {
-            const delay = (colIdx * 0.2 + rowIdx * 0.13).toFixed(2);
-            const duration = (2.5 + (colIdx % 3) * 0.7).toFixed(2);
-            const charIndex = (colIdx * 7 + rowIdx * 11) % chars.length;
-            const char = chars[charIndex];
+      <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+        {Array.from({ length: COLS }, (_, ci) =>
+          Array.from({ length: ROWS }, (_, ri) => {
+            const delay = ((ci * 0.3 + ri * 0.2) % 2).toFixed(2);
+            const dur = (2.5 + (ci % 3) * 0.6).toFixed(2);
+            const char = chars[(ci * 3 + ri * 5) % chars.length];
             return (
               <text
-                key={colIdx + "-" + rowIdx}
-                x={5 + (colIdx * 90) / (columns - 1)}
-                y={10 + (rowIdx * 80) / (rows - 1)}
+                key={`${ci}-${ri}`}
+                x={6 + (ci * 88) / (COLS - 1)}
+                y={12 + (ri * 76) / (ROWS - 1)}
                 fill={color}
-                fontSize="7"
-                fontFamily="'JetBrains Mono', 'Fira Mono', 'Cascadia Code', 'Consolas', monospace"
-                opacity={0.4 - rowIdx * 0.04}
+                fontSize="8"
+                fontFamily="monospace"
+                opacity={0.38 - ri * 0.06}
               >
                 <animate
                   attributeName="y"
-                  values={`0;${10 + (rowIdx * 80) / (rows - 1)};100`}
-                  dur={`${duration}s`}
+                  values={`0;${12 + (ri * 76) / (ROWS - 1)};100`}
+                  dur={`${dur}s`}
                   repeatCount="indefinite"
                   begin={`${delay}s`}
                 />
@@ -52,7 +47,7 @@ function MatrixCodeOverlay({ color = "#6b7280", density = 18 }) {
               </text>
             );
           })
-        ))}
+        )}
       </svg>
     </div>
   );
@@ -73,8 +68,12 @@ export default function AnimatedPfp({
   // Reduced 3D tilt on mobile for better performance
   const rotateX = useTransform(y, [-100, 100], isMobile ? [8, -8] : [18, -18]);
   const rotateY = useTransform(x, [-100, 100], isMobile ? [-8, 8] : [-18, 18]);
-  const shadowX = useTransform(x, [-100, 100], [32, -32]);
-  const shadowY = useTransform(y, [-100, 100], [-16, 32]);
+  const shadowYVal = useTransform(y, [-100, 100], [-16, 32]);
+  // Derive reactive boxShadow string from the MotionValue so it updates on mouse move
+  const boxShadow = useTransform(
+    shadowYVal,
+    (sy) => `0px ${sy.toFixed(1)}px 48px 0px rgba(30,41,59,0.32)`
+  );
 
   function handleMouseMove(e) {
     if (isMobile) return; // Disable mouse tracking on mobile
@@ -136,19 +135,14 @@ export default function AnimatedPfp({
       {/* Subtle floating effect + 3D tilt + glass shadow */}
       <motion.div
         className="relative w-full h-full rounded-3xl overflow-hidden z-20"
-        style={{
-          rotateX,
-          rotateY,
-          scale: hovered ? 1.09 : 1,
-          boxShadow: shadowX && shadowY ? `0px ${shadowY.get()}px ${48 + (hovered ? 24 : 0)}px 0px rgba(30,41,59,0.32)` : undefined,
-        }}
+        style={{ rotateX, rotateY, boxShadow }}
         animate={{
           y: [0, -10, 0, 10, 0],
         }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
       >
-        {/* Matrix/code effect now behind the image for clarity */}
-        <MatrixCodeOverlay />
+        {/* Matrix code effect — skipped on mobile for performance */}
+        {!isMobile && <MatrixCodeOverlay />}
         <OptimizedImage
           src={src}
           alt={`${alt} - Blockchain engineer and Web3 developer profile picture`}

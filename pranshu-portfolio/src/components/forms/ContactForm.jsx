@@ -1,13 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, X, MessageCircle } from "lucide-react";
 import { createPortal } from "react-dom";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-  const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState({ success: null, text: "" });
@@ -21,13 +20,15 @@ export default function ContactForm() {
     message: (v) => (v.trim() ? "" : "Message cannot be empty"),
   };
 
-  useEffect(() => {
-    const newErr = {};
-    for (let field in formData) {
+  // Compute errors synchronously — no useEffect needed, avoids a render cycle
+  const errors = useMemo(() => {
+    const errs = {};
+    for (const field in formData) {
       const err = validators[field]?.(formData[field]);
-      if (err) newErr[field] = err;
+      if (err) errs[field] = err;
     }
-    setErrors(newErr);
+    return errs;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData]);
 
   useEffect(() => {
