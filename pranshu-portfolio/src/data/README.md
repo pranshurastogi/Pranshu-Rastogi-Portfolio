@@ -1,6 +1,6 @@
 # Projects Data Structure
 
-This file contains the structure and documentation for the `projects.json` file used in the ProjectShowcase component.
+This file contains the structure and documentation for the `projects.json` file used in the ProjectShowcase component. For **where to put image files**, redirects, and removal workflow, see **`ASSETS.md`** in the project root.
 
 ## File Location
 `src/data/projects.json`
@@ -65,9 +65,9 @@ Use Tailwind CSS gradient classes for the `gradient` field. Examples:
   "description": "Cross-chain DeFi aggregator with yield optimization.",
   "longDescription": "A comprehensive DeFi ecosystem that bridges multiple blockchain networks...",
   "images": [
-    "/images/project-defi-1.png",
-    "/images/project-defi-2.png",
-    "/images/project-defi-3.png"
+    "/images/projects/my-project-1.png",
+    "/images/projects/my-project-2.png",
+    "/images/projects/my-project-3.png"
   ],
   "technologies": ["Solidity", "Next.js", "Web3.js", "Ethers.js"],
   "features": [
@@ -91,20 +91,20 @@ Use Tailwind CSS gradient classes for the `gradient` field. Examples:
 3. Ensure all required fields are included
 4. Use a unique `id` number
 5. Choose an appropriate icon from the available options
-6. Add project images to the `public/images/` directory
+6. Add project images under `public/images/projects/` (see repo root `ASSETS.md`)
 7. Save the file - the component will automatically load the new data
 
 ## Media Guidelines
 
 ### Images
-- Place project images in `public/images/`
-- Use descriptive filenames (e.g., `project-defi-dashboard-1.png`)
+- Place project images in `public/images/projects/`
+- Use descriptive filenames (e.g., `my-protocol-dashboard-1.png`)
 - Recommended aspect ratio: 16:9 (landscape)
 - Optimal size: 800x450px or higher
 - Supported formats: PNG, JPG, WebP
 
 ### Videos
-- Place project videos in `public/images/`
+- Place project videos in `public/images/projects/`
 - Use descriptive filenames (e.g., `project-demo.mov`)
 - Recommended aspect ratio: 16:9 (landscape)
 - Optimal resolution: 1280x720px or higher

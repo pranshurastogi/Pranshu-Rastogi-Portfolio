@@ -3,12 +3,13 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  ExternalLinkIcon, GithubIcon, EyeIcon, XIcon, MailIcon, ChevronLeftIcon, ChevronRightIcon,
+  ExternalLinkIcon, GithubIcon, EyeIcon, XIcon, MailIcon, ChevronLeftIcon, ChevronRightIcon, TrophyIcon,
 } from "lucide-react";
 import { FaTwitter } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import projectsData from "../../data/projects.json";
 import OptimizedImage from "../ui/OptimizedImage";
+import VideoWithFallback from "../ui/VideoWithFallback";
 
 const PROJECTS_PER_PAGE = 6;
 
@@ -118,10 +119,14 @@ export default function ProjectShowcase() {
                   {/* Image */}
                   <div className="relative aspect-video overflow-hidden">
                     {project.images[0]?.match(/\.(mov|mp4|webm)$/) ? (
-                      <video
+                      <VideoWithFallback
                         src={project.images[0]}
                         className="w-full h-full object-cover"
-                        muted loop playsInline autoPlay
+                        muted
+                        loop
+                        playsInline
+                        autoPlay
+                        aria-label={`${project.title} preview video`}
                       />
                     ) : (
                       <OptimizedImage
@@ -142,6 +147,15 @@ export default function ProjectShowcase() {
                     {project.difficulty === "Advanced" && (
                       <div className="absolute top-2 right-2 px-2 py-0.5 bg-black/60 backdrop-blur rounded-md border border-[var(--accent-purple)]/30 text-[9px] font-mono text-[var(--accent-purple)] uppercase tracking-wider">
                         Advanced
+                      </div>
+                    )}
+                    {/* Award badge */}
+                    {project.awards?.length > 0 && (
+                      <div className="absolute bottom-2 left-2 flex items-center gap-1 px-2 py-0.5 bg-black/70 backdrop-blur rounded-md border border-amber-400/40">
+                        <TrophyIcon className="w-2.5 h-2.5 text-amber-400 flex-shrink-0" />
+                        <span className="text-[9px] font-mono text-amber-300 leading-none">
+                          {project.awards[0].label}
+                        </span>
                       </div>
                     )}
                   </div>

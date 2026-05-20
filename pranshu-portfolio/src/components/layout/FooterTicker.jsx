@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { FileText, Download } from "lucide-react";
+import { ASSETS } from "@/lib/site-assets";
 
 export default function FooterTicker() {
   const stats = [
@@ -23,7 +24,7 @@ export default function FooterTicker() {
       {/* Resume */}
       <div className="flex-shrink-0 z-10 pl-4">
         <Link
-          href="/resume.pdf"
+          href={ASSETS.documents.resume}
           target="_blank"
           rel="noopener noreferrer"
           className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--accent-purple)] transition-all text-xs font-medium"

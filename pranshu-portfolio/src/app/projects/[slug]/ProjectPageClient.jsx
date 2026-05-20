@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import OptimizedImage from "@/components/ui/OptimizedImage";
+import VideoWithFallback from "@/components/ui/VideoWithFallback";
 import projectsData from "@/data/projects.json";
 
 function isVideo(src) {
@@ -104,10 +105,15 @@ export default function ProjectPageClient({ project }) {
                   className="aspect-video bg-[var(--bg-secondary)] relative"
                 >
                   {isVideo(project.images[current]) ? (
-                    <video
+                    <VideoWithFallback
                       src={project.images[current]}
                       className="w-full h-full object-cover"
-                      muted loop playsInline autoPlay controls
+                      muted
+                      loop
+                      playsInline
+                      autoPlay
+                      controls
+                      aria-label={`${project.title} preview video`}
                     />
                   ) : (
                     <OptimizedImage
@@ -159,7 +165,13 @@ export default function ProjectPageClient({ project }) {
                     }`}
                   >
                     {isVideo(img) ? (
-                      <video src={img} className="w-full h-full object-cover" muted />
+                      <VideoWithFallback
+                        src={img}
+                        className="w-full h-full object-cover"
+                        muted
+                        playsInline
+                        aria-label={`Thumbnail video ${i + 1}`}
+                      />
                     ) : (
                       <OptimizedImage
                         src={img}
@@ -297,6 +309,52 @@ export default function ProjectPageClient({ project }) {
                 </div>
               </div>
             </div>
+
+            {/* Awards & Recognition */}
+            {project.awards?.length > 0 && (
+              <div className="rounded-2xl border border-amber-400/20 bg-[var(--bg-secondary)] p-5 relative overflow-hidden">
+                <div
+                  className="pointer-events-none absolute inset-0"
+                  style={{
+                    background:
+                      "radial-gradient(ellipse at 50% 0%, rgba(251,191,36,0.07) 0%, transparent 70%)",
+                  }}
+                />
+                <div className="flex items-center gap-2 mb-4 relative z-10">
+                  <TrophyIcon className="w-3.5 h-3.5 text-amber-400" />
+                  <p className="text-amber-400/80 text-xs uppercase tracking-widest font-medium">
+                    Awards
+                  </p>
+                </div>
+                <div className="space-y-3 relative z-10">
+                  {project.awards.map((award, i) => (
+                    <div
+                      key={i}
+                      className="rounded-xl border border-amber-400/10 bg-amber-400/[0.04] px-4 py-3"
+                    >
+                      <p className="text-amber-300 text-xs font-semibold mb-0.5">
+                        {award.prize}
+                      </p>
+                      {award.link ? (
+                        <a
+                          href={award.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-[10px] text-amber-400/60 hover:text-amber-400 transition-colors font-mono"
+                        >
+                          {award.label}
+                          <ExternalLinkIcon className="w-2.5 h-2.5" />
+                        </a>
+                      ) : (
+                        <p className="text-[10px] text-amber-400/60 font-mono">
+                          {award.label}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </motion.div>
         </div>
 
@@ -322,10 +380,13 @@ export default function ProjectPageClient({ project }) {
                 >
                   <div className="aspect-video relative bg-[var(--bg-primary)]">
                     {isVideo(rel.images[0]) ? (
-                      <video
+                      <VideoWithFallback
                         src={rel.images[0]}
                         className="w-full h-full object-cover opacity-70 group-hover:opacity-90 transition-opacity"
-                        muted loop playsInline
+                        muted
+                        loop
+                        playsInline
+                        aria-label={`${rel.title} preview`}
                       />
                     ) : (
                       <OptimizedImage

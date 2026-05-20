@@ -1,70 +1,74 @@
 // src/app/projects/[slug]/page.jsx
-import { notFound } from 'next/navigation';
-import { motion } from 'framer-motion';
-import { ExternalLinkIcon, GithubIcon, ArrowLeftIcon } from 'lucide-react';
-import Link from 'next/link';
-import OptimizedImage from '@/components/ui/OptimizedImage';
-import projectsData from '@/data/projects.json';
-import ProjectPageClient from './ProjectPageClient';
+import { notFound } from "next/navigation";
+import projectsData from "@/data/projects.json";
+import ProjectPageClient from "./ProjectPageClient";
+import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { absoluteUrl } from "@/lib/site-assets";
+import { projectSlug, projectUrl, SITE_URL } from "@/lib/site-seo";
 
-// Generate metadata for each project
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const project = projectsData.projects.find(p =>
-    p.title.toLowerCase().replace(/\s+/g, '-') === slug
+  const project = projectsData.projects.find(
+    (p) => projectSlug(p.title) === slug
   );
-  
+
   if (!project) {
     return {
-      title: 'Project Not Found | Pranshu Rastogi',
-      description: 'The requested blockchain project could not be found.'
+      title: "Project Not Found",
+      description: "The requested blockchain project could not be found.",
     };
   }
 
+  const pageUrl = projectUrl(project.title);
+  const ogImage = project.images[0]?.startsWith("http")
+    ? project.images[0]
+    : absoluteUrl(project.images[0]);
+
+  const title = `${project.title} — ${project.category} Project`;
+  const description = `${project.description} Built with ${project.technologies.slice(0, 5).join(", ")}. By Pranshu Rastogi, blockchain & ecosystem engineer.`;
+
   return {
-    title: `${project.title} | Blockchain Project by Pranshu Rastogi`,
-    description: `${project.description} - ${project.subtitle}. Explore this ${project.category.toLowerCase()} project built with ${project.technologies.join(', ')}.`,
-    keywords: [
-      'blockchain',
-      'web3',
-      'decentralized',
-      project.category.toLowerCase(),
-      ...project.technologies.map(tech => tech.toLowerCase()),
-      'pranshu rastogi',
-      'blockchain engineer'
-    ].join(', '),
+    title,
+    description,
+    alternates: { canonical: pageUrl },
     openGraph: {
-      title: `${project.title} | Blockchain Project`,
+      title: `${project.title} | Pranshu Rastogi`,
       description: project.description,
-      type: 'website',
-      url: `https://pranshurastogi.com/projects/${slug}`,
-      images: [
-        {
-          url: project.images[0],
-          width: 1200,
-          height: 630,
-          alt: `${project.title} - ${project.subtitle}`
-        }
-      ]
+      type: "website",
+      url: pageUrl,
+      images: [{ url: ogImage, width: 1200, height: 630, alt: `${project.title} — ${project.subtitle}` }],
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: `${project.title} | Blockchain Project`,
       description: project.description,
-      images: [project.images[0]]
-    }
+      images: [ogImage],
+    },
   };
 }
 
 export default async function ProjectPage({ params }) {
   const { slug } = await params;
-  const project = projectsData.projects.find(p =>
-    p.title.toLowerCase().replace(/\s+/g, '-') === slug
+  const project = projectsData.projects.find(
+    (p) => projectSlug(p.title) === slug
   );
 
   if (!project) {
     notFound();
   }
 
-  return <ProjectPageClient project={project} />;
+  const pageUrl = projectUrl(project.title);
+
+  return (
+    <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: SITE_URL },
+          { name: "Projects", url: `${SITE_URL}/#projects` },
+          { name: project.title, url: pageUrl },
+        ]}
+      />
+      <ProjectPageClient project={project} />
+    </>
+  );
 }

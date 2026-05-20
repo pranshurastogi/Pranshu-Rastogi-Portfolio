@@ -1,11 +1,13 @@
 {
-  "name": "Pranshu Rastogi Portfolio",
-  "short_name": "Pranshu Portfolio",
-  "description": "Pranshu Rastogi's personal portfolio - Blockchain Engineer, Speaker, Writer",
+  "name": "Pranshu Rastogi — DevRel & Blockchain Portfolio",
+  "short_name": "Pranshu Rastogi",
+  "description": "Portfolio of Pranshu Rastogi — DevRel, ecosystem, backend & blockchain engineer. Head of Ecosystem at Push Chain. Hire for Web3 roles.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#10151a",
   "theme_color": "#39FF14",
+  "categories": ["business", "productivity", "utilities"],
+  "lang": "en",
   "icons": [
     {
       "src": "/favicon.ico",

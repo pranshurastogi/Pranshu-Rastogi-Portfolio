@@ -7,8 +7,8 @@
       "description": "Post-quantum stealth address protocol for Ethereum and Sui. Send to anyone using just their ENS (.eth) or SuiNS (.sui) name—SPECTER generates a fresh one-time stealth address for every payment. Uses ML-KEM-768 (NIST FIPS 203) so payments stay private even against quantum adversaries. Integrates with Yellow Network for private trading via off-chain state channels.",
       "longDescription": "Onchain payments today are fully transparent; every transfer exposes both sender and recipient. SPECTER fixes this. Send to anyone using just their ENS or SuiNS name, and SPECTER generates a fresh, one-time stealth address for every payment. The recipient is the only one who can discover and spend from it—to the rest of the world it looks like funds went to a random address. The cryptography uses ML-KEM-768 (NIST FIPS 203), a post-quantum key encapsulation standard, so payments stay private even against adversaries with quantum computers. SPECTER also integrates with Yellow Network to enable private trading through off-chain state channel settlement. Built for ETHGlobal HackMoney 2026.",
       "images": [
-        "/images/specter.png",
-        "/images/specter-1.png"
+        "/images/projects/specter.png",
+        "/images/projects/specter-1.png"
       ],
       "technologies": [
         "Rust",
@@ -42,7 +42,13 @@
       "category": "Privacy & Cryptography",
       "difficulty": "Advanced",
       "icon": "zap",
-      "gradient": "from-[#0D9488]/20 to-[#AEEA00]/10"
+      "gradient": "from-[#0D9488]/20 to-[#AEEA00]/10",
+      "awards": [
+        {
+          "label": "ETHCC[9]",
+          "prize": "3rd Prize — Stage Pitch"
+        }
+      ]
     },
     {
       "id": 2,
@@ -51,9 +57,9 @@
       "description": "A transaction firewall that sits between AI agents and the blockchain, scoring every proposed transaction through a policy engine and AI risk scanner before it can execute. No prompt, no urgency signal, and no model error can bypass the gate — only a tiered human confirmation can.",
       "longDescription": "VANTA is a transaction firewall that sits between AI agents and the blockchain, scoring every proposed transaction through a policy engine and AI risk scanner before it can execute. No prompt, no urgency signal, and no model error can bypass the gate — only a tiered human confirmation can.\n\nAs autonomous AI agents gain the ability to sign and broadcast transactions, a single compromised or confused model can drain wallets, manipulate protocols, or trigger irreversible on-chain actions. VANTA solves this by adding a deterministic, policy-first gate that runs before any transaction hits the mempool. Every transaction is scored, analyzed for risk, and held for human review if it exceeds defined thresholds — making AI-powered blockchain interactions safe by default.",
       "images": [
-        "/images/VAANTA-1.png",
-        "/images/VAANTA-2.png",
-        "/images/VAANTA-3.png"
+        "/images/projects/VAANTA-1.png",
+        "/images/projects/VAANTA-2.png",
+        "/images/projects/VAANTA-3.png"
       ],
       "technologies": [
         "TypeScript",
@@ -76,10 +82,18 @@
       ],
       "github": "https://github.com/pranshurastogi/VANTA",
       "live": "https://github.com/pranshurastogi/VANTA",
+      "showcase": "https://ethglobal.com/showcase/vanta-sep7q",
       "category": "AI Security",
       "difficulty": "Advanced",
       "icon": "shield",
-      "gradient": "from-[#FF4444]/20 to-[#9F4EFF]/10"
+      "gradient": "from-[#FF4444]/20 to-[#9F4EFF]/10",
+      "awards": [
+        {
+          "label": "ETHGlobal Cannes 2026",
+          "prize": "Winner — Best use of Dynamic Node SDK",
+          "link": "https://ethglobal.com/showcase/vanta-sep7q"
+        }
+      ]
     },
     {
       "id": 3,
@@ -88,9 +102,9 @@
       "description": "The all-in-one Alephium dashboard for real-time blockchain analytics, dynamic contract insights, and gamified onchain scoring—complete with live network stats, wallet profiler, token flows, Ralph contract decoder, alerts, quests, and XP-powered achievements.",
       "longDescription": "AlphIQ is designed to synthesize information, not just present it. The real challenge in Web3 isn't finding data; it's the cognitive burden of connecting disparate points: a transaction, a wallet's history, a contract's function, and a community campaign — into a single, understandable narrative. AlphIQ does that heavy lifting for you, weaving the data into a story and giving you a central role to play.",
       "images": [
-        "/images/alphiq-mov.mov",
-        "/images/alphIQ-dashboard1.png",
-        "/images/alphIQ-dashboard-2.png"
+        "/images/projects/alphiq-mov.mov",
+        "/images/projects/alphIQ-dashboard1.png",
+        "/images/projects/AlphIQ-Dashboard-2.png"
       ],
       "technologies": [
         "Solidity",
@@ -129,9 +143,9 @@
       "description": "A decentralized platform for collaborative idea sharing and community-driven innovation, built on Etherlink blockchain with NFT rewards for contributors.",
       "longDescription": "Bloom-Ideas is a Web3 hackathon platform that transforms idea sharing into a collaborative garden ecosystem. Users can plant ideas, nurture them through community engagement, and earn NFT rewards as their ideas bloom into successful projects.",
       "images": [
-        "/images/Bloom-ideas-3.gif",
-        "/images/Bloom-ideas-1.png",
-        "/images/Bloom-ideas-2.png"
+        "/images/projects/Bloom-ideas-3.gif",
+        "/images/projects/Bloom-ideas-1.png",
+        "/images/projects/Bloom-ideas-2.png"
       ],
       "technologies": [
         "Ethereum",
@@ -162,9 +176,9 @@
       "description": "Admin dashboard for AlphIQ helps you to see analytics, create , quests, and lot more with seamless UI.",
       "longDescription": "AlphIQ Admin Dashboard is a powerful tool that helps you to manage your AlphIQ instance. It allows you to see analytics, create quests, and lot more with seamless UI.",
       "images": [
-        "/images/alphiq-admin-3.gif",
-        "/images/alphiq-admin-1.png",
-        "/images/alphiq-admin-2.png"
+        "/images/projects/alphiq-admin-3.gif",
+        "/images/projects/alphiq-admin-1.png",
+        "/images/projects/alphiq-admin-2.png"
       ],
       "technologies": [
         "TypeScript",
@@ -197,10 +211,10 @@
       "description": "A comprehensive decentralized identity platform that empowers users to own, verify, and showcase their digital identity across multiple platforms. Connect your ENS to Self, GitHub, X (Twitter), and Farcaster to unlock your EYI badge and enjoy safer, smarter web3 interactions.",
       "longDescription": "EYI is a next-generation decentralized identity platform that revolutionizes how users establish and maintain their digital presence in the web3 ecosystem. Built with privacy-first principles, EYI combines multiple verification layers to create a comprehensive identity system that's both secure and user-friendly. The platform addresses the fundamental challenge of digital identity in web3: proving you are who you say you are without compromising your privacy.",
       "images": [
-        "/images/EYI-1.png",
-        "/images/EYI-2.png",
-        "/images/EYI-3.png",
-        "/images/EYI-4.png"
+        "/images/projects/EYI-1.png",
+        "/images/projects/EYI-2.png",
+        "/images/projects/EYI-3.png",
+        "/images/projects/EYI-4.png"
       ],
       "technologies": [
         "Next.js",
@@ -239,10 +253,10 @@
       "description": "Imagine a world where learning blockchain isn't about memorizing complex concepts, but about embarking on epic quests, solving puzzles, and earning rewards that actually matter. Welcome to IntelliLearn - where every game is a lesson, every achievement is a milestone, and every player becomes a Web3 master.",
       "longDescription": "Welcome to IntelliLearn, where the future of Web3 education unfolds. We're transforming complex blockchain concepts into an engaging adventure, powered by gamification, virality, and decentralised identity. Join us on this journey to onboard the next billion users into the Web3 universe.",
       "images": [
-        "/images/Intellilearn-4.mov",
-        "/images/Intellilearn-1.png",
-        "/images/Intellilearn-2.png",
-        "/images/Intellilearn-3.png"
+        "/images/projects/Intellilearn-4.mov",
+        "/images/projects/Intellilearn-1.png",
+        "/images/projects/Intellilearn-2.png",
+        "/images/projects/Intellilearn-3.png"
       ],
       "technologies": [
         "Open Campus",

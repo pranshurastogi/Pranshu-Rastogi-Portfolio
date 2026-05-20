@@ -5,34 +5,10 @@ import OptimizedImage from "../ui/OptimizedImage";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
+import featuredMedia from "@/data/featured-media.json";
 
-const mediaItems = [
-  {
-    url: "https://youtu.be/vEJvaVTWb_M?si=SVrUotAbEP4EcWx2",
-    title: "Open Intent Framework - Discover the Open Intent advantage",
-    thumbnail: "https://img.youtube.com/vi/vEJvaVTWb_M/maxresdefault.jpg",
-  },
-  {
-    url: "https://kukufm.com/show/get-started-with-blockchain?utm_source=share_sh",
-    title: "Kuku FM Podcast: Get Started with Blockchain",
-    thumbnail: "/images/kuku.png",
-  },
-  {
-    url: "https://open.spotify.com/episode/1qQ57vyYZb5366843Gh24Z",
-    title: "Spotify: Where's The Block?",
-    thumbnail: "/images/wtb.png",
-  },
-  {
-    url: "https://youtube.com/shorts/pII6zoDs_1k?si=sVzxBVM9Q32aMeG1",
-    title: "4k+ audience at LPU",
-    thumbnail: "/images/lpu.png",
-  },
-  {
-    url: "https://youtu.be/R00PZeQuB8I?si=-diX-f704Jrz3uVs",
-    title: "Ethereum Merge",
-    thumbnail: "https://img.youtube.com/vi/R00PZeQuB8I/maxresdefault.jpg",
-  },
-];
+/** Podcasts & media — edit `src/data/featured-media.json` to add or remove. */
+const mediaItems = featuredMedia.items;
 
 export default function MediaSection() {
   const [activeIdx, setActiveIdx] = useState(0);

@@ -10,7 +10,31 @@ Allow: /favicon.svg
 Allow: /favicon-64.png
 Allow: /manifest.json
 
-# LLM-friendly content
+# AI & LLM discovery files
 Allow: /llms.txt
+Allow: /ai.txt
+Allow: /documents/resume.pdf
+
+# Welcome AI crawlers for portfolio discovery (DevRel, ecosystem, blockchain hiring)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
 
 Sitemap: https://pranshurastogi.com/sitemap.xml

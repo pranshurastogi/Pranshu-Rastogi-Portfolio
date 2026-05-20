@@ -5,8 +5,8 @@
 ### Step 1: Upload Your Resume PDF
 1. Take your resume PDF file
 2. Rename it to `resume.pdf` (if it's not already named that)
-3. Copy the file to the `public/` folder in your project
-4. The file should be located at: `public/resume.pdf`
+3. Copy the file to the `public/documents/` folder in your project
+4. The file should be located at: `public/documents/resume.pdf` (site links use `ASSETS.documents.resume` in `src/lib/site-assets.js`)
 
 ### Step 2: Test the Resume Links
 1. Start your development server: `npm run dev` or `yarn dev`
@@ -17,9 +17,7 @@
    - Both links open your PDF in a new tab
 
 ### Step 3: Customize (Optional)
-If you want to change the resume file name or location, update the `resumeUrl` variable in:
-- `src/components/Hero.jsx` (line 310)
-- `src/components/Header.jsx` (line 19)
+If you want to change the resume file name or location, update `ASSETS.documents.resume` in `src/lib/site-assets.js` (used by Hero and footer).
 
 ## Features Added:
 ✅ **Hero Section Resume Button**: Prominent download button with terminal styling
@@ -31,10 +29,16 @@ If you want to change the resume file name or location, update the `resumeUrl` v
 ## File Structure:
 ```
 public/
-├── resume.pdf          ← Your resume goes here
+├── documents/
+│   └── resume.pdf      ← Your resume goes here
 ├── images/
+│   ├── projects/
+│   ├── profile/
+│   └── ...
 ├── eth.svg
 └── ...other files
 ```
+
+The URL `/resume.pdf` still works: it redirects to `/documents/resume.pdf` (see `src/config/legacy-asset-redirects.js`).
 
 Your resume is now integrated into your portfolio website with a professional, themed presentation that matches your blockchain aesthetic!

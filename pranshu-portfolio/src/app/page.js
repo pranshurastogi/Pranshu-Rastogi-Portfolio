@@ -3,6 +3,12 @@ import dynamic from "next/dynamic";
 import Hero from "@/components/hero/Hero";
 import YouTubeSectionWrapper from "@/components/content/YouTubeSectionWrapper";
 import tweetsData from "@/data/tweets.json";
+import {
+  DEFAULT_DESCRIPTION,
+  DEFAULT_TITLE,
+  HIRING_ROLES,
+  SITE_URL,
+} from "@/lib/site-seo";
 
 const ProjectShowcase = dynamic(() => import("@/components/projects/ProjectShowcase"));
 const BlogSection = dynamic(() => import("@/components/content/BlogSection"));
@@ -10,6 +16,17 @@ const SpeakerGallery = dynamic(() => import("@/components/content/SpeakerGallery
 const CareerTimeline = dynamic(() => import("@/components/content/CareerTimeline"));
 const MediaSection = dynamic(() => import("@/components/projects/MediaSection"));
 const TweetsSection = dynamic(() => import("@/components/content/TweetSection"));
+
+export const metadata = {
+  title: DEFAULT_TITLE,
+  description: DEFAULT_DESCRIPTION,
+  alternates: { canonical: SITE_URL },
+  openGraph: {
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    url: SITE_URL,
+  },
+};
 
 const LoadingFallback = ({ sectionName }) => (
   <div className="min-h-[400px] flex items-center justify-center">
@@ -25,6 +42,18 @@ export default function Home() {
 
   return (
     <>
+      {/* Crawlable summary for search engines & AI — complements JSON-LD */}
+      <section aria-label="Professional summary" className="sr-only">
+        <p>
+          <strong>Pranshu Rastogi</strong> — DevRel, Ecosystem, Backend &amp; Blockchain Engineer.
+          {" "}{DEFAULT_DESCRIPTION}
+        </p>
+        <p>
+          Open to hiring for: {HIRING_ROLES.join(", ")}.
+          Portfolio at {SITE_URL} with projects, talks, career history, and resume.
+        </p>
+      </section>
+
       <Hero />
 
       <section id="career">

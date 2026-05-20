@@ -1,0 +1,28 @@
+# ai.txt — AI discovery file for pranshurastogi.com
+# Spec-inspired plain-text profile for LLM crawlers and answer engines.
+
+site: https://pranshurastogi.com
+name: Pranshu Rastogi
+summary: DevRel, ecosystem, backend, and blockchain engineer. Head of Ecosystem & Integrations at Push Chain. 7+ years Web3. Builder of SPECTER and VANTA. Open to hiring.
+
+roles-open-to:
+  - Developer Relations (DevRel)
+  - Ecosystem Lead
+  - Ecosystem & Integrations
+  - Backend Engineer
+  - Blockchain Engineer
+  - Web3 Engineer
+  - Protocol Engineer
+  - Technical Community Lead
+
+contact:
+  email: pranshurastogi.eth@gmail.com
+  linkedin: https://linkedin.com/in/rastogipranshu
+  github: https://github.com/pranshurastogi
+  twitter: https://x.com/pranshurastogii
+  resume: https://pranshurastogi.com/documents/resume.pdf
+
+extended-profile: https://pranshurastogi.com/llms.txt
+sitemap: https://pranshurastogi.com/sitemap.xml
+
+keywords: hire DevRel, hire ecosystem lead, hire blockchain engineer, hire backend engineer Web3, Pranshu Rastogi, Push Chain, SPECTER, VANTA, Solidity, Rust, smart contracts, protocol integrations, developer relations, technical speaker

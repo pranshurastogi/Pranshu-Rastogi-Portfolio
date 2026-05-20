@@ -75,16 +75,19 @@ const OptimizedImage = ({
     if (src?.includes('bloom')) return 'Bloom Ideas Web3 platform - Decentralized idea sharing and NFT rewards';
     if (src?.includes('intellilearn')) return 'Intellilearn blockchain education platform - Gamified Web3 learning experience';
     if (src?.includes('eyi')) return 'EYI decentralized identity platform - Multi-chain identity verification system';
-    if (src?.includes('pg-')) return 'Blockchain conference speaking engagement - Web3 education and community building';
+    if (src?.includes('pg-') || src?.includes('/speaking/')) return 'Blockchain conference speaking engagement - Web3 education and community building';
     if (src?.includes('kuku')) return 'Blockchain podcast interview - Kuku FM Web3 education content';
     if (src?.includes('wtb')) return 'Where\'s The Block podcast - Blockchain discussion and analysis';
     if (src?.includes('lpu')) return 'Blockchain university presentation - 4000+ audience at LPU';
+    if (src?.includes('/featured/')) return 'Featured media appearance - Web3 podcasts and talks';
     
     return 'Blockchain project showcase - Web3 development and innovation';
   };
 
   const optimizedSrc = getOptimizedSrc(src);
   const enhancedAlt = getEnhancedAlt(alt, src);
+  const isAnimatedGif =
+    typeof optimizedSrc === "string" && /\.gif(\?|#|$)/i.test(optimizedSrc);
 
   return (
     <div 
@@ -105,7 +108,14 @@ const OptimizedImage = ({
           placeholder={placeholder}
           blurDataURL={getBlurDataURL()}
           onLoad={() => setIsLoaded(true)}
-          onError={() => { setIsLoaded(true); setHasError(true); }}
+          onError={() => {
+            setIsLoaded(true);
+            setHasError(true);
+            if (process.env.NODE_ENV === "development" && optimizedSrc) {
+              console.warn("[OptimizedImage] failed to load:", optimizedSrc);
+            }
+          }}
+          unoptimized={isAnimatedGif}
           className={`transition-opacity duration-300 ${
             isLoaded ? 'opacity-100' : 'opacity-0'
           } ${className}`}

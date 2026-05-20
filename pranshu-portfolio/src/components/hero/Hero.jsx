@@ -8,6 +8,8 @@ import {
 } from "react-icons/fa";
 import { FileText, Download, ChevronDown, ChevronUp, ChevronsDown } from "lucide-react";
 import AnimatedPfp from "./AnimatedPfp";
+import { ASSETS } from "@/lib/site-assets";
+import { SHORT_TAGLINE } from "@/lib/site-seo";
 
 /* ── Typewriter ── */
 function Typewriter({ roles, speed = 80, pause = 1200 }) {
@@ -79,8 +81,8 @@ export default function Hero() {
 
   const roles = [
     "Head of Ecosystem & Integrations @ Push Chain",
+    "DevRel · Backend · Blockchain Engineer",
     "Web3 Builder & Community Orchestrator",
-    "Storyteller. Technologist. Empath.",
   ];
 
   return (
@@ -137,14 +139,24 @@ export default function Hero() {
           </motion.h1>
 
           {/* Typewriter role */}
-          <motion.h2
-            className="text-base sm:text-lg md:text-xl mb-5 font-medium min-h-[2.5rem]"
+          <motion.p
+            className="text-base sm:text-lg md:text-xl mb-2 font-medium min-h-[2.5rem]"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7, duration: 0.5 }}
+            aria-live="polite"
           >
             <Typewriter roles={roles} />
-          </motion.h2>
+          </motion.p>
+
+          <motion.p
+            className="text-xs sm:text-sm text-[var(--accent-cyan)]/90 font-medium mb-5 tracking-wide"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.85, duration: 0.5 }}
+          >
+            {SHORT_TAGLINE} · Open to opportunities
+          </motion.p>
 
           {/* Bio */}
           <motion.div
@@ -189,7 +201,7 @@ export default function Hero() {
             transition={{ delay: 1.5, duration: 0.5 }}
           >
             <Link
-              href="/resume.pdf"
+              href={ASSETS.documents.resume}
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-[var(--text-muted)] hover:text-[var(--accent-purple)] hover:border-[var(--accent-purple)]/30 transition-all text-sm"

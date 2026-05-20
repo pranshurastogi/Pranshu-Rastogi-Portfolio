@@ -2,28 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { CircularGallery } from "../ui/CircularGallery";
-import { Play, Pause, RotateCcw, MousePointer2 } from "lucide-react";
+import {
+  Play, Pause, RefreshCw, MousePointer2,
+  Satellite, LayoutGrid, Stars,
+} from "lucide-react";
 import { motion } from "framer-motion";
+import speakingGallery from "@/data/speaking-gallery.json";
+import { ImageGallery } from "@/components/ui/image-gallery";
 
-const SPEAKERS_RAW = [
-  { src: "/images/pg-bangkok.JPG", name: "ETHGlobal Bangkok booth" },
-  { src: "/images/pg-bangkok-2.jpg", name: "ETHGlobal Bangkok Push Protocol" },
-  { src: "/images/pg-ethIndia.JPG", name: "ETHIndia Push protocol booth" },
-  { src: "/images/pg-ETHGlobal-istanbul.jpg", name: "ETHGlobal Istanbul" },
-  { src: "/images/pg-ethi.jpg", name: "ETHGlobal Istanbul" },
-  { src: "/images/pg-Unfold.jpg", name: "Unfold X Push Protocol" },
-  { src: "/images/pg-NFT-day-SKIT.JPG", name: "NFT Day - SKIT" },
-  { src: "/images/pg-poly.jpg", name: "Polygon event" },
-  { src: "/images/pg-coindcx.png", name: "Namaste Web3, CoinDCX X Forbes" },
-  { src: "/images/pg-polygon-guild.png", name: "Polygon Guild, Blr" },
-  { src: "/images/pg-google.png", name: "Google Cloud Web3 Conclave" },
-  { src: "/images/pg-dtp.png", name: "Intro to web3 - DYP" },
-  { src: "/images/pg-fipkart.JPG", name: "Polygon X Flipkart" },
-  { src: "/images/pg-vietnam.png", name: "BUIDL ASIA, Vietnam" },
-  { src: "/images/pg-buidl-vietnam.jpeg", name: "BUIDL Asia Community" },
-  { src: "/images/pg-talent-of-the-week.jpeg", name: "Talent of the Week" },
-  { src: "/images/pg-w3c.jpeg", name: "Web3 Conf Goa" },
-];
+const SPEAKERS_RAW = speakingGallery.items;
 
 function toGalleryItems(speakers) {
   return speakers.map((s) => ({
@@ -34,27 +21,31 @@ function toGalleryItems(speakers) {
 }
 
 const SPEEDS = [
-  { label: "Slow", value: 0.01 },
-  { label: "Normal", value: 0.03 },
-  { label: "Fast", value: 0.07 },
+  { label: "SLOW",   value: 0.01 },
+  { label: "CRUISE", value: 0.03 },
+  { label: "WARP",   value: 0.07 },
 ];
 
 export default function SpeakerGallery() {
-  const [radius, setRadius] = useState(720);
-  const [mode, setMode] = useState("auto");
-  const [paused, setPaused] = useState(false);
-  const [speedIdx, setSpeedIdx] = useState(1);
+  const [radius, setRadius]       = useState(720);
+  const [mode, setMode]           = useState("auto");
+  const [paused, setPaused]       = useState(false);
+  const [speedIdx, setSpeedIdx]   = useState(1);
+  const [galleryView, setGalleryView] = useState("circular");
+
   const items = toGalleryItems(SPEAKERS_RAW);
+  const imageGalleryItems = SPEAKERS_RAW.map((item) => ({
+    src: item.src,
+    alt: item.name,
+    placeholder: "/images/profile/pfp-current.png",
+  }));
 
   useEffect(() => {
-    const updateRadius = () => {
-      setRadius(
-        window.innerWidth < 640 ? 420 : window.innerWidth < 1024 ? 560 : 720
-      );
-    };
-    updateRadius();
-    window.addEventListener("resize", updateRadius);
-    return () => window.removeEventListener("resize", updateRadius);
+    const update = () =>
+      setRadius(window.innerWidth < 640 ? 420 : window.innerWidth < 1024 ? 560 : 720);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
 
   const handleModeChange = (newMode) => {
@@ -63,12 +54,12 @@ export default function SpeakerGallery() {
   };
 
   return (
-    <section
-      className="py-16 md:py-24 relative overflow-hidden"
-      aria-label="Speaker & event gallery"
-    >
+    <section className="py-16 md:py-24 relative overflow-hidden" aria-label="Speaker & event gallery">
+      {/* Ambient radial glow */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_0%,rgba(124,77,255,0.07),transparent)]" />
+
       <div className="max-w-6xl mx-auto px-4">
-        {/* Header */}
+        {/* ── Header ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -76,108 +67,206 @@ export default function SpeakerGallery() {
           transition={{ duration: 0.5 }}
           className="text-center mb-10"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-3">
-            Gallery
-          </h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-3">Gallery</h2>
           <div className="section-divider mb-4" />
           <p className="text-[var(--text-muted)] text-sm max-w-md mx-auto">
             Events, talks & hackathons across the Web3 world.
           </p>
         </motion.div>
 
-        {/* Controls */}
+        {/* ── View toggle ── */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: 0.15 }}
-          className="flex flex-wrap items-center justify-center gap-3 mb-8"
+          transition={{ duration: 0.4, delay: 0.12 }}
+          className="flex justify-center mb-8"
         >
-          {/* Mode toggle */}
-          <div className="flex items-center gap-1 rounded-xl border border-white/[0.08] bg-[var(--bg-secondary)] p-1">
-            <button
-              onClick={() => handleModeChange("auto")}
-              className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
-                mode === "auto"
-                  ? "bg-[var(--accent-purple)] text-white shadow"
-                  : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
-              }`}
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              Auto Rotate
-            </button>
-            <button
-              onClick={() => handleModeChange("scroll")}
-              className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
-                mode === "scroll"
-                  ? "bg-[var(--accent-purple)] text-white shadow"
-                  : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
-              }`}
-            >
-              <MousePointer2 className="w-3.5 h-3.5" />
-              Scroll Driven
-            </button>
-          </div>
-
-          {/* Play / Pause */}
-          {mode === "auto" && (
-            <button
-              onClick={() => setPaused((p) => !p)}
-              className="flex items-center gap-1.5 rounded-xl border border-white/[0.08] bg-[var(--bg-secondary)] px-3.5 py-2 text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-white/[0.15] transition-all"
-              aria-label={paused ? "Resume rotation" : "Pause rotation"}
-            >
-              {paused ? (
-                <>
-                  <Play className="w-3.5 h-3.5 text-[var(--accent-lime)]" /> Resume
-                </>
-              ) : (
-                <>
-                  <Pause className="w-3.5 h-3.5 text-[var(--accent-purple)]" /> Pause
-                </>
-              )}
-            </button>
-          )}
-
-          {/* Speed */}
-          {mode === "auto" && (
-            <div className="flex items-center gap-1 rounded-xl border border-white/[0.08] bg-[var(--bg-secondary)] p-1">
-              {SPEEDS.map((s, i) => (
-                <button
-                  key={s.label}
-                  onClick={() => setSpeedIdx(i)}
-                  className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-all ${
-                    speedIdx === i
-                      ? "bg-white/[0.08] text-[var(--text-primary)]"
-                      : "text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
-                  }`}
-                >
-                  {s.label}
-                </button>
-              ))}
+          <div className="relative p-1 rounded-2xl bg-[#06040F] border border-[#7C4DFF]/20 shadow-[0_0_40px_rgba(124,77,255,0.1)]">
+            {/* Subtle scanline texture */}
+            <div className="pointer-events-none absolute inset-0 rounded-2xl overflow-hidden">
+              <div className="absolute inset-0 opacity-20 bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(255,255,255,0.015)_2px,rgba(255,255,255,0.015)_4px)]" />
             </div>
-          )}
 
-          {mode === "scroll" && (
-            <span className="text-xs text-[var(--text-muted)] italic">
-              Scroll the page to rotate the gallery
-            </span>
-          )}
+            <div className="relative flex items-center">
+              {[
+                { key: "circular", Icon: Satellite,  label: "ORBITAL", sub: "VIEW" },
+                { key: "grid",     Icon: LayoutGrid, label: "STELLAR", sub: "GRID" },
+              ].map(({ key, Icon, label, sub }) => {
+                const active = galleryView === key;
+                return (
+                  <button
+                    key={key}
+                    onClick={() => setGalleryView(key)}
+                    aria-pressed={active}
+                    className={`relative flex items-center gap-2.5 px-7 py-3.5 rounded-xl text-xs tracking-widest transition-all duration-300 overflow-hidden ${
+                      active ? "text-white" : "text-white/25 hover:text-white/55"
+                    }`}
+                  >
+                    {active && (
+                      <motion.div
+                        layoutId="view-indicator"
+                        className="absolute inset-0 rounded-xl bg-gradient-to-r from-[#7C4DFF] to-[#4F7CFF]"
+                        style={{ boxShadow: "0 0 28px rgba(124,77,255,0.55), inset 0 1px 0 rgba(255,255,255,0.15)" }}
+                        transition={{ type: "spring", bounce: 0.15, duration: 0.45 }}
+                      />
+                    )}
+                    <Icon className="relative z-10 w-4 h-4 flex-shrink-0" />
+                    <span className="relative z-10 text-left">
+                      <span className="block font-bold text-[11px]">{label}</span>
+                      <span className={`block text-[9px] ${active ? "opacity-55" : "opacity-25"}`}>{sub}</span>
+                    </span>
+                    {active && (
+                      <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse flex-shrink-0" />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </motion.div>
 
-        {/* Gallery */}
-        <div
-          className="relative mx-auto w-full"
-          style={{ minHeight: "min(85vw, 520px)", height: "min(85vw, 520px)" }}
-        >
-          <CircularGallery
-            items={items}
-            radius={radius}
-            autoRotateSpeed={SPEEDS[speedIdx].value}
-            mode={mode}
-            paused={paused}
-            className="absolute inset-0"
-          />
-        </div>
+        {/* ── Mission Control Panel (circular mode only) ── */}
+        {galleryView === "circular" && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.3 }}
+            className="flex justify-center mb-10"
+          >
+            <div className="relative rounded-2xl overflow-hidden border border-[#7C4DFF]/12 bg-[#06040F]/90 backdrop-blur-sm shadow-[0_4px_40px_rgba(0,0,0,0.55)]">
+              <div className="h-px bg-gradient-to-r from-transparent via-[#7C4DFF]/45 to-transparent" />
+
+              <div className="flex flex-wrap items-center gap-px px-3 py-3">
+
+                {/* TRAJECTORY */}
+                <div className="px-3">
+                  <p className="text-[8px] font-bold uppercase tracking-[0.22em] text-[#7C4DFF]/45 mb-2.5">Trajectory</p>
+                  <div className="flex gap-0.5 rounded-xl bg-black/50 p-0.5 border border-white/[0.04]">
+                    <button
+                      onClick={() => handleModeChange("auto")}
+                      className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-[10px] font-bold tracking-widest transition-all duration-300 ${
+                        mode === "auto"
+                          ? "bg-gradient-to-r from-[#7C4DFF] to-[#5B6FFF] text-white shadow-[0_0_20px_rgba(124,77,255,0.4)]"
+                          : "text-white/28 hover:text-white/55 hover:bg-white/5"
+                      }`}
+                    >
+                      <RefreshCw
+                        className={`w-3 h-3 ${mode === "auto" && !paused ? "animate-spin" : ""}`}
+                        style={{ animationDuration: "3s" }}
+                      />
+                      AUTO ORBIT
+                    </button>
+                    <button
+                      onClick={() => handleModeChange("scroll")}
+                      className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-[10px] font-bold tracking-widest transition-all duration-300 ${
+                        mode === "scroll"
+                          ? "bg-gradient-to-r from-[#00C4CC]/65 to-[#0099B8]/65 text-white shadow-[0_0_20px_rgba(0,196,204,0.3)]"
+                          : "text-white/28 hover:text-white/55 hover:bg-white/5"
+                      }`}
+                    >
+                      <MousePointer2 className="w-3 h-3" />
+                      WARP DRIVE
+                    </button>
+                  </div>
+                </div>
+
+                <div className="w-px h-10 bg-white/[0.06] mx-1" />
+
+                {mode === "auto" && (
+                  <>
+                    {/* STATUS */}
+                    <div className="px-3">
+                      <p className="text-[8px] font-bold uppercase tracking-[0.22em] text-[#7C4DFF]/45 mb-2.5">Status</p>
+                      <button
+                        onClick={() => setPaused((p) => !p)}
+                        aria-label={paused ? "Resume rotation" : "Pause rotation"}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-xl border text-[10px] font-bold tracking-widest transition-all duration-300 ${
+                          paused
+                            ? "border-[#4ADE80]/30 bg-[#4ADE80]/[0.08] text-[#4ADE80] shadow-[0_0_16px_rgba(74,222,128,0.15)]"
+                            : "border-[#F97316]/30 bg-[#F97316]/[0.08] text-[#F97316] shadow-[0_0_16px_rgba(249,115,22,0.15)]"
+                        }`}
+                      >
+                        {paused ? <Play className="w-3 h-3" /> : <Pause className="w-3 h-3" />}
+                        {paused ? "RESUME" : "HOLD"}
+                        <span
+                          className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
+                            paused ? "bg-[#4ADE80]" : "bg-[#F97316] animate-pulse"
+                          }`}
+                        />
+                      </button>
+                    </div>
+
+                    <div className="w-px h-10 bg-white/[0.06] mx-1" />
+
+                    {/* VELOCITY */}
+                    <div className="px-3">
+                      <p className="text-[8px] font-bold uppercase tracking-[0.22em] text-[#7C4DFF]/45 mb-2.5">Velocity</p>
+                      <div className="flex gap-0.5 rounded-xl bg-black/50 p-0.5 border border-white/[0.04]">
+                        {SPEEDS.map((s, i) => (
+                          <button
+                            key={s.label}
+                            onClick={() => setSpeedIdx(i)}
+                            className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-[10px] font-bold tracking-widest transition-all duration-300 ${
+                              speedIdx === i
+                                ? "bg-white/10 text-white shadow"
+                                : "text-white/22 hover:text-white/50 hover:bg-white/[0.04]"
+                            }`}
+                          >
+                            {/* Throttle bars */}
+                            <span className="flex items-end gap-[2px] h-3.5">
+                              {[0, 1, 2].map((bar) => (
+                                <span
+                                  key={bar}
+                                  className={`w-[2px] rounded-full transition-all ${
+                                    speedIdx === i && bar <= i ? "bg-[#A78BFA]" : "bg-white/15"
+                                  }`}
+                                  style={{ height: `${(bar + 1) * 5}px` }}
+                                />
+                              ))}
+                            </span>
+                            {s.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {mode === "scroll" && (
+                  <div className="flex items-center gap-2 px-4">
+                    <Stars className="w-3.5 h-3.5 text-[#00C4CC] animate-pulse" />
+                    <span className="text-[10px] text-white/30 italic tracking-widest">
+                      Scroll to navigate the galaxy
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              <div className="h-px bg-gradient-to-r from-transparent via-[#7C4DFF]/45 to-transparent" />
+            </div>
+          </motion.div>
+        )}
+
+        {/* ── Gallery ── */}
+        {galleryView === "circular" ? (
+          <div
+            className="relative mx-auto w-full"
+            style={{ minHeight: "min(85vw, 520px)", height: "min(85vw, 520px)" }}
+          >
+            <CircularGallery
+              items={items}
+              radius={radius}
+              autoRotateSpeed={SPEEDS[speedIdx].value}
+              mode={mode}
+              paused={paused}
+              className="absolute inset-0"
+            />
+          </div>
+        ) : (
+          <ImageGallery items={imageGalleryItems} />
+        )}
       </div>
     </section>
   );
