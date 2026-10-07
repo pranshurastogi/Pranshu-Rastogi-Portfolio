@@ -40,6 +40,8 @@ async function fetchYouTubeRSS() {
     const videos = feed.items
       .map((item) => {
         try {
+          // Shorts appear in the feed as youtube.com/shorts/ID — only show full videos
+          if (item.link?.includes("/shorts/")) return null;
           let videoId = null;
           // Try to get video ID from link
           if (item.link) {

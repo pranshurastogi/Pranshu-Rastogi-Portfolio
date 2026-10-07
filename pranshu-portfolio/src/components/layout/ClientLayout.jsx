@@ -1,6 +1,7 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { useRef } from "react";
+import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 import Header from "./Header";
@@ -18,6 +19,10 @@ const ShootingStarsBackground = dynamic(
 
 export default function ClientLayout({ children }) {
   const pathname = usePathname();
+  // Becomes true after the first client navigation, so only route changes animate
+  const hasNavigated = useRef(false);
+  const firstPath = useRef(pathname);
+  if (pathname !== firstPath.current) hasNavigated.current = true;
 
   return (
     <>
@@ -29,18 +34,21 @@ export default function ClientLayout({ children }) {
       <div className="relative z-10">
         <Header />
 
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.main
-            key={pathname}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="min-h-screen"
-          >
-            {children}
-          </motion.main>
-        </AnimatePresence>
+        {/*
+          Enter-only route transition. An exit animation (AnimatePresence mode="wait")
+          breaks with the App Router: children swap before the exit runs, and on
+          browser Back the outgoing <main> could freeze at opacity 0 — a blank page.
+          The first render skips the animation so server HTML is never hidden.
+        */}
+        <motion.main
+          key={pathname}
+          initial={hasNavigated.current ? { opacity: 0, y: 12 } : false}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="min-h-screen"
+        >
+          {children}
+        </motion.main>
 
         <ContactForm />
         <Analytics />
