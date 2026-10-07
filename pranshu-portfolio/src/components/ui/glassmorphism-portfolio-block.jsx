@@ -56,7 +56,7 @@ export function GlassmorphismPortfolioBlock({
                   className="text-2xl font-semibold tracking-tight text-[var(--text-primary)] md:text-3xl"
                 >
                   {name},{" "}
-                  <span className="text-[var(--accent-purple)]">{title}</span>
+                  <span className="text-[var(--accent-purple-text)]">{title}</span>
                 </motion.h2>
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
@@ -169,7 +169,7 @@ export function GlassmorphismPortfolioBlock({
                         whileTap={{ scale: 0.985 }}
                       >
                         <div className="flex items-center gap-3">
-                          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--accent-purple-dim)] text-[var(--accent-purple)]">
+                          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--accent-purple-dim)] text-[var(--accent-purple-text)]">
                             <Icon className="h-4 w-4" />
                           </span>
                           <div>
@@ -181,7 +181,7 @@ export function GlassmorphismPortfolioBlock({
                             </p>
                           </div>
                         </div>
-                        <ArrowUpRight className="h-4 w-4 text-[var(--text-muted)] transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--accent-purple)]" />
+                        <ArrowUpRight className="h-4 w-4 text-[var(--text-muted)] transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--accent-purple-text)]" />
                       </motion.a>
                     );
                   })}

@@ -14,6 +14,7 @@ export default function VideoWithFallback({
   autoPlay,
   controls,
   poster,
+  preload = "metadata",
   "aria-label": ariaLabel,
 }) {
   const [failed, setFailed] = useState(false);
@@ -40,6 +41,7 @@ export default function VideoWithFallback({
       autoPlay={autoPlay}
       controls={controls}
       poster={poster}
+      preload={preload}
       aria-label={ariaLabel}
       onError={() => setFailed(true)}
     />

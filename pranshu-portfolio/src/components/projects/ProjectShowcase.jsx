@@ -1,16 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ExternalLinkIcon, GithubIcon, EyeIcon, XIcon, MailIcon, ChevronLeftIcon, ChevronRightIcon, TrophyIcon,
 } from "lucide-react";
 import { FaTwitter } from "react-icons/fa";
-import { useRouter } from "next/navigation";
 import projectsData from "../../data/projects.json";
 import OptimizedImage from "../ui/OptimizedImage";
-import VideoWithFallback from "../ui/VideoWithFallback";
-import { projectSlug } from "@/lib/site-seo";
+import LazyVideo from "../ui/LazyVideo";
+import { isVideoSrc, projectSlug, projectStillSrc } from "@/lib/site-seo";
+import { optimizedImageSrc } from "@/lib/site-assets";
 
 const PROJECTS_PER_PAGE = 6;
 
@@ -30,11 +31,26 @@ const cardVariants = {
 };
 
 export default function ProjectShowcase() {
-  const router = useRouter();
   const [hoveredCard, setHoveredCard] = useState(null);
   const [showCollabModal, setShowCollabModal] = useState(false);
   const [page, setPage] = useState(0);
   const [dir, setDir] = useState(1);
+
+  const ctaRef = useRef(null);
+  const closeRef = useRef(null);
+
+  // Modal: Esc closes, focus moves into the dialog and returns to the CTA on close
+  useEffect(() => {
+    if (!showCollabModal) return;
+    const cta = ctaRef.current;
+    closeRef.current?.focus();
+    const onKey = (e) => e.key === "Escape" && setShowCollabModal(false);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      cta?.focus();
+    };
+  }, [showCollabModal]);
 
   const projects = projectsData.projects;
   const totalPages = Math.ceil(projects.length / PROJECTS_PER_PAGE);
@@ -46,9 +62,6 @@ export default function ProjectShowcase() {
     document.getElementById("projects")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  function openProject(project) {
-    router.push(`/projects/${projectSlug(project.title)}`);
-  }
 
   return (
     <div className="py-16 md:py-24">
@@ -62,7 +75,7 @@ export default function ProjectShowcase() {
           transition={{ duration: 0.5 }}
         >
           <div className="inline-flex items-center gap-2 mb-3">
-            <span className="text-[10px] font-mono tracking-[0.2em] text-[var(--accent-purple)] uppercase opacity-70">
+            <span className="text-[10px] font-mono tracking-[0.2em] text-[var(--accent-purple-text)] uppercase opacity-70">
               {page === 0 ? "★ Featured Builds" : "★ More Projects"}
             </span>
           </div>
@@ -94,13 +107,12 @@ export default function ProjectShowcase() {
                 initial="hidden"
                 animate="visible"
                 whileHover={{ y: -6, transition: { duration: 0.2 } }}
-                className="group cursor-pointer"
-                onClick={() => openProject(project)}
+                className="group"
                 onMouseEnter={() => setHoveredCard(project.id)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
                 <div
-                  className={`relative bg-[var(--bg-secondary)] border rounded-2xl p-0 h-full transition-all duration-300 overflow-hidden ${
+                  className={`relative bg-[var(--bg-secondary)] border rounded-2xl p-0 h-full transition-all duration-300 overflow-hidden focus-within:ring-2 focus-within:ring-[var(--accent-purple)]/60 ${
                     hoveredCard === project.id
                       ? "border-[var(--accent-purple)]/40 shadow-[0_8px_40px_rgba(159,78,255,0.12)]"
                       : "border-white/[0.06]"
@@ -118,15 +130,12 @@ export default function ProjectShowcase() {
 
                   {/* Image */}
                   <div className="relative aspect-video overflow-hidden">
-                    {project.images[0]?.match(/\.(mov|mp4|webm)$/) ? (
-                      <VideoWithFallback
+                    {isVideoSrc(project.images[0]) ? (
+                      <LazyVideo
                         src={project.images[0]}
-                        className="w-full h-full object-cover"
-                        muted
-                        loop
-                        playsInline
-                        autoPlay
-                        aria-label={`${project.title} preview video`}
+                        poster={optimizedImageSrc(projectStillSrc(project), 750)}
+                        className="w-full h-full object-cover object-top"
+                        aria-label={`${project.title} preview`}
                       />
                     ) : (
                       <OptimizedImage
@@ -143,12 +152,6 @@ export default function ProjectShowcase() {
                         <EyeIcon className="w-5 h-5 text-white" />
                       </div>
                     </div>
-                    {/* Difficulty badge */}
-                    {project.difficulty === "Advanced" && (
-                      <div className="absolute top-2 right-2 px-2 py-0.5 bg-black/60 backdrop-blur rounded-md border border-[var(--accent-purple)]/30 text-[9px] font-mono text-[var(--accent-purple)] uppercase tracking-wider">
-                        Advanced
-                      </div>
-                    )}
                     {/* Recognition badges: award + accelerator program */}
                     {(project.awards?.length > 0 || project.programs?.length > 0) && (
                       <div className="absolute bottom-2 left-2 right-2 flex flex-wrap items-center gap-1.5">
@@ -185,9 +188,15 @@ export default function ProjectShowcase() {
                   <div className="p-5 space-y-3">
                     <div>
                       <h3 className={`text-base font-semibold mb-1 transition-colors ${
-                        hoveredCard === project.id ? "text-[var(--accent-purple)]" : "text-[var(--text-primary)]"
+                        hoveredCard === project.id ? "text-[var(--accent-purple-text)]" : "text-[var(--text-primary)]"
                       }`}>
-                        {project.title}
+                        {/* Stretched link: the whole card is clickable, crawlable and keyboard-focusable */}
+                        <Link
+                          href={`/projects/${projectSlug(project.title)}`}
+                          className="outline-none after:absolute after:inset-0 after:content-['']"
+                        >
+                          {project.title}
+                        </Link>
                       </h3>
                       <p className="text-[var(--text-muted)] text-xs">{project.subtitle}</p>
                     </div>
@@ -201,7 +210,7 @@ export default function ProjectShowcase() {
                       {project.technologies.slice(0, 3).map((tech, i) => (
                         <span
                           key={i}
-                          className="px-2 py-0.5 bg-[var(--accent-purple-dim)] text-[var(--accent-purple)] text-[10px] rounded-md font-medium"
+                          className="px-2 py-0.5 bg-[var(--accent-purple-dim)] text-[var(--accent-purple-text)] text-[10px] rounded-md font-medium"
                         >
                           {tech}
                         </span>
@@ -218,20 +227,21 @@ export default function ProjectShowcase() {
                       <span className="px-2 py-0.5 bg-[var(--accent-cyan-dim)] text-[var(--accent-cyan)] text-[10px] rounded-md font-medium">
                         {project.category}
                       </span>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          window.open(project.live, "_blank", "noopener,noreferrer");
-                        }}
-                        className="px-3 py-1.5 bg-[var(--accent-purple-dim)] text-[var(--accent-purple)] text-xs rounded-lg font-medium hover:bg-[var(--accent-purple)]/20 transition-colors min-h-[36px]"
-                        aria-label={`Launch demo for ${project.title}`}
-                      >
-                        {project.live?.includes("github.com")
-                          ? "GitHub →"
-                          : project.schemaType === "Organization"
-                          ? "Visit Site →"
-                          : "Live Demo →"}
-                      </button>
+                      {project.live && (
+                        <a
+                          href={project.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="relative z-10 inline-flex items-center px-3 py-1.5 bg-[var(--accent-purple-dim)] text-[var(--accent-purple-text)] text-xs rounded-lg font-medium hover:bg-[var(--accent-purple)]/20 transition-colors min-h-[36px]"
+                          aria-label={`Open ${project.title} (opens in a new tab)`}
+                        >
+                          {project.live.includes("github.com")
+                            ? "GitHub →"
+                            : project.schemaType === "Organization"
+                            ? "Visit Site →"
+                            : "Live Demo →"}
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -255,7 +265,7 @@ export default function ProjectShowcase() {
               className={`flex items-center gap-2 px-4 py-2 rounded-xl border text-sm font-medium transition-all ${
                 page === 0
                   ? "border-white/[0.04] text-[var(--text-muted)] opacity-40 cursor-not-allowed"
-                  : "border-white/[0.08] text-[var(--text-secondary)] hover:border-[var(--accent-purple)]/40 hover:text-[var(--accent-purple)] hover:bg-[var(--accent-purple-dim)]"
+                  : "border-white/[0.08] text-[var(--text-secondary)] hover:border-[var(--accent-purple)]/40 hover:text-[var(--accent-purple-text)] hover:bg-[var(--accent-purple-dim)]"
               }`}
               aria-label="Previous page"
             >
@@ -289,7 +299,7 @@ export default function ProjectShowcase() {
               className={`flex items-center gap-2 px-4 py-2 rounded-xl border text-sm font-medium transition-all ${
                 page === totalPages - 1
                   ? "border-white/[0.04] text-[var(--text-muted)] opacity-40 cursor-not-allowed"
-                  : "border-white/[0.08] text-[var(--text-secondary)] hover:border-[var(--accent-purple)]/40 hover:text-[var(--accent-purple)] hover:bg-[var(--accent-purple-dim)]"
+                  : "border-white/[0.08] text-[var(--text-secondary)] hover:border-[var(--accent-purple)]/40 hover:text-[var(--accent-purple-text)] hover:bg-[var(--accent-purple-dim)]"
               }`}
               aria-label="Next page"
             >
@@ -319,7 +329,9 @@ export default function ProjectShowcase() {
               Interested in collaborating on blockchain or AI security projects?
             </p>
             <button
+              ref={ctaRef}
               onClick={() => setShowCollabModal(true)}
+              aria-haspopup="dialog"
               className="relative z-10 px-6 py-2.5 bg-[var(--accent-purple)] text-white font-medium rounded-xl hover:bg-[var(--accent-purple)]/90 transition-all hover:shadow-lg hover:shadow-[var(--accent-purple)]/20 text-sm"
             >
               Let's Build Together
@@ -343,13 +355,16 @@ export default function ProjectShowcase() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="collab-dialog-title"
               className="bg-[var(--bg-secondary)] border border-white/[0.08] rounded-2xl max-w-lg w-full overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="p-6 border-b border-white/[0.06]">
                 <div className="flex items-start justify-between mb-4">
                   <div>
-                    <h2 className="text-xl font-bold text-[var(--text-primary)] mb-1">
+                    <h2 id="collab-dialog-title" className="text-xl font-bold text-[var(--text-primary)] mb-1">
                       Let's Build Together
                     </h2>
                     <p className="text-sm text-[var(--text-muted)]">
@@ -357,7 +372,9 @@ export default function ProjectShowcase() {
                     </p>
                   </div>
                   <button
+                    ref={closeRef}
                     onClick={() => setShowCollabModal(false)}
+                    aria-label="Close dialog"
                     className="p-2 hover:bg-white/[0.04] rounded-lg transition-colors text-[var(--text-muted)]"
                   >
                     <XIcon className="w-4 h-4" />
@@ -373,13 +390,13 @@ export default function ProjectShowcase() {
                   className="group flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] hover:border-[var(--accent-purple)]/30 hover:bg-white/[0.02] transition-all"
                 >
                   <div className="w-10 h-10 rounded-xl bg-[var(--accent-purple-dim)] flex items-center justify-center">
-                    <FaTwitter className="w-5 h-5 text-[var(--accent-purple)]" />
+                    <FaTwitter className="w-5 h-5 text-[var(--accent-purple-text)]" />
                   </div>
                   <div className="flex-1">
                     <p className="text-sm font-semibold text-[var(--text-primary)]">Connect on X</p>
                     <p className="text-xs text-[var(--text-muted)]">@pranshurastogii — DM for real-time conversations</p>
                   </div>
-                  <ExternalLinkIcon className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--accent-purple)] transition-colors" />
+                  <ExternalLinkIcon className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--accent-purple-text)] transition-colors" />
                 </a>
 
                 <div className="p-4 rounded-xl border border-white/[0.06]">

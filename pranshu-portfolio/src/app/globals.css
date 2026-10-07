@@ -7,8 +7,9 @@
   --bg-card: #1A1A24;
   --text-primary: #E8EDF5;
   --text-secondary: #9CA3B0;
-  --text-muted: #6B7280;
+  --text-muted: #858D9B;   /* ≥5:1 on all surfaces (WCAG AA) */
   --accent-purple: #9F4EFF;
+  --accent-purple-text: #B07BFF; /* purple for text: ≥5.8:1 on dark surfaces */
   --accent-cyan: #00F5FF;
   --accent-lime: #39FF9E;
   --accent-purple-dim: rgba(159, 78, 255, 0.15);

@@ -38,7 +38,7 @@ export default async function BlogSection() {
             href="https://specterpq.com/insights"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-xl bg-[var(--accent-purple-dim)] border border-[var(--accent-purple)]/20 text-[var(--accent-purple)] hover:border-[var(--accent-purple)]/40 hover:text-white transition-all text-xs font-mono"
+            className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-xl bg-[var(--accent-purple-dim)] border border-[var(--accent-purple)]/20 text-[var(--accent-purple-text)] hover:border-[var(--accent-purple)]/40 hover:text-white transition-all text-xs font-mono"
           >
             <span>🔬</span>
             Post-Quantum & Privacy Research on SPECTER Insights

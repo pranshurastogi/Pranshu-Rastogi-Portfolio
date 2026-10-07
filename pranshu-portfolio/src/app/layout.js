@@ -99,7 +99,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${poppins.variable} ${victorMono.variable}`}>
       <head>
-        <link rel="preload" href={ASSETS.profile.pfp} as="image" />
         <link rel="dns-prefetch" href="//img.youtube.com" />
         <link rel="dns-prefetch" href="//cdn-images-1.medium.com" />
         <link rel="preconnect" href="https://img.youtube.com" />

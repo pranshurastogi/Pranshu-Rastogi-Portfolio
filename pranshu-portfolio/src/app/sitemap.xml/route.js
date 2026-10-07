@@ -14,18 +14,18 @@ function escapeXml(value) {
     .replace(/'/g, '&apos;');
 }
 
+// No <lastmod>: a per-request timestamp is noise that Google learns to ignore.
+// llms.txt / ai.txt are discovered via robots.txt and <link rel="alternate">, not the sitemap.
+
 // Google image sitemaps accept stills and GIFs; videos need a separate schema
 const isImage = (src) => /\.(png|jpe?g|webp|avif|gif)$/i.test(src);
 
 export async function GET() {
   const baseUrl = SITE_URL;
-  const now = new Date().toISOString();
 
   const staticPages = [
     { url: `${baseUrl}/`, changeFrequency: 'weekly', priority: 1.0 },
     { url: `${baseUrl}/poaps`, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${baseUrl}/llms.txt`, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${baseUrl}/ai.txt`, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${baseUrl}/documents/resume.pdf`, changeFrequency: 'monthly', priority: 0.8 },
   ];
 
@@ -46,7 +46,6 @@ export async function GET() {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${allPages.map((page) => `  <url>
     <loc>${escapeXml(page.url)}</loc>
-    <lastmod>${now}</lastmod>
     <changefreq>${page.changeFrequency}</changefreq>
     <priority>${page.priority.toFixed(1)}</priority>${(page.images || []).map((img) => `
     <image:image>

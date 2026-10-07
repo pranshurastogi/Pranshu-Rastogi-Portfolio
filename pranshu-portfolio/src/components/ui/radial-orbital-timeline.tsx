@@ -53,6 +53,30 @@ export default function RadialOrbitalTimeline({
   const containerRef = useRef<HTMLDivElement>(null);
   const orbitRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<Record<number, HTMLDivElement | null>>({});
+  const [showGlobe, setShowGlobe] = useState(false);
+
+  // Only fetch the three.js globe once the timeline is near the viewport, and
+  // skip it on low-memory / data-saver devices (the CSS orb stays instead).
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const nav = navigator as Navigator & {
+      deviceMemory?: number;
+      connection?: { saveData?: boolean };
+    };
+    if ((nav.deviceMemory && nav.deviceMemory < 4) || nav.connection?.saveData) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShowGlobe(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "300px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === containerRef.current || e.target === orbitRef.current) {
@@ -188,7 +212,11 @@ export default function RadialOrbitalTimeline({
                   "radial-gradient(circle, rgba(159,78,255,0.45) 0%, rgba(0,245,255,0.12) 55%, transparent 75%)",
               }}
             />
-            <Globe className="relative w-full h-full" dots={700} size={0.15} speed={0.6} distance={9.2} />
+            {showGlobe ? (
+              <Globe className="relative w-full h-full" dots={700} size={0.15} speed={0.6} distance={9.2} />
+            ) : (
+              <OrbFallback />
+            )}
           </div>
 
           {/* Orbit ring */}
@@ -283,7 +311,7 @@ export default function RadialOrbitalTimeline({
                   </div>
                   {item.company && (
                     <div className={`text-[10px] mt-0.5 font-mono-italic ${
-                      isActive ? "text-[var(--accent-cyan)]" : "text-[var(--accent-purple)]"
+                      isActive ? "text-[var(--accent-cyan)]" : "text-[var(--accent-purple-text)]"
                     }`}>
                       {item.company}
                     </div>

@@ -24,3 +24,13 @@ export function absoluteUrl(path) {
   const p = path.startsWith("/") ? path : `/${path}`;
   return `${SITE_ORIGIN}${p}`;
 }
+
+/**
+ * URL of a local image served through Next's optimizer (resized WebP/AVIF).
+ * Use where next/image can't be, e.g. <video poster>. `width` must be one of
+ * next.config.mjs `images.deviceSizes`.
+ */
+export function optimizedImageSrc(src, width = 1080, quality = 75) {
+  if (!src || src.startsWith("http") || src.startsWith("data:")) return src;
+  return `/_next/image?url=${encodeURIComponent(src)}&w=${width}&q=${quality}`;
+}

@@ -15,6 +15,8 @@ export type SceneContainerProps = {
   environment?: SceneEnvironment;
   camera?: [number, number, number];
   fov?: number;
+  /** false = render on demand only (static scene, e.g. reduced motion). */
+  animate?: boolean;
 };
 
 const LIGHTS: Record<SceneEnvironment, { ambient: number; key: number; rim: number }> = {
@@ -33,6 +35,7 @@ export function SceneContainer({
   environment = "night",
   camera = [0, 0, 6],
   fov = 42,
+  animate = true,
 }: SceneContainerProps) {
   const wrapperRef = React.useRef<HTMLDivElement>(null);
   const [visible, setVisible] = React.useState(true);
@@ -59,7 +62,7 @@ export function SceneContainer({
   return (
     <div ref={wrapperRef} className={className} aria-hidden="true">
       <Canvas
-        frameloop={visible ? "always" : "never"}
+        frameloop={!visible ? "never" : animate ? "always" : "demand"}
         dpr={[1, 2]}
         camera={{ position: camera, fov }}
         gl={{ antialias: true, alpha: true, powerPreference: "low-power" }}

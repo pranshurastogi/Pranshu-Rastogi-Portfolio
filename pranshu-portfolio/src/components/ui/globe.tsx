@@ -246,6 +246,7 @@ export function Globe({
       environment={environment}
       camera={[0, 0, distance]}
       fov={42}
+      animate={!reducedMotion}
     >
       <GlobeMesh dots={dots} speed={reducedMotion ? 0 : speed} size={size} theme={theme} />
     </SceneContainer>

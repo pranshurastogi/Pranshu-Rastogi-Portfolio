@@ -16,25 +16,48 @@ function getRandomCount(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function tweetHandle(url) {
+  try {
+    return new URL(url).pathname.split("/")[1] || "x";
+  } catch {
+    return "x";
+  }
+}
+
+const WIDGETS_SRC = "https://platform.twitter.com/widgets.js";
+
+/** Load X's widgets.js once; resolves with window.twttr or rejects if blocked/slow. */
+function loadTwitterWidgets(timeoutMs = 8000) {
+  if (window.twttr?.widgets) return Promise.resolve(window.twttr);
+  return new Promise((resolve, reject) => {
+    let script = document.querySelector(`script[src="${WIDGETS_SRC}"]`);
+    if (!script) {
+      script = document.createElement("script");
+      script.src = WIDGETS_SRC;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+    const timer = setTimeout(() => reject(new Error("widgets.js timeout")), timeoutMs);
+    const done = () => {
+      clearTimeout(timer);
+      window.twttr?.widgets ? resolve(window.twttr) : reject(new Error("twttr missing"));
+    };
+    script.addEventListener("load", done, { once: true });
+    script.addEventListener("error", () => { clearTimeout(timer); reject(new Error("widgets.js blocked")); }, { once: true });
+  });
+}
+
 export default function TweetsSection({ tweets = [], minCount = 6, maxCount = 9 }) {
   const containerRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [loadingError, setLoadingError] = useState(false);
-  const [widgetsLoaded, setWidgetsLoaded] = useState(false);
 
   const selectedTweets = useMemo(() => {
-    if (!tweets || tweets.length === 0) return [];
-    const validTweets = tweets.filter((url) => {
-      try {
-        return (
-          typeof url === "string" &&
-          (url.includes("twitter.com") || url.includes("x.com")) &&
-          url.includes("/status/")
-        );
-      } catch {
-        return false;
-      }
-    });
+    const validTweets = (tweets || []).filter(
+      (url) =>
+        typeof url === "string" &&
+        (url.includes("twitter.com") || url.includes("x.com")) &&
+        url.includes("/status/")
+    );
     if (validTweets.length === 0) return [];
     const shuffled = shuffleArray(validTweets);
     const count = Math.min(getRandomCount(minCount, maxCount), shuffled.length);
@@ -57,71 +80,25 @@ export default function TweetsSection({ tweets = [], minCount = 6, maxCount = 9 
     return () => observer.disconnect();
   }, []);
 
+  // Upgrade the fallback cards into embeds. If X is blocked or slow, the
+  // fallback link cards simply stay — never an empty grid.
   useEffect(() => {
     if (!isVisible || selectedTweets.length === 0) return;
-
-    const loadWidgets = () => {
-      try {
-        if (window.twttr?.ready) {
-          window.twttr.ready((twttr) => {
-            if (containerRef.current) {
-              twttr.widgets.load(containerRef.current).catch(() => setLoadingError(true));
-            }
-          });
-        } else if (window.twttr?.widgets && containerRef.current) {
-          window.twttr.widgets.load(containerRef.current).catch(() => setLoadingError(true));
-        }
-        setWidgetsLoaded(true);
-      } catch {
-        setLoadingError(true);
-      }
+    let cancelled = false;
+    loadTwitterWidgets()
+      .then((twttr) => {
+        if (!cancelled && containerRef.current) twttr.widgets.load(containerRef.current);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
     };
+  }, [isVisible, selectedTweets.length]);
 
-    if (typeof window === "undefined") return;
-
-    const existing = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
-    if (!existing) {
-      const script = document.createElement("script");
-      script.src = "https://platform.twitter.com/widgets.js";
-      script.async = true;
-      script.onerror = () => setLoadingError(true);
-      script.onload = () => {
-        const timeout = setTimeout(() => {
-          if (!widgetsLoaded) setLoadingError(true);
-        }, 10000);
-        loadWidgets();
-        clearTimeout(timeout);
-      };
-      document.body.appendChild(script);
-    } else {
-      if (window.twttr) {
-        loadWidgets();
-      } else {
-        const checkInterval = setInterval(() => {
-          if (window.twttr) {
-            clearInterval(checkInterval);
-            loadWidgets();
-          }
-        }, 100);
-        setTimeout(() => clearInterval(checkInterval), 5000);
-      }
-    }
-  }, [isVisible, selectedTweets.length, widgetsLoaded]);
-
-  if (loadingError && selectedTweets.length === 0) {
-    return (
-      <section className="py-16 md:py-24">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <div className="bg-[var(--bg-secondary)] border border-white/[0.06] rounded-2xl p-8 max-w-md mx-auto">
-            <p className="text-[var(--text-muted)]">Unable to load tweets at this time.</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  if (selectedTweets.length === 0) return null;
 
   return (
-    <section ref={containerRef} className="py-16 md:py-24">
+    <section ref={containerRef} className="py-16 md:py-24" aria-labelledby="tweets-heading">
       <div className="max-w-6xl mx-auto px-4">
         {/* Header */}
         <motion.div
@@ -131,7 +108,7 @@ export default function TweetsSection({ tweets = [], minCount = 6, maxCount = 9 
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-3">
+          <h2 id="tweets-heading" className="text-3xl md:text-4xl font-bold text-[var(--text-primary)] mb-3">
             Tweets
           </h2>
           <div className="section-divider mb-4" />
@@ -140,16 +117,11 @@ export default function TweetsSection({ tweets = [], minCount = 6, maxCount = 9 
           </p>
         </motion.div>
 
-        {selectedTweets.length === 0 ? (
-          <div className="text-center py-8">
-            <div className="bg-[var(--bg-secondary)] border border-white/[0.06] rounded-2xl p-8 max-w-md mx-auto">
-              <p className="text-[var(--text-muted)]">No tweets available at the moment.</p>
-            </div>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {isVisible &&
-              selectedTweets.map((url, i) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 items-start">
+          {isVisible &&
+            selectedTweets.map((url, i) => {
+              const handle = tweetHandle(url);
+              return (
                 <motion.div
                   key={`${url}-${i}`}
                   className="rounded-2xl overflow-hidden bg-[var(--bg-secondary)] border border-white/[0.06] hover:border-[var(--accent-purple)]/30 transition-all duration-300"
@@ -157,13 +129,24 @@ export default function TweetsSection({ tweets = [], minCount = 6, maxCount = 9 
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.08 }}
                 >
-                  <blockquote className="twitter-tweet min-h-[350px]" data-theme="dark">
-                    <a href={url} target="_blank" rel="noopener noreferrer"></a>
+                  {/* widgets.js replaces this blockquote with the embed; until then it is a real link card */}
+                  <blockquote className="twitter-tweet !m-0 p-5" data-theme="dark" data-dnt="true">
+                    <p className="text-sm text-[var(--text-secondary)] mb-3">
+                      Post by <span className="text-[var(--text-primary)] font-medium">@{handle}</span>
+                    </p>
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--accent-purple-text)] hover:underline"
+                    >
+                      View post on X <span aria-hidden="true">→</span>
+                    </a>
                   </blockquote>
                 </motion.div>
-              ))}
-          </div>
-        )}
+              );
+            })}
+        </div>
       </div>
     </section>
   );

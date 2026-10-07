@@ -1,7 +1,7 @@
 // src/components/OptimizedImage.jsx
 "use client";
 
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
@@ -21,32 +21,9 @@ const OptimizedImage = ({
 }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [isInView, setIsInView] = useState(priority);
-  const imgRef = useRef(null);
-
-  // Intersection Observer for lazy loading
-  useEffect(() => {
-    if (priority || isInView) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.disconnect();
-        }
-      },
-      {
-        rootMargin: '50px', // Start loading 50px before image comes into view
-        threshold: 0.1
-      }
-    );
-
-    if (imgRef.current) {
-      observer.observe(imgRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [priority, isInView]);
+  // next/image lazy-loads non-priority images natively (loading="lazy"), so the
+  // <img> is always in the server HTML — good for SEO and LCP.
+  const isInView = true;
 
   // Generate WebP src if not already WebP
   const getOptimizedSrc = (originalSrc) => {
@@ -90,8 +67,7 @@ const OptimizedImage = ({
     typeof optimizedSrc === "string" && /\.gif(\?|#|$)/i.test(optimizedSrc);
 
   return (
-    <div 
-      ref={imgRef}
+    <div
       className={`relative overflow-hidden ${className}`}
       style={{ width: fill ? '100%' : width, height: fill ? '100%' : height }}
     >

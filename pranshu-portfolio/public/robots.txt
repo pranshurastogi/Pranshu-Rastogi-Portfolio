@@ -2,7 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /ingest/
-Disallow: /_next/
 
 # Favicon and manifest
 Allow: /favicon.ico

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion } from "framer-motion";
+import { MotionConfig, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 import Header from "./Header";
@@ -25,7 +25,7 @@ export default function ClientLayout({ children }) {
   if (pathname !== firstPath.current) hasNavigated.current = true;
 
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       {/* Global animated background — shooting stars + static stars */}
       <div className="fixed inset-0 z-0 overflow-hidden bg-[var(--bg-primary)]">
         <ShootingStarsBackground />
@@ -57,6 +57,6 @@ export default function ClientLayout({ children }) {
         <WebVitals />
         <PerformanceMonitor />
       </div>
-    </>
+    </MotionConfig>
   );
 }

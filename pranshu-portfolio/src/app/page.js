@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import Hero from "@/components/hero/Hero";
 import YouTubeSectionWrapper from "@/components/content/YouTubeSectionWrapper";
 import tweetsData from "@/data/tweets.json";
+import { FaqJsonLd } from "@/components/seo/JsonLd";
 import {
   DEFAULT_DESCRIPTION,
   DEFAULT_TITLE,
@@ -42,6 +43,7 @@ export default function Home() {
 
   return (
     <>
+      <FaqJsonLd />
       {/* Crawlable summary for search engines & AI — complements JSON-LD */}
       <section aria-label="Professional summary" className="sr-only">
         <p>

@@ -64,7 +64,7 @@ export function GlassBlogCard({
       {/* Content */}
       <div className="flex flex-col gap-3 p-5 flex-1">
         <div className="space-y-2 flex-1">
-          <h3 className="text-base font-semibold leading-tight text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent-purple)] line-clamp-2">
+          <h3 className="text-base font-semibold leading-tight text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent-purple-text)] line-clamp-2">
             {title}
           </h3>
           <p className="line-clamp-2 text-sm text-[var(--text-muted)] leading-relaxed">
@@ -74,7 +74,7 @@ export function GlassBlogCard({
 
         <div className="flex items-center justify-between border-t border-white/[0.06] pt-3">
           <div className="flex items-center gap-2">
-            <div className="h-7 w-7 rounded-full bg-[var(--accent-purple-dim)] border border-white/[0.06] flex items-center justify-center text-[var(--accent-purple)] text-xs font-semibold">
+            <div className="h-7 w-7 rounded-full bg-[var(--accent-purple-dim)] border border-white/[0.06] flex items-center justify-center text-[var(--accent-purple-text)] text-xs font-semibold">
               {author?.name?.[0] || "P"}
             </div>
             <div className="flex flex-col">

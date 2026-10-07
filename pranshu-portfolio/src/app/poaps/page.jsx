@@ -16,6 +16,13 @@ export const metadata = {
     url: `${SITE_URL}/poaps`,
     images: [{ url: absoluteUrl(ASSETS.profile.pfp), alt: "Pranshu Rastogi POAPs" }],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "POAPs | Pranshu Rastogi",
+    description:
+      "Onchain proof of 30+ Web3 conferences, hackathons, and ecosystem programs attended by Pranshu Rastogi.",
+    images: [absoluteUrl(ASSETS.profile.pfp)],
+  },
 };
 
 export default function PoapsPage() {

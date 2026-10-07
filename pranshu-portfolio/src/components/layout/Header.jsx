@@ -25,7 +25,7 @@ export default function Header() {
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center gap-2.5 select-none text-[var(--text-primary)] hover:text-[var(--accent-purple)] transition-colors"
+            className="flex items-center gap-2.5 select-none text-[var(--text-primary)] hover:text-[var(--accent-purple-text)] transition-colors"
           >
             <CustomLogo width={22} height={22} className="flex-shrink-0" />
             <span className="text-base font-semibold tracking-tight">
@@ -59,7 +59,7 @@ export default function Header() {
                   key={l.href}
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="block py-2.5 px-3 text-[var(--text-secondary)] hover:text-[var(--accent-purple)] text-sm font-medium transition-colors rounded-lg hover:bg-white/[0.03]"
+                  className="block py-2.5 px-3 text-[var(--text-secondary)] hover:text-[var(--accent-purple-text)] text-sm font-medium transition-colors rounded-lg hover:bg-white/[0.03]"
                 >
                   {l.name}
                 </Link>

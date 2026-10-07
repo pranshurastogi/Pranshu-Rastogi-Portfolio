@@ -16,7 +16,6 @@ export function GlobalJsonLd() {
     buildWebsiteSchema(),
     buildProfilePageSchema(),
     buildProfessionalServiceSchema(),
-    buildFAQSchema(),
     buildProjectsSchema(),
   ];
 
@@ -30,6 +29,16 @@ export function GlobalJsonLd() {
         />
       ))}
     </>
+  );
+}
+
+/** FAQ schema belongs on the homepage only (it answers questions about the profile) */
+export function FaqJsonLd() {
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={jsonLdScript(buildFAQSchema())}
+    />
   );
 }
 

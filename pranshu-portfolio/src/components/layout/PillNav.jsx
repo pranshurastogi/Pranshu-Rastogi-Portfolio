@@ -84,7 +84,7 @@ export default function PillNav() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.2 }}
-                className="text-[var(--accent-purple)] font-medium text-sm tracking-wide whitespace-nowrap"
+                className="text-[var(--accent-purple-text)] font-medium text-sm tracking-wide whitespace-nowrap"
               >
                 {activeItem.label}
               </motion.span>
@@ -106,7 +106,7 @@ export default function PillNav() {
                   onClick={() => handleClick(item.id)}
                   className={`cursor-pointer transition-all duration-200 rounded-lg px-3 py-1.5 text-sm font-medium whitespace-nowrap ${
                     isActive
-                      ? "text-[var(--accent-purple)] bg-[var(--accent-purple-dim)]"
+                      ? "text-[var(--accent-purple-text)] bg-[var(--accent-purple-dim)]"
                       : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
                   }`}
                 >

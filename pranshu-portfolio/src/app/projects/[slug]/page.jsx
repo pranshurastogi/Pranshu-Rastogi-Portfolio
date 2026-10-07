@@ -5,6 +5,11 @@ import ProjectPageClient from "./ProjectPageClient";
 import { BreadcrumbJsonLd, ProjectJsonLd } from "@/components/seo/JsonLd";
 import { projectSlug, projectStillImage, projectUrl, SITE_URL } from "@/lib/site-seo";
 
+// Pre-render every project page at build time
+export function generateStaticParams() {
+  return projectsData.projects.map((p) => ({ slug: projectSlug(p.title) }));
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const project = projectsData.projects.find(
@@ -64,8 +69,7 @@ export default async function ProjectPage({ params }) {
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: "Home", url: SITE_URL },
-          { name: "Projects", url: `${SITE_URL}/#projects` },
+          { name: "Home", url: `${SITE_URL}/` },
           { name: project.title, url: pageUrl },
         ]}
       />

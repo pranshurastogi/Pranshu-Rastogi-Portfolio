@@ -8,7 +8,7 @@
       "description": "Post-quantum stealth address protocol for Ethereum and Sui. Pay any ENS (.eth) or SuiNS (.sui) name and SPECTER derives a fresh, unlinkable one-time address for every payment, secured by ML-KEM-768 (NIST FIPS 203). Ships with a TypeScript/WASM SDK on npm, a hosted API, an in-browser playground, and private trading on Yellow Network.",
       "longDescription": "Onchain payments today are fully transparent: every transfer exposes both sender and recipient. SPECTER fixes this. A recipient publishes one public meta-address (linked to their ENS or SuiNS name), and every sender derives a different one-time stealth address for each payment. Only the recipient can discover and spend those funds; to everyone else they look like transfers to random addresses.\n\nThe discovery path uses ML-KEM-768 (NIST FIPS 203), a lattice-based post-quantum KEM, so announcement data stays private even against \"harvest now, decrypt later\" quantum adversaries. One-byte view tags let recipients skip ~99.6% of announcements, scanning 80K announcements in about 1.5 seconds.\n\nSPECTER is more than a hackathon demo. It ships as a full stack: a Rust/Axum backend and hosted API, a React web app (Setup → Send → Scan), the @specterpq/sdk TypeScript SDK compiled to WebAssembly so all cryptography runs on-device, an interactive SDK playground, a self-custodial \"I don't trust SPECTER\" recovery flow that works even if SPECTER goes offline, and a Yellow Network integration for anonymous state-channel trading. Started at ETHGlobal HackMoney 2026, won 3rd prize at the ETHCC[9] stage pitch, and selected for Founder School Cohort 2.",
       "images": [
-        "/images/projects/specter-demo.gif",
+        "/images/projects/specter-demo.mp4",
         "/images/projects/specter-home.webp",
         "/images/projects/specter-how-it-works.webp",
         "/images/projects/specter-setup.webp",
@@ -212,6 +212,7 @@
         }
       ],
       "category": "Privacy & Cryptography",
+      "applicationCategory": "FinanceApplication",
       "difficulty": "Advanced",
       "icon": "zap",
       "gradient": "from-[#0D9488]/20 to-[#AEEA00]/10",
@@ -239,7 +240,7 @@
       "description": "A private, local-first AI reminder app for iPhone. Type, speak or snap an unfinished thought; on-device AI understands the date, person and promise, then brings it back at the right moment with one clear next step. Built in Swift 6 with Apple Foundation Models, deterministic grounding and an opt-in cloud challenger. Live in public TestFlight beta.",
       "longDescription": "To-do apps optimise the list. TuckBack optimises what it feels like to carry your life. You tuck a thought away (by text, voice, camera or scan, in English, Hindi, Hinglish, Spanish or German) and it leaves your attention. It returns when it can actually move, in your own words, with who it involves and one grounded next step instead of a wall of options.\n\nThe AI is designed around one rule: models propose, code decides. Every capture is committed to an on-device SQLite database before any model runs, so an AI failure can never lose a thought. A deterministic interpreter and forty versioned Action Recipes always produce an answer. Apple Foundation Models (iOS 26) can refine it on-device, and an opt-in OpenAI or Gemini second opinion can compete, but every proposal passes the same grounding validator and confidence policy. Ungrounded people, times or amounts, unsafe actions and wrong-language output are rejected. No model can send, pay, book, delete or complete anything.\n\nLearning optimises for loops that actually get resolved, not engagement: evidence builds up gradually, decays after 90 days, and any learned pattern can be forgotten. Repeated snoozes trigger a Rescue engine that offers a smaller step rather than a louder nag. Designed, engineered and shipped solo: native Swift/SwiftUI app, widgets and Apple Watch, plus an optional Fastify backend for accounts, encrypted sync and Daily Return emails.",
       "images": [
-        "/images/projects/tuckback-demo.gif",
+        "/images/projects/tuckback-demo.mp4",
         "/images/projects/tuckback-appstore-1.webp",
         "/images/projects/tuckback-appstore-2.webp",
         "/images/projects/tuckback-hero.webp",
@@ -384,7 +385,8 @@
               "Redis / BullMQ workers"
             ]
           }
-        ]
+        ],
+        "layersNote": "Dependencies point inward: UI → use cases → pure domain. Adapters plug in at the edges."
       },
       "howItWorks": [
         {
@@ -414,8 +416,8 @@
           "label": "Capture languages"
         },
         {
-          "value": "0",
-          "label": "Accounts needed"
+          "value": "No account",
+          "label": "Local-first core"
         },
         {
           "value": "iOS 18+",
@@ -482,15 +484,15 @@
         }
       ],
       "category": "AI · Consumer iOS",
-      "difficulty": "Advanced",
-      "icon": "zap",
-      "gradient": "from-[#3E6B4E]/20 to-[#AEEA00]/10",
-      "operatingSystem": "iOS 18+",
       "applicationCategory": "LifestyleApplication",
+      "operatingSystem": "iOS 18+",
       "offers": {
         "price": "0",
         "priceCurrency": "USD"
-      }
+      },
+      "difficulty": "Advanced",
+      "icon": "zap",
+      "gradient": "from-[#3E6B4E]/20 to-[#AEEA00]/10"
     },
     {
       "id": 9,
@@ -500,7 +502,7 @@
       "description": "A two-operator research studio for tokenized real-world assets: treasuries, private credit, stablecoins, PE/VC and real estate. Flagship reports, ghostwriting, custom Dune dashboards and AI-search intel agents, plus a free weekly Lab and a live Private Credit Map tracking 39 platforms and 98 tokenized credit assets.",
       "longDescription": "TheRawByte writes the research people read before they put money in. It covers one category properly: real-world assets onchain, across stablecoins, treasuries, non-US government debt, private credit, equities, PE/VC, commodities and real estate. Every deliverable is built on the studio's own onchain queries, explained in language that works for a TradFi allocator and a crypto native alike.\n\nIt runs as two operators with no middle layer. Ishita Rastogi leads research and narrative; Pranshu Rastogi leads engineering and distribution: Dune queries and dashboards, RWA intel agents that track competitor TVL and yield, and GEO / AI-search work so protocols surface when someone asks ChatGPT or Perplexity which tokenized treasury to use.\n\nThe free weekly Lab ships one public Dune dashboard, a query-logic breakdown and a walkthrough video, so prospective clients can check the work before paying. The Private Credit Map follows tokenized credit from issuance through DeFi to exit. Work has been cited on Ethereum.org, shared by Bankless co-founder Ryan Sean Adams and amplified by @ethereum, with clients and publications including Phala Network, Raiku, Gelato, Push Chain and Hazeflow Research.",
       "images": [
-        "/images/projects/therawbyte-demo.gif",
+        "/images/projects/therawbyte-demo.mp4",
         "/images/projects/therawbyte-hero.webp",
         "/images/projects/therawbyte-services.webp",
         "/images/projects/therawbyte-credit-map.webp",
@@ -652,10 +654,10 @@
         }
       ],
       "category": "RWA Research · Data",
+      "schemaType": "Organization",
       "difficulty": "Intermediate",
       "icon": "cube",
       "gradient": "from-[#C6FF3D]/20 to-[#0D1A0F]/10",
-      "schemaType": "Organization",
       "awards": [
         {
           "label": "Ethereum.org",
@@ -698,6 +700,7 @@
       "live": "https://github.com/pranshurastogi/VANTA",
       "showcase": "https://ethglobal.com/showcase/vanta-sep7q",
       "category": "AI Security",
+      "applicationCategory": "SecurityApplication",
       "difficulty": "Advanced",
       "icon": "shield",
       "gradient": "from-[#FF4444]/20 to-[#9F4EFF]/10",
@@ -716,7 +719,7 @@
       "description": "The all-in-one Alephium dashboard for real-time blockchain analytics, dynamic contract insights, and gamified onchain scoring—complete with live network stats, wallet profiler, token flows, Ralph contract decoder, alerts, quests, and XP-powered achievements.",
       "longDescription": "AlphIQ is designed to synthesize information, not just present it. The real challenge in Web3 isn't finding data; it's the cognitive burden of connecting disparate points: a transaction, a wallet's history, a contract's function, and a community campaign — into a single, understandable narrative. AlphIQ does that heavy lifting for you, weaving the data into a story and giving you a central role to play.",
       "images": [
-        "/images/projects/alphiq-mov.mov",
+        "/images/projects/alphiq-demo.mp4",
         "/images/projects/alphIQ-dashboard1.png",
         "/images/projects/AlphIQ-Dashboard-2.png"
       ],
@@ -746,6 +749,7 @@
       "github": "https://github.com/pranshurastogi/AlphIQ",
       "live": "https://www.alphiq.xyz/",
       "category": "Analytics",
+      "applicationCategory": "BusinessApplication",
       "difficulty": "Intermediate",
       "icon": "zap",
       "gradient": "from-[#627EEA]/20 to-[#AEEA00]/10"
@@ -757,7 +761,7 @@
       "description": "A decentralized platform for collaborative idea sharing and community-driven innovation, built on Etherlink blockchain with NFT rewards for contributors.",
       "longDescription": "Bloom-Ideas is a Web3 hackathon platform that transforms idea sharing into a collaborative garden ecosystem. Users can plant ideas, nurture them through community engagement, and earn NFT rewards as their ideas bloom into successful projects.",
       "images": [
-        "/images/projects/Bloom-ideas-3.gif",
+        "/images/projects/bloom-ideas-demo.mp4",
         "/images/projects/Bloom-ideas-1.png",
         "/images/projects/Bloom-ideas-2.png"
       ],
@@ -779,6 +783,7 @@
       "github": "https://github.com/BloomIdeas/SOC-Bloom-ideas",
       "live": "https://soc-bloom-ideas.vercel.app/",
       "category": "Web3 Hackathon",
+      "applicationCategory": "SocialNetworkingApplication",
       "difficulty": "Intermediate",
       "icon": "ethereum",
       "gradient": "from-[#AEEA00]/20 to-[#39FF14]/10"
@@ -790,7 +795,7 @@
       "description": "Admin dashboard for AlphIQ helps you to see analytics, create , quests, and lot more with seamless UI.",
       "longDescription": "AlphIQ Admin Dashboard is a powerful tool that helps you to manage your AlphIQ instance. It allows you to see analytics, create quests, and lot more with seamless UI.",
       "images": [
-        "/images/projects/alphiq-admin-3.gif",
+        "/images/projects/alphiq-admin-demo.mp4",
         "/images/projects/alphiq-admin-1.png",
         "/images/projects/alphiq-admin-2.png"
       ],
@@ -814,6 +819,7 @@
       "github": "https://github.com/pranshurastogi/AlphIQ-admin-panel",
       "live": "https://admin.alphiq.xyz/",
       "category": "Admin Dashboard",
+      "applicationCategory": "BusinessApplication",
       "difficulty": "Intermediate",
       "icon": "code",
       "gradient": "from-[#F7931A]/20 to-[#627EEA]/10"
@@ -856,6 +862,7 @@
       "github": "https://github.com/pranshurastogi/EYI",
       "live": "https://eyi-two.vercel.app/",
       "category": "Decentralized Identity",
+      "applicationCategory": "SocialNetworkingApplication",
       "difficulty": "Advanced",
       "icon": "shield",
       "gradient": "from-[#8B5CF6]/20 to-[#06B6D4]/10"
@@ -867,7 +874,7 @@
       "description": "Imagine a world where learning blockchain isn't about memorizing complex concepts, but about embarking on epic quests, solving puzzles, and earning rewards that actually matter. Welcome to IntelliLearn - where every game is a lesson, every achievement is a milestone, and every player becomes a Web3 master.",
       "longDescription": "Welcome to IntelliLearn, where the future of Web3 education unfolds. We're transforming complex blockchain concepts into an engaging adventure, powered by gamification, virality, and decentralised identity. Join us on this journey to onboard the next billion users into the Web3 universe.",
       "images": [
-        "/images/projects/Intellilearn-4.mov",
+        "/images/projects/intellilearn-demo.mp4",
         "/images/projects/Intellilearn-1.png",
         "/images/projects/Intellilearn-2.png",
         "/images/projects/Intellilearn-3.png"
@@ -890,6 +897,7 @@
       "github": "https://github.com/Intellilearn-gm/IL-core",
       "live": "https://il-core.vercel.app/login",
       "category": "Web3 Education",
+      "applicationCategory": "EducationalApplication",
       "difficulty": "Intermediate",
       "icon": "snap",
       "gradient": "from-[#a259ff]/20 to-[#F7931A]/10"

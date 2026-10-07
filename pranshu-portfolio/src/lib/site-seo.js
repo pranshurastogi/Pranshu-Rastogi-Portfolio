@@ -117,10 +117,17 @@ export function projectUrl(title) {
   return `${SITE_URL}/projects/${projectSlug(title)}`;
 }
 
-/** First still image for a project (skips GIFs/videos) — used for OG cards and sitemaps */
+export const isVideoSrc = (src) => /\.(mov|mp4|webm)$/i.test(src || "");
+const isStillSrc = (src) => !/\.(gif|mov|mp4|webm)$/i.test(src || "");
+
+/** First still image path for a project (skips GIFs/videos) — posters, thumbnails, related cards */
+export function projectStillSrc(project) {
+  return project.images.find(isStillSrc) || project.images[0];
+}
+
+/** Absolute URL of the first still image — used for OG cards, JSON-LD and sitemaps */
 export function projectStillImage(project) {
-  const still = project.images.find((src) => !/\.(gif|mov|mp4|webm)$/i.test(src));
-  const src = still || project.images[0];
+  const src = projectStillSrc(project);
   return src?.startsWith("http") ? src : absoluteUrl(src);
 }
 
@@ -337,8 +344,12 @@ export function buildProjectsSchema() {
         url: projectUrl(p.title),
         image: projectStillImage(p),
         ...(p.live && { sameAs: p.live }),
-        ...(!p.schemaType && { applicationCategory: p.applicationCategory || p.category }),
-        author: { "@id": `${SITE_URL}/#person` },
+        ...(p.schemaType === "Organization"
+          ? { founder: { "@id": `${SITE_URL}/#person` } }
+          : {
+              applicationCategory: p.applicationCategory || p.category,
+              author: { "@id": `${SITE_URL}/#person` },
+            }),
       },
     })),
   };
@@ -357,6 +368,7 @@ export function buildBreadcrumbSchema(items) {
   };
 }
 
+/** Serialize JSON-LD safely: escaping "<" prevents a value from closing the <script> tag */
 export function jsonLdScript(data) {
-  return { __html: JSON.stringify(data) };
+  return { __html: JSON.stringify(data).replace(/</g, "\\u003c") };
 }

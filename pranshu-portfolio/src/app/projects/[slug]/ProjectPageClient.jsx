@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ExternalLinkIcon,
@@ -13,6 +13,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   CheckCircleIcon,
+  PlayIcon,
   PackageIcon,
   CopyIcon,
   CheckIcon,
@@ -27,7 +28,8 @@ import OptimizedImage from "@/components/ui/OptimizedImage";
 import VideoWithFallback from "@/components/ui/VideoWithFallback";
 import ArchitectureDiagram from "@/components/projects/ArchitectureDiagram";
 import projectsData from "@/data/projects.json";
-import { projectSlug } from "@/lib/site-seo";
+import { projectSlug, projectStillSrc } from "@/lib/site-seo";
+import { optimizedImageSrc } from "@/lib/site-assets";
 
 function isVideo(src) {
   return src?.match(/\.(mov|mp4|webm)$/);
@@ -86,7 +88,7 @@ function CopyCommand({ command }) {
       <button
         onClick={copy}
         aria-label={copied ? "Copied" : `Copy “${command}”`}
-        className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg text-[var(--text-muted)] hover:bg-[var(--accent-purple-dim)] hover:text-[var(--accent-purple)] transition-colors"
+        className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg text-[var(--text-muted)] hover:bg-[var(--accent-purple-dim)] hover:text-[var(--accent-purple-text)] transition-colors"
       >
         {copied ? (
           <CheckIcon className="w-3.5 h-3.5 text-[var(--accent-lime)]" />
@@ -105,17 +107,18 @@ export default function ProjectPageClient({ project }) {
   const prev = useCallback(() => setCurrent((p) => (p - 1 + total) % total), [total]);
   const next = useCallback(() => setCurrent((p) => (p + 1) % total), [total]);
 
-  // Arrow keys move the gallery (ignored while typing in a field)
-  useEffect(() => {
-    if (total < 2) return;
-    const onKey = (e) => {
-      if (e.target.closest?.("input, textarea, [contenteditable]")) return;
-      if (e.key === "ArrowLeft") prev();
-      if (e.key === "ArrowRight") next();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [total, prev, next]);
+  // Arrow keys move the gallery while it has focus (modifier shortcuts like Alt+← pass through)
+  const onCarouselKey = (e) => {
+    if (total < 2 || e.altKey || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    if (e.key === "ArrowLeft") { e.preventDefault(); prev(); }
+    if (e.key === "ArrowRight") { e.preventDefault(); next(); }
+  };
+  const still = projectStillSrc(project);
+
+  // Related projects: the next three after this one (wrapping), so each page links somewhere different
+  const all = projectsData.projects;
+  const idx = all.findIndex((p) => p.id === project.id);
+  const related = [1, 2, 3].map((k) => all[(idx + k) % all.length]).filter((p) => p.id !== project.id);
 
   const activeLinks = LINK_ITEMS.filter((l) => !!project[l.key]);
   const paragraphs = project.longDescription.split(/\n\s*\n/);
@@ -145,7 +148,7 @@ export default function ProjectPageClient({ project }) {
         >
           <Link
             href="/#projects"
-            className="inline-flex items-center gap-2 text-sm text-[var(--text-muted)] hover:text-[var(--accent-purple)] transition-colors mb-10"
+            className="inline-flex items-center gap-2 text-sm text-[var(--text-muted)] hover:text-[var(--accent-purple-text)] transition-colors mb-10"
           >
             <ArrowLeftIcon className="w-4 h-4" />
             Back to Portfolio
@@ -220,7 +223,7 @@ export default function ProjectPageClient({ project }) {
                   href={project.social.x}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.1] bg-white/[0.03] px-3 py-1.5 text-xs text-[var(--text-secondary)] hover:border-[var(--accent-purple)]/40 hover:text-[var(--accent-purple)] transition-colors"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.1] bg-white/[0.03] px-3 py-1.5 text-xs text-[var(--text-secondary)] hover:border-[var(--accent-purple)]/40 hover:text-[var(--accent-purple-text)] transition-colors"
                 >
                   <FaXTwitter className="w-3 h-3" />
                   {project.social.xHandle}
@@ -240,7 +243,7 @@ export default function ProjectPageClient({ project }) {
           >
             {project.stats.map((stat) => (
               <div key={stat.label} className={`${card} px-4 py-4`}>
-                <p className="text-xl md:text-2xl font-bold text-[var(--accent-purple)] font-mono tracking-tight">
+                <p className="text-xl md:text-2xl font-bold text-[var(--accent-purple-text)] font-mono tracking-tight">
                   {stat.value}
                 </p>
                 <p className="text-[11px] uppercase tracking-wider text-[var(--text-muted)] mt-1">
@@ -254,20 +257,17 @@ export default function ProjectPageClient({ project }) {
         {/* Two-column layout */}
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           {/* LEFT: media + description + steps + tech + features */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="flex-1 min-w-0 space-y-6 w-full"
-          >
+          <div className="flex-1 min-w-0 space-y-6 w-full">
             {/* Carousel */}
             <div
               className="relative rounded-2xl overflow-hidden border border-white/[0.06]"
               role="region"
               aria-roledescription="carousel"
-              aria-label={`${project.title} screenshots`}
+              aria-label={`${project.title} screenshots — use arrow keys to browse`}
+              tabIndex={total > 1 ? 0 : undefined}
+              onKeyDown={onCarouselKey}
             >
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={current}
                   initial={{ opacity: 0 }}
@@ -279,13 +279,14 @@ export default function ProjectPageClient({ project }) {
                   {isVideo(project.images[current]) ? (
                     <VideoWithFallback
                       src={project.images[current]}
+                      poster={optimizedImageSrc(still, 1200)}
                       className="w-full h-full object-cover"
                       muted
                       loop
                       playsInline
                       autoPlay
                       controls
-                      aria-label={`${project.title} preview video`}
+                      aria-label={`${project.title} demo video`}
                     />
                   ) : (
                     <OptimizedImage
@@ -301,7 +302,12 @@ export default function ProjectPageClient({ project }) {
               </AnimatePresence>
 
               {/* Counter */}
-              <div className="absolute top-3 left-3 bg-black/60 backdrop-blur border border-white/[0.08] text-[var(--text-secondary)] text-xs px-2.5 py-1 rounded-full font-mono">
+              <div
+                className="absolute top-3 left-3 bg-black/60 backdrop-blur border border-white/[0.08] text-[var(--text-secondary)] text-xs px-2.5 py-1 rounded-full font-mono"
+                aria-live="polite"
+                aria-atomic="true"
+              >
+                <span className="sr-only">Slide </span>
                 {current + 1} / {total}
               </div>
 
@@ -332,7 +338,7 @@ export default function ProjectPageClient({ project }) {
                   <button
                     key={i}
                     onClick={() => setCurrent(i)}
-                    aria-label={`Show screenshot ${i + 1}`}
+                    aria-label={`Show ${isVideo(img) ? "demo video" : "screenshot"} ${i + 1}`}
                     aria-current={i === current}
                     className={`flex-shrink-0 w-20 h-12 rounded-lg overflow-hidden border-2 transition-all ${
                       i === current
@@ -340,23 +346,19 @@ export default function ProjectPageClient({ project }) {
                         : "border-white/[0.06] hover:border-white/[0.15]"
                     }`}
                   >
-                    {isVideo(img) ? (
-                      <VideoWithFallback
-                        src={img}
-                        className="w-full h-full object-cover"
-                        muted
-                        playsInline
-                        aria-label={`Thumbnail video ${i + 1}`}
-                      />
-                    ) : (
+                    {/* Videos use the still poster as their thumbnail — never a second video download */}
+                    <span className="relative block w-full h-full">
                       <OptimizedImage
-                        src={img}
-                        alt={`thumb ${i + 1}`}
+                        src={isVideo(img) ? still : img}
+                        alt=""
                         width={80}
                         height={48}
                         className="w-full h-full object-cover object-top"
                       />
-                    )}
+                      {isVideo(img) && (
+                        <PlayIcon className="absolute inset-0 m-auto w-4 h-4 text-white drop-shadow" aria-hidden="true" />
+                      )}
+                    </span>
                   </button>
                 ))}
               </div>
@@ -388,7 +390,7 @@ export default function ProjectPageClient({ project }) {
                       key={step.title}
                       className="relative rounded-xl border border-white/[0.06] bg-[var(--bg-primary)] p-4"
                     >
-                      <span className="font-mono text-[10px] text-[var(--accent-purple)] tracking-widest">
+                      <span className="font-mono text-[10px] text-[var(--accent-purple-text)] tracking-widest">
                         {String(i + 1).padStart(2, "0")}
                       </span>
                       <p className="text-sm font-semibold text-[var(--text-primary)] mt-1">
@@ -410,7 +412,7 @@ export default function ProjectPageClient({ project }) {
                 {project.technologies.map((tech, i) => (
                   <span
                     key={i}
-                    className="px-3 py-1.5 rounded-lg border border-[var(--accent-purple)]/15 bg-[var(--accent-purple-dim)] text-[var(--accent-purple)] text-xs font-medium"
+                    className="px-3 py-1.5 rounded-lg border border-[var(--accent-purple)]/15 bg-[var(--accent-purple-dim)] text-[var(--accent-purple-text)] text-xs font-medium"
                   >
                     {tech}
                   </span>
@@ -436,7 +438,7 @@ export default function ProjectPageClient({ project }) {
                 ))}
               </ul>
             </section>
-          </motion.div>
+          </div>
 
           {/* RIGHT: links sidebar */}
           <motion.aside
@@ -447,9 +449,9 @@ export default function ProjectPageClient({ project }) {
           >
             {/* Quick Links */}
             <div className={`${card} p-5`}>
-              <p className="text-[var(--text-muted)] text-xs uppercase tracking-widest mb-4">
+              <h2 className="text-[var(--text-muted)] text-xs uppercase tracking-widest font-normal mb-4">
                 Quick Links
-              </p>
+              </h2>
               <div className="space-y-3">
                 {activeLinks.map(({ key, label, sub, href, Icon }) => {
                   const isSite = key === "live" && project.schemaType === "Organization";
@@ -462,11 +464,11 @@ export default function ProjectPageClient({ project }) {
                     className="group flex items-center justify-between rounded-xl border border-white/[0.06] bg-[var(--bg-primary)] px-4 py-3.5 transition-all duration-300 hover:border-[var(--accent-purple)]/30 hover:bg-[var(--accent-purple-dim)] hover:-translate-y-0.5"
                   >
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-[var(--accent-purple-dim)] text-[var(--accent-purple)] group-hover:bg-[var(--accent-purple)]/20 transition-colors">
+                      <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-[var(--accent-purple-dim)] text-[var(--accent-purple-text)] group-hover:bg-[var(--accent-purple)]/20 transition-colors">
                         <Icon className="w-4 h-4" />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-sm font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent-purple)] transition-colors">
+                        <p className="text-sm font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent-purple-text)] transition-colors">
                           {isSite ? "Website" : label}
                         </p>
                         <p className="text-xs text-[var(--text-muted)] truncate">
@@ -474,7 +476,7 @@ export default function ProjectPageClient({ project }) {
                         </p>
                       </div>
                     </div>
-                    <ArrowRightIcon className="w-4 h-4 flex-shrink-0 text-[var(--text-muted)] group-hover:text-[var(--accent-purple)] group-hover:translate-x-1 transition-all duration-200" />
+                    <ArrowRightIcon className="w-4 h-4 flex-shrink-0 text-[var(--text-muted)] group-hover:text-[var(--accent-purple-text)] group-hover:translate-x-1 transition-all duration-200" />
                   </a>
                   );
                 })}
@@ -484,9 +486,9 @@ export default function ProjectPageClient({ project }) {
             {/* Install */}
             {project.install && (
               <div className={`${card} p-5`}>
-                <p className="text-[var(--text-muted)] text-xs uppercase tracking-widest mb-3">
+                <h2 className="text-[var(--text-muted)] text-xs uppercase tracking-widest font-normal mb-3">
                   {project.npm ? "Install the SDK" : "Install"}
-                </p>
+                </h2>
                 <CopyCommand command={project.install} />
               </div>
             )}
@@ -503,9 +505,9 @@ export default function ProjectPageClient({ project }) {
                 />
                 <div className="flex items-center gap-2 mb-4 relative z-10">
                   <GraduationCapIcon className="w-3.5 h-3.5 text-teal-300" />
-                  <p className="text-teal-300/80 text-xs uppercase tracking-widest font-medium">
+                  <h2 className="text-teal-300/80 text-xs uppercase tracking-widest font-medium">
                     Backed by
-                  </p>
+                  </h2>
                 </div>
                 <div className="space-y-3 relative z-10">
                   {project.programs.map((program, i) => (
@@ -552,9 +554,9 @@ export default function ProjectPageClient({ project }) {
                 />
                 <div className="flex items-center gap-2 mb-4 relative z-10">
                   <TrophyIcon className="w-3.5 h-3.5 text-amber-400" />
-                  <p className="text-amber-400/80 text-xs uppercase tracking-widest font-medium">
+                  <h2 className="text-amber-400/80 text-xs uppercase tracking-widest font-medium">
                     Awards
-                  </p>
+                  </h2>
                 </div>
                 <div className="space-y-3 relative z-10">
                   {project.awards.map((award, i) => (
@@ -588,9 +590,9 @@ export default function ProjectPageClient({ project }) {
 
             {/* Project Info */}
             <div className={`${card} p-5`}>
-              <p className="text-[var(--text-muted)] text-xs uppercase tracking-widest mb-3">
+              <h2 className="text-[var(--text-muted)] text-xs uppercase tracking-widest font-normal mb-3">
                 Project Info
-              </p>
+              </h2>
               <div className="space-y-2.5 text-sm">
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-[var(--text-muted)]">Category</span>
@@ -604,9 +606,9 @@ export default function ProjectPageClient({ project }) {
                     <span
                       className={`font-medium ${
                         project.difficulty === "Advanced"
-                          ? "text-red-400"
+                          ? "text-[var(--accent-purple-text)]"
                           : project.difficulty === "Intermediate"
-                          ? "text-yellow-400"
+                          ? "text-amber-300"
                           : "text-[var(--accent-lime)]"
                       }`}
                     >
@@ -616,7 +618,7 @@ export default function ProjectPageClient({ project }) {
                 )}
                 <div className="flex items-center justify-between">
                   <span className="text-[var(--text-muted)]">Stack size</span>
-                  <span className="text-[var(--accent-purple)]">
+                  <span className="text-[var(--accent-purple-text)]">
                     {project.technologies.length} techs
                   </span>
                 </div>
@@ -651,7 +653,7 @@ export default function ProjectPageClient({ project }) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {project.resources.map((group) => (
                 <div key={group.group} className={`${card} p-5`}>
-                  <p className="text-[var(--accent-purple)] text-[10px] font-mono uppercase tracking-[0.2em] mb-3">
+                  <p className="text-[var(--accent-purple-text)] text-[10px] font-mono uppercase tracking-[0.2em] mb-3">
                     {group.group}
                   </p>
                   <ul className="divide-y divide-white/[0.04]">
@@ -663,7 +665,7 @@ export default function ProjectPageClient({ project }) {
                           className="group flex items-center justify-between gap-3 py-2.5"
                         >
                           <div className="min-w-0">
-                            <p className="text-sm font-medium text-[var(--text-primary)] group-hover:text-[var(--accent-purple)] transition-colors">
+                            <p className="text-sm font-medium text-[var(--text-primary)] group-hover:text-[var(--accent-purple-text)] transition-colors">
                               {item.label}
                             </p>
                             {item.description && (
@@ -672,7 +674,7 @@ export default function ProjectPageClient({ project }) {
                               </p>
                             )}
                           </div>
-                          <ArrowUpRightIcon className="w-4 h-4 flex-shrink-0 text-[var(--text-muted)] group-hover:text-[var(--accent-purple)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all" />
+                          <ArrowUpRightIcon className="w-4 h-4 flex-shrink-0 text-[var(--text-muted)] group-hover:text-[var(--accent-purple-text)] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all" />
                         </a>
                       </li>
                     ))}
@@ -694,38 +696,24 @@ export default function ProjectPageClient({ project }) {
             Other Projects
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {projectsData.projects
-              .filter((p) => p.id !== project.id)
-              .slice(0, 3)
-              .map((rel) => (
+            {related.map((rel) => (
                 <Link
                   key={rel.id}
                   href={`/projects/${projectSlug(rel.title)}`}
                   className="group overflow-hidden rounded-2xl border border-white/[0.06] bg-[var(--bg-secondary)] hover:border-[var(--accent-purple)]/30 hover:-translate-y-1 transition-all duration-300 hover:shadow-lg hover:shadow-[var(--accent-purple)]/5"
                 >
                   <div className="aspect-video relative bg-[var(--bg-primary)]">
-                    {isVideo(rel.images[0]) ? (
-                      <VideoWithFallback
-                        src={rel.images[0]}
-                        className="w-full h-full object-cover opacity-70 group-hover:opacity-90 transition-opacity"
-                        muted
-                        loop
-                        playsInline
-                        aria-label={`${rel.title} preview`}
-                      />
-                    ) : (
-                      <OptimizedImage
-                        src={rel.images[0]}
-                        alt={rel.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                        className="object-cover opacity-70 group-hover:opacity-90 transition-opacity"
-                      />
-                    )}
+                    <OptimizedImage
+                      src={projectStillSrc(rel)}
+                      alt=""
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover object-top opacity-70 group-hover:opacity-90 transition-opacity"
+                    />
                     <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-secondary)] to-transparent" />
                   </div>
                   <div className="p-4">
-                    <h3 className="font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent-purple)] transition-colors">
+                    <h3 className="font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent-purple-text)] transition-colors">
                       {rel.title}
                     </h3>
                     <p className="text-[var(--text-muted)] text-xs mt-1">

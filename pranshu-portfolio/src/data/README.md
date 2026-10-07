@@ -45,7 +45,7 @@ Every optional field renders only when present, so simple projects can skip them
 | `awards` | `[{ label, prize, link? }]` | Amber badge on the card + header chip + Awards sidebar card |
 | `programs` | `[{ label, org, description?, logo, link }]` | Accelerator / cohort badge (with logo) on the card + header chip + "Backed by" sidebar card |
 | `beta` | string (URL) | Quick Links sidebar ("Public Beta", e.g. a TestFlight link) |
-| `architecture` | `{ title, summary, pipeline: [{ title, text, tier }], principles: [{ title, text }], layers: [{ name, items }] }` | Full-width "System design" diagram (`ArchitectureDiagram.jsx`). `tier` is `device`, `apple`, `guard` or `cloud` and sets each stage's colour |
+| `architecture` | `{ title, summary, pipeline: [{ title, text, tier }], principles: [{ title, text }], layers: [{ name, items }], layersNote? }` | Full-width "System design" diagram (`ArchitectureDiagram.jsx`). `tier` is `device`, `apple`, `guard` or `cloud` and sets each stage's colour |
 | `schemaType` | `"Organization"` | Emit Organization JSON-LD (with you as `founder`) instead of SoftwareApplication. Use for studios/companies |
 | `operatingSystem` | string | SoftwareApplication `operatingSystem` (defaults to `"Web"`) |
 | `applicationCategory` | string | schema.org app category, e.g. `LifestyleApplication` (defaults to `category`) |
@@ -56,8 +56,8 @@ Every optional field renders only when present, so simple projects can skip them
 
 ### Media Order
 
-- `images[0]` is the **card thumbnail** on the homepage and the first slide on the project page. An animated GIF here autoplays on the card.
-- OG/Twitter cards and the image sitemap skip GIFs and videos and use the **first still image** instead (`projectStillImage()` in `src/lib/site-seo.js`), so keep at least one PNG/JPG/WebP in the list.
+- `images[0]` is the **card preview** on the homepage and the first slide on the project page. An MP4 here plays (muted, looping) on the card while it is visible.
+- OG/Twitter cards, the image sitemap, carousel thumbnails, related-project cards and video posters use the **first still image** (`projectStillSrc()` / `projectStillImage()` in `src/lib/site-seo.js`), so keep at least one PNG/JPG/WebP in the list.
 
 ### Available Icons
 
@@ -147,13 +147,17 @@ Use Tailwind CSS gradient classes for the `gradient` field. Examples:
 - Supported formats: MOV, MP4, WebM
 - Videos will autoplay (muted) in cards and show controls in modal
 
-### Demo GIFs
-- Keep GIFs under ~5 MB: 720px wide, 8–10 fps, ≤128 colours. Next.js does not optimise GIFs (`unoptimized`), so the file is served as-is
-- Recipe (from a screen recording `demo.mp4`):
+### Demo videos (use MP4, not GIF)
+- Animated previews are **MP4** (H.264, ≤1280px, no audio). A 20 s demo is ~1–1.7 MB as MP4 versus 4–55 MB as GIF
+- Put the video first in `images` to make it the card preview. Cards play it with `LazyVideo` (poster first, downloads and plays only while visible, paused for reduced-motion users). The **first still image** in `images` is used as its poster, thumbnail and OG image, so always include at least one PNG/JPG/WebP
+- Recipe (from a screen recording or GIF):
 
 ```bash
-ffmpeg -i demo.mp4 -vf "setpts=PTS/1.3,fps=8,scale=720:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=96:stats_mode=diff[p];[b][p]paletteuse=dither=none:diff_mode=rectangle" project-demo.gif
+ffmpeg -i input.webm -an -vf "setpts=PTS/1.3,scale='min(1280,iw)':-2,fps=24" \
+  -c:v libx264 -crf 28 -preset slow -pix_fmt yuv420p -movflags +faststart project-demo.mp4
 ```
+
+- Photos: convert to WebP at ≤1600px (`sharp(src).resize({ width: 1600 }).webp({ quality: 80 })`). Never commit multi-MB PNGs
 
 ## Color Theme
 

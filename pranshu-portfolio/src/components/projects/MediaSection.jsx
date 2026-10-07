@@ -41,7 +41,7 @@ export default function MediaSection() {
         <div className="relative">
           <button
             onClick={() => scrollToIdx(activeIdx - 1)}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-20 p-2.5 bg-[var(--bg-secondary)] border border-white/[0.08] rounded-full text-[var(--text-muted)] hover:text-[var(--accent-purple)] hover:border-[var(--accent-purple)]/30 transition-all"
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-20 p-2.5 bg-[var(--bg-secondary)] border border-white/[0.08] rounded-full text-[var(--text-muted)] hover:text-[var(--accent-purple-text)] hover:border-[var(--accent-purple)]/30 transition-all"
             aria-label="Previous item"
           >
             <ChevronLeft className="w-5 h-5" />
@@ -75,7 +75,7 @@ export default function MediaSection() {
                       <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-secondary)] to-transparent opacity-40" />
                     </div>
                     <div className="p-4">
-                      <h4 className="text-sm font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent-purple)] transition-colors line-clamp-2">
+                      <h4 className="text-sm font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent-purple-text)] transition-colors line-clamp-2">
                         {item.title}
                       </h4>
                     </div>
@@ -87,7 +87,7 @@ export default function MediaSection() {
 
           <button
             onClick={() => scrollToIdx(activeIdx + 1)}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-20 p-2.5 bg-[var(--bg-secondary)] border border-white/[0.08] rounded-full text-[var(--text-muted)] hover:text-[var(--accent-purple)] hover:border-[var(--accent-purple)]/30 transition-all"
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-20 p-2.5 bg-[var(--bg-secondary)] border border-white/[0.08] rounded-full text-[var(--text-muted)] hover:text-[var(--accent-purple-text)] hover:border-[var(--accent-purple)]/30 transition-all"
             aria-label="Next item"
           >
             <ChevronRight className="w-5 h-5" />

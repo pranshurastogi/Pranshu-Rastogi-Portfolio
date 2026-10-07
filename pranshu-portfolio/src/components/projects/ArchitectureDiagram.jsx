@@ -6,7 +6,7 @@ import { ArrowRightIcon, ArrowDownIcon, ShieldCheckIcon, LayersIcon } from "luci
 /**
  * Visual system architecture for a project page, driven by `project.architecture`:
  *   { title, summary, pipeline: [{ title, text, tier }], principles: [{ title, text }],
- *     layers: [{ name, items: [] }] }
+ *     layers: [{ name, items: [] }], layersNote? }
  * `tier` colours each pipeline stage; unknown tiers fall back to "device".
  */
 const TIERS = {
@@ -18,12 +18,15 @@ const TIERS = {
 
 const card = "rounded-2xl border border-white/[0.06] bg-[var(--bg-secondary)]";
 
+const connector =
+  "w-4 h-4 p-0.5 rounded-full bg-[var(--bg-secondary)] text-[var(--text-muted)]";
+
 function tierOf(stage) {
   return TIERS[stage.tier] || TIERS.device;
 }
 
 export default function ArchitectureDiagram({ architecture }) {
-  const { title, summary, pipeline = [], principles = [], layers = [] } = architecture;
+  const { title, summary, pipeline = [], principles = [], layers = [], layersNote } = architecture;
   const usedTiers = Object.entries(TIERS).filter(([key]) =>
     pipeline.some((s) => (s.tier || "device") === key)
   );
@@ -37,7 +40,7 @@ export default function ArchitectureDiagram({ architecture }) {
       className="mt-16 scroll-mt-24"
       aria-labelledby="architecture-heading"
     >
-      <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--accent-purple)] mb-2">
+      <p className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--accent-purple-text)] mb-2">
         System design
       </p>
       <h2 id="architecture-heading" className="scroll-mt-24 text-lg md:text-xl font-bold text-[var(--text-primary)] mb-2">
@@ -96,19 +99,27 @@ export default function ArchitectureDiagram({ architecture }) {
                     >
                       {i + 1}
                     </span>
-                    <span className="text-[9px] font-mono uppercase tracking-wider" style={{ color: t.color }}>
+                    <span className="text-[10px] font-mono uppercase tracking-wider" style={{ color: t.color }}>
                       {t.label}
                     </span>
                   </div>
                   <p className="text-sm font-semibold text-[var(--text-primary)] leading-snug">{stage.title}</p>
                   <p className="text-xs text-[var(--text-muted)] leading-relaxed mt-1">{stage.text}</p>
 
-                  {/* Flow connectors: down on mobile, right inside a desktop row */}
+                  {/* Flow connectors: down in the 1-col layout; right within a row of the
+                      2-col (tablet) and 4-col (desktop) grids; down-left at row ends */}
                   {!isLast && (
                     <>
-                      <ArrowDownIcon className="sm:hidden absolute -bottom-3 left-1/2 -translate-x-1/2 z-10 w-4 h-4 p-0.5 rounded-full bg-[var(--bg-secondary)] text-[var(--text-muted)]" />
+                      <ArrowDownIcon
+                        className={`absolute -bottom-3 left-1/2 -translate-x-1/2 z-10 ${connector} block ${
+                          i % 2 === 1 ? "sm:block" : "sm:hidden"
+                        } ${(i + 1) % 4 === 0 ? "lg:block" : "lg:hidden"}`}
+                      />
+                      {i % 2 === 0 && (
+                        <ArrowRightIcon className={`hidden sm:block lg:hidden absolute top-1/2 -right-3 -translate-y-1/2 z-10 ${connector}`} />
+                      )}
                       {(i + 1) % 4 !== 0 && (
-                        <ArrowRightIcon className="hidden lg:block absolute top-1/2 -right-3 -translate-y-1/2 z-10 w-4 h-4 p-0.5 rounded-full bg-[var(--bg-secondary)] text-[var(--text-muted)]" />
+                        <ArrowRightIcon className={`hidden lg:block absolute top-1/2 -right-3 -translate-y-1/2 z-10 ${connector}`} />
                       )}
                     </>
                   )}
@@ -177,9 +188,9 @@ export default function ArchitectureDiagram({ architecture }) {
                 );
               })}
             </div>
-            <p className="text-[10px] text-[var(--text-muted)] mt-3 font-mono">
-              Dependencies point inward: UI → use cases → pure domain. Adapters plug in at the edges.
-            </p>
+            {layersNote && (
+              <p className="text-xs text-[var(--text-muted)] mt-3">{layersNote}</p>
+            )}
           </div>
         )}
       </div>

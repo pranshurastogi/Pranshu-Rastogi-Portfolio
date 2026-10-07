@@ -54,7 +54,7 @@ function SocialIcon({ href, label, children }) {
       className="group"
     >
       <span className="flex items-center justify-center w-11 h-11 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:border-[var(--accent-purple)]/40 hover:bg-[var(--accent-purple-dim)] transition-all duration-200 hover:scale-105">
-        <span className="text-xl text-[var(--text-muted)] group-hover:text-[var(--accent-purple)] transition-colors">
+        <span className="text-xl text-[var(--text-muted)] group-hover:text-[var(--accent-purple-text)] transition-colors">
           {children}
         </span>
       </span>
@@ -170,7 +170,7 @@ export default function Hero() {
             </p>
             <button
               onClick={() => setExpanded(!expanded)}
-              className="mt-2 inline-flex items-center gap-1.5 text-[var(--accent-purple)] text-sm font-medium hover:text-[var(--accent-cyan)] transition-colors"
+              className="mt-2 inline-flex items-center gap-1.5 text-[var(--accent-purple-text)] text-sm font-medium hover:text-[var(--accent-cyan)] transition-colors"
             >
               {expanded ? (
                 <>Show less <ChevronUp className="w-4 h-4" /></>
@@ -202,9 +202,10 @@ export default function Hero() {
           >
             <Link
               href={ASSETS.documents.resume}
+              prefetch={false} // a PDF, not a route — prefetching downloads ~0.5MB
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-[var(--text-muted)] hover:text-[var(--accent-purple)] hover:border-[var(--accent-purple)]/30 transition-all text-sm"
+              className="group inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-[var(--text-muted)] hover:text-[var(--accent-purple-text)] hover:border-[var(--accent-purple)]/30 transition-all text-sm"
             >
               <FileText className="w-4 h-4" />
               <span className="font-mono text-xs">resume.pdf</span>
