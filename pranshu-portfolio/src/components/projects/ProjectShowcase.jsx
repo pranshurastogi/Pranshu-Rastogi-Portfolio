@@ -71,7 +71,7 @@ export default function ProjectShowcase() {
           </h2>
           <div className="section-divider-cosmic mb-4" />
           <p className="text-[var(--text-muted)] text-sm max-w-lg mx-auto">
-            Building privacy protocols, AI security infrastructure, and decentralized identity across multiple chains.
+            Post-quantum privacy, on-device AI for iPhone, RWA research, and decentralized identity: products shipped across iOS, the web, and multiple chains.
           </p>
         </motion.div>
 
@@ -226,7 +226,11 @@ export default function ProjectShowcase() {
                         className="px-3 py-1.5 bg-[var(--accent-purple-dim)] text-[var(--accent-purple)] text-xs rounded-lg font-medium hover:bg-[var(--accent-purple)]/20 transition-colors min-h-[36px]"
                         aria-label={`Launch demo for ${project.title}`}
                       >
-                        {project.live?.includes("github.com") ? "GitHub →" : "Live Demo →"}
+                        {project.live?.includes("github.com")
+                          ? "GitHub →"
+                          : project.schemaType === "Organization"
+                          ? "Visit Site →"
+                          : "Live Demo →"}
                       </button>
                     </div>
                   </div>

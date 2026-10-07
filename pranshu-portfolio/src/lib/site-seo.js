@@ -50,19 +50,34 @@ export const SEO_KEYWORDS = [
   "protocol engineering",
   "onchain privacy",
   "AI agent security blockchain",
+  "TuckBack",
+  "TuckBack app",
+  "AI reminder app iPhone",
+  "on-device AI app",
+  "Apple Foundation Models",
+  "Apple Intelligence developer",
+  "Swift SwiftUI developer",
+  "local-first app",
+  "TheRawByte",
+  "RWA research",
+  "tokenized real-world assets",
+  "onchain private credit",
+  "Dune dashboards",
+  "GEO AI search optimization",
+  "Web3 founder",
 ];
 
 export const DEFAULT_TITLE =
   "Pranshu Rastogi | DevRel, Ecosystem & Blockchain Engineer — Web3 Builder";
 
 export const DEFAULT_DESCRIPTION =
-  "Hire Pranshu Rastogi for DevRel, ecosystem, backend, or blockchain engineering. Head of Ecosystem & Integrations at Push Chain with 7+ years in Web3, 30+ global talks, and 1,000+ protocol integrations. Builder of SPECTER (post-quantum privacy) and VANTA (AI transaction firewall). Open to full-time roles and consulting.";
+  "Hire Pranshu Rastogi for DevRel, ecosystem, backend, or blockchain engineering. Head of Ecosystem & Integrations at Push Chain with 7+ years in Web3, 30+ global talks, and 1,000+ protocol integrations. Founder of SPECTER (post-quantum privacy), TuckBack (on-device AI reminders for iPhone) and TheRawByte (RWA research studio). Open to full-time roles and consulting.";
 
 export const SHORT_TAGLINE =
   "DevRel · Ecosystem · Backend · Blockchain — 7+ years building and scaling Web3";
 
 export const PERSON_DESCRIPTION =
-  "Pranshu Rastogi is Head of Ecosystem & Integrations at Push Chain, a blockchain engineer with 7+ years in Web3, a DevRel-oriented technical speaker (30+ conferences), and builder of SPECTER and VANTA. Experienced in backend systems, smart contracts, protocol integrations, and ecosystem growth.";
+  "Pranshu Rastogi is Head of Ecosystem & Integrations at Push Chain, a blockchain engineer with 7+ years in Web3, a DevRel-oriented technical speaker (30+ conferences), and founder of SPECTER (post-quantum privacy), TuckBack (on-device AI iOS app) and TheRawByte (RWA research studio). Experienced in backend systems, smart contracts, on-device AI, protocol integrations, and ecosystem growth.";
 
 export const KNOWS_ABOUT = [
   "Developer Relations",
@@ -78,6 +93,14 @@ export const KNOWS_ABOUT = [
   "Push Protocol",
   "Protocol Integrations",
   "Technical Writing",
+  "On-device AI",
+  "Apple Foundation Models",
+  "Swift",
+  "SwiftUI",
+  "iOS Development",
+  "Real-World Assets (RWA)",
+  "Tokenized Private Credit",
+  "Onchain Data Analytics",
   "Community Building",
   "Post-Quantum Cryptography",
   "Stealth Addresses",
@@ -108,15 +131,33 @@ export function projectLinks(project) {
     project.github,
     project.docs,
     project.showcase,
+    project.beta,
     project.social?.x,
     project.npm && `https://www.npmjs.com/package/${project.npm}`,
     ...(project.resources || []).flatMap((g) => g.items.map((i) => i.url)),
-  ].filter(Boolean);
+  ].filter((u) => u?.startsWith("http"));
   return [...new Set(urls)];
 }
 
 /** Detailed SoftwareApplication schema for a single project page */
 export function buildProjectSchema(project) {
+  const sameAs = projectLinks(project).filter((u) => u !== project.live);
+  if (project.schemaType === "Organization") {
+    return {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": `${projectUrl(project.title)}#organization`,
+      name: project.title,
+      slogan: project.tagline,
+      description: project.description,
+      url: project.live || projectUrl(project.title),
+      mainEntityOfPage: projectUrl(project.title),
+      image: projectStillImage(project),
+      knowsAbout: project.technologies,
+      sameAs,
+      founder: { "@id": `${SITE_URL}/#person` },
+    };
+  }
   return {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -127,13 +168,14 @@ export function buildProjectSchema(project) {
     url: project.live || projectUrl(project.title),
     mainEntityOfPage: projectUrl(project.title),
     image: projectStillImage(project),
-    applicationCategory: project.category,
-    operatingSystem: "Web",
+    applicationCategory: project.applicationCategory || project.category,
+    operatingSystem: project.operatingSystem || "Web",
     keywords: project.technologies.join(", "),
     featureList: project.features,
-    sameAs: projectLinks(project).filter((u) => u !== project.live),
+    sameAs,
     author: { "@id": `${SITE_URL}/#person` },
     creator: { "@type": "Person", name: SITE_NAME, url: `${SITE_URL}/` },
+    ...(project.offers && { offers: { "@type": "Offer", ...project.offers } }),
     award: [
       ...(project.awards || []).map((a) => `${a.label} — ${a.prize}`),
       ...(project.programs || []).map((p) => `Selected for ${p.label}`),
@@ -173,6 +215,7 @@ export function buildPersonSchema() {
     award: [
       "ETHCC[9] — 3rd Prize Stage Pitch (SPECTER)",
       "Founder School Cohort 2 (SPECTER)",
+      "Cited on Ethereum.org (TheRawByte research)",
       "30+ Web3 conference speaking engagements",
       "1,000+ Push Protocol integrations led",
     ],
@@ -256,7 +299,15 @@ export function buildFAQSchema() {
         name: "Is Pranshu Rastogi available for backend or blockchain engineering roles?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. Background includes backend architecture, production smart contracts (Solidity), Rust protocol work, Substrate/DID systems, and shipping products like SPECTER, VANTA, AlphIQ, and EYI.",
+          text: "Yes. Background includes backend architecture, production smart contracts (Solidity), Rust protocol work, Substrate/DID systems, and shipping products like SPECTER, TuckBack, VANTA, AlphIQ, and EYI.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What has Pranshu Rastogi built?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "SPECTER, a post-quantum stealth address protocol for Ethereum and Sui (ETHCC[9] 3rd prize, Founder School Cohort 2); TuckBack, a private, local-first AI reminder app for iPhone built with Swift 6 and Apple Foundation Models; and TheRawByte, a research studio for tokenized real-world assets with a live Private Credit Map. Also VANTA, AlphIQ, EYI and more.",
         },
       },
       {
@@ -280,11 +331,13 @@ export function buildProjectsSchema() {
       "@type": "ListItem",
       position: i + 1,
       item: {
-        "@type": "SoftwareApplication",
+        "@type": p.schemaType || "SoftwareApplication",
         name: p.title,
         description: p.description,
-        url: p.live || projectUrl(p.title),
-        applicationCategory: p.category,
+        url: projectUrl(p.title),
+        image: projectStillImage(p),
+        ...(p.live && { sameAs: p.live }),
+        ...(!p.schemaType && { applicationCategory: p.applicationCategory || p.category }),
         author: { "@id": `${SITE_URL}/#person` },
       },
     })),

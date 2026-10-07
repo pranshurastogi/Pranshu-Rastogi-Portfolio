@@ -232,6 +232,439 @@
       ]
     },
     {
+      "id": 8,
+      "title": "TuckBack",
+      "tagline": "Let it leave your mind",
+      "subtitle": "AI Reminders • On-Device Intelligence • iOS",
+      "description": "A private, local-first AI reminder app for iPhone. Type, speak or snap an unfinished thought; on-device AI understands the date, person and promise, then brings it back at the right moment with one clear next step. Built in Swift 6 with Apple Foundation Models, deterministic grounding and an opt-in cloud challenger. Live in public TestFlight beta.",
+      "longDescription": "To-do apps optimise the list. TuckBack optimises what it feels like to carry your life. You tuck a thought away (by text, voice, camera or scan, in English, Hindi, Hinglish, Spanish or German) and it leaves your attention. It returns when it can actually move, in your own words, with who it involves and one grounded next step instead of a wall of options.\n\nThe AI is designed around one rule: models propose, code decides. Every capture is committed to an on-device SQLite database before any model runs, so an AI failure can never lose a thought. A deterministic interpreter and forty versioned Action Recipes always produce an answer. Apple Foundation Models (iOS 26) can refine it on-device, and an opt-in OpenAI or Gemini second opinion can compete, but every proposal passes the same grounding validator and confidence policy. Ungrounded people, times or amounts, unsafe actions and wrong-language output are rejected. No model can send, pay, book, delete or complete anything.\n\nLearning optimises for loops that actually get resolved, not engagement: evidence builds up gradually, decays after 90 days, and any learned pattern can be forgotten. Repeated snoozes trigger a Rescue engine that offers a smaller step rather than a louder nag. Designed, engineered and shipped solo: native Swift/SwiftUI app, widgets and Apple Watch, plus an optional Fastify backend for accounts, encrypted sync and Daily Return emails.",
+      "images": [
+        "/images/projects/tuckback-demo.gif",
+        "/images/projects/tuckback-appstore-1.webp",
+        "/images/projects/tuckback-appstore-2.webp",
+        "/images/projects/tuckback-hero.webp",
+        "/images/projects/tuckback-story.webp",
+        "/images/projects/tuckback-app.webp",
+        "/images/projects/tuckback-why.webp",
+        "/images/projects/tuckback-intro.mp4"
+      ],
+      "technologies": [
+        "Swift 6",
+        "SwiftUI",
+        "Apple Foundation Models",
+        "Apple Intelligence",
+        "Vision / VisionKit",
+        "Speech",
+        "GRDB / SQLite",
+        "FTS5",
+        "WidgetKit",
+        "watchOS",
+        "Node.js",
+        "Fastify",
+        "PostgreSQL",
+        "Drizzle",
+        "Redis / BullMQ",
+        "OpenAI",
+        "Gemini",
+        "Next.js"
+      ],
+      "features": [
+        "Capture by text, voice, camera or document scan; exact words saved first",
+        "On-device understanding of dates, people, amounts and routines in 5 languages incl. Hindi & Hinglish",
+        "Apple Foundation Models on-device, with deterministic fallback on every device",
+        "40 versioned Action Recipes: one grounded next step, never a wall of AI",
+        "Grounding validator + confidence policy: models propose, code decides",
+        "Safe Action Catalog: AI can prepare drafts, never send, pay, book or complete",
+        "Learns from resolved loops, not engagement; 90-day decay, forget any pattern",
+        "Rescue engine turns repeated snoozes into a smaller step",
+        "People-aware promises, Nests, Daily Return, widgets and Apple Watch",
+        "Private by architecture: local SQLite with iOS Data Protection; cloud off by default"
+      ],
+      "architecture": {
+        "title": "How the AI is architected",
+        "summary": "A layered pipeline where deterministic code always answers first, on-device models refine, an opt-in cloud model can only challenge, and one application-owned policy decides what reaches the user.",
+        "pipeline": [
+          {
+            "title": "Capture",
+            "text": "Text, voice, camera or scan. Exact words committed to local SQLite in one transaction before any AI runs.",
+            "tier": "device"
+          },
+          {
+            "title": "Deterministic understanding",
+            "text": "Dates, people, amounts, links and routines in EN/HI/Hinglish/ES/DE build a Task Frame. Always on.",
+            "tier": "device"
+          },
+          {
+            "title": "Action Recipes",
+            "text": "40 versioned, signal-gated recipes propose a structured next-step candidate instantly.",
+            "tier": "device"
+          },
+          {
+            "title": "Apple Foundation Models",
+            "text": "On iOS 26, an on-device model refines wording from a bounded context packet. Availability- and locale-gated.",
+            "tier": "apple"
+          },
+          {
+            "title": "Grounding & confidence gate",
+            "text": "Rejects unknown schemas, ungrounded people/times/amounts, unsafe actions and wrong language. One decision point.",
+            "tier": "guard"
+          },
+          {
+            "title": "Local ranker",
+            "text": "Evidence-weighted ranking learned from loops you actually resolved. Decays after 90 days.",
+            "tier": "device"
+          },
+          {
+            "title": "Opt-in cloud challenger",
+            "text": "OpenAI or Gemini with your key and consent. Must clear the same gates and beat the local answer by more than 3 points.",
+            "tier": "cloud"
+          },
+          {
+            "title": "One next step",
+            "text": "One primary action plus at most two alternatives, saved append-only. Nothing happens until you tap.",
+            "tier": "device"
+          }
+        ],
+        "principles": [
+          {
+            "title": "Commit before compute",
+            "text": "The thought is saved before any model runs. AI failure never loses or changes it."
+          },
+          {
+            "title": "Models propose, code decides",
+            "text": "Strict schemas and an allowlisted Action Catalog. No model can send, pay, book, delete or complete."
+          },
+          {
+            "title": "Private by architecture",
+            "text": "Core works with no account. Audio and images are never kept. Cloud AI is off by default."
+          },
+          {
+            "title": "Learn outcomes, not engagement",
+            "text": "Ranking improves from resolved loops; every learned pattern is visible and forgettable."
+          }
+        ],
+        "layers": [
+          {
+            "name": "Presentation",
+            "items": [
+              "SwiftUI views",
+              "@Observable view models",
+              "Widgets & Apple Watch"
+            ]
+          },
+          {
+            "name": "Application",
+            "items": [
+              "Use cases & commands",
+              "Confidence policy",
+              "Action Catalog & ranker"
+            ]
+          },
+          {
+            "name": "Domain",
+            "items": [
+              "Pure Swift, Sendable models",
+              "Loop state machine",
+              "Append-only event log"
+            ]
+          },
+          {
+            "name": "On-device adapters",
+            "items": [
+              "GRDB / SQLite + FTS5",
+              "Vision, Speech, EventKit",
+              "Apple Foundation Models"
+            ]
+          },
+          {
+            "name": "Optional cloud",
+            "items": [
+              "Fastify + Zod API",
+              "PostgreSQL / Drizzle",
+              "Redis / BullMQ workers"
+            ]
+          }
+        ]
+      },
+      "howItWorks": [
+        {
+          "title": "Tuck it",
+          "text": "Type, speak or snap it. Your exact words are saved first."
+        },
+        {
+          "title": "Forget it",
+          "text": "No badges or guilt pings. Tuck holds it for you."
+        },
+        {
+          "title": "It returns",
+          "text": "At the right moment, with the person and one next step."
+        },
+        {
+          "title": "Close it",
+          "text": "Finish it, or drop it on purpose. Both are real endings."
+        }
+      ],
+      "stats": [
+        {
+          "value": "40",
+          "label": "Action Recipes"
+        },
+        {
+          "value": "5",
+          "label": "Capture languages"
+        },
+        {
+          "value": "0",
+          "label": "Accounts needed"
+        },
+        {
+          "value": "iOS 18+",
+          "label": "Public beta"
+        }
+      ],
+      "live": "https://www.tuckback.com",
+      "beta": "https://testflight.apple.com/join/RqwmqJa1",
+      "resources": [
+        {
+          "group": "Product",
+          "items": [
+            {
+              "label": "Website",
+              "url": "https://www.tuckback.com",
+              "description": "The story, the app and the FAQ"
+            },
+            {
+              "label": "Public Beta (TestFlight)",
+              "url": "https://testflight.apple.com/join/RqwmqJa1",
+              "description": "Install on iPhone (iOS 18+)"
+            },
+            {
+              "label": "Why TuckBack",
+              "url": "https://www.tuckback.com/#different",
+              "description": "Not a to-do list: the opposite of one"
+            },
+            {
+              "label": "FAQ",
+              "url": "https://www.tuckback.com/#faq",
+              "description": "Privacy, pricing, Android and more"
+            }
+          ]
+        },
+        {
+          "group": "Trust",
+          "items": [
+            {
+              "label": "Privacy Policy",
+              "url": "https://www.tuckback.com/privacy",
+              "description": "What stays on device and what never leaves"
+            },
+            {
+              "label": "Terms of Service",
+              "url": "https://www.tuckback.com/terms",
+              "description": "Beta terms"
+            },
+            {
+              "label": "Support",
+              "url": "https://www.tuckback.com/support",
+              "description": "Help and contact"
+            }
+          ]
+        },
+        {
+          "group": "Community",
+          "items": [
+            {
+              "label": "Ask on X",
+              "url": "https://x.com/pranshurastogii",
+              "description": "Built by one person; every message gets read"
+            }
+          ]
+        }
+      ],
+      "category": "AI · Consumer iOS",
+      "difficulty": "Advanced",
+      "icon": "zap",
+      "gradient": "from-[#3E6B4E]/20 to-[#AEEA00]/10",
+      "operatingSystem": "iOS 18+",
+      "applicationCategory": "LifestyleApplication",
+      "offers": {
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "id": 9,
+      "title": "TheRawByte",
+      "tagline": "Research for the RWA stack",
+      "subtitle": "RWA Research Studio • Onchain Data • AI Intel Agents",
+      "description": "A two-operator research studio for tokenized real-world assets: treasuries, private credit, stablecoins, PE/VC and real estate. Flagship reports, ghostwriting, custom Dune dashboards and AI-search intel agents, plus a free weekly Lab and a live Private Credit Map tracking 39 platforms and 98 tokenized credit assets.",
+      "longDescription": "TheRawByte writes the research people read before they put money in. It covers one category properly: real-world assets onchain, across stablecoins, treasuries, non-US government debt, private credit, equities, PE/VC, commodities and real estate. Every deliverable is built on the studio's own onchain queries, explained in language that works for a TradFi allocator and a crypto native alike.\n\nIt runs as two operators with no middle layer. Ishita Rastogi leads research and narrative; Pranshu Rastogi leads engineering and distribution: Dune queries and dashboards, RWA intel agents that track competitor TVL and yield, and GEO / AI-search work so protocols surface when someone asks ChatGPT or Perplexity which tokenized treasury to use.\n\nThe free weekly Lab ships one public Dune dashboard, a query-logic breakdown and a walkthrough video, so prospective clients can check the work before paying. The Private Credit Map follows tokenized credit from issuance through DeFi to exit. Work has been cited on Ethereum.org, shared by Bankless co-founder Ryan Sean Adams and amplified by @ethereum, with clients and publications including Phala Network, Raiku, Gelato, Push Chain and Hazeflow Research.",
+      "images": [
+        "/images/projects/therawbyte-demo.gif",
+        "/images/projects/therawbyte-hero.webp",
+        "/images/projects/therawbyte-services.webp",
+        "/images/projects/therawbyte-credit-map.webp",
+        "/images/projects/therawbyte-private-credit-map.webp",
+        "/images/projects/therawbyte-private-credit.webp",
+        "/images/projects/therawbyte-numbers.webp"
+      ],
+      "technologies": [
+        "Dune SQL",
+        "Onchain Data",
+        "AI Intel Agents",
+        "GEO / AI Search",
+        "Next.js",
+        "Vercel",
+        "Substack",
+        "Mirror"
+      ],
+      "features": [
+        "Flagship RWA reports and sector primers built on original onchain queries",
+        "Founder and protocol ghostwriting for X, Mirror and Substack",
+        "Custom Dune dashboards for reserves, flows and redemptions",
+        "RWA intel agents tracking competitor TVL and yield",
+        "GEO / AI-search distribution so protocols surface in ChatGPT and Perplexity answers",
+        "Free weekly Lab: one dashboard, one breakdown, one video",
+        "Live Private Credit Map: 39 platforms, 98 tokenized credit assets, issuance to DeFi to exit"
+      ],
+      "howItWorks": [
+        {
+          "title": "Research",
+          "text": "Study the protocol, tokenization model and onchain data first."
+        },
+        {
+          "title": "Narrative",
+          "text": "Explain why it matters to TradFi allocators and crypto natives."
+        },
+        {
+          "title": "Distribution",
+          "text": "Publish where RWA allocators and DeFi researchers already read."
+        }
+      ],
+      "stats": [
+        {
+          "value": "80k+",
+          "label": "Wallets onboarded"
+        },
+        {
+          "value": "14k",
+          "label": "Avg research reads"
+        },
+        {
+          "value": "98",
+          "label": "Credit assets mapped"
+        },
+        {
+          "value": "3",
+          "label": "Ethereum signals"
+        }
+      ],
+      "live": "https://www.therawbyte.com",
+      "social": {
+        "x": "https://x.com/therawbyte",
+        "xHandle": "@therawbyte"
+      },
+      "resources": [
+        {
+          "group": "Studio",
+          "items": [
+            {
+              "label": "Website",
+              "url": "https://www.therawbyte.com",
+              "description": "Services, the Lab, work and engagements"
+            },
+            {
+              "label": "Services",
+              "url": "https://www.therawbyte.com/#services",
+              "description": "Reports, ghostwriting, docs, dashboards, agents"
+            },
+            {
+              "label": "The Lab",
+              "url": "https://www.therawbyte.com/#lab",
+              "description": "Free weekly dashboard, breakdown and video"
+            },
+            {
+              "label": "Blog",
+              "url": "https://www.therawbyte.com/blog",
+              "description": "RWA research and essays"
+            }
+          ]
+        },
+        {
+          "group": "Private Credit Map",
+          "items": [
+            {
+              "label": "Open the Map",
+              "url": "https://privatecredit.therawbyte.com",
+              "description": "39 platforms, 98 tokenized credit assets"
+            },
+            {
+              "label": "Directory",
+              "url": "https://privatecredit.therawbyte.com/directory",
+              "description": "Every platform and asset"
+            },
+            {
+              "label": "Learn",
+              "url": "https://privatecredit.therawbyte.com/learn",
+              "description": "How onchain private credit works"
+            }
+          ]
+        },
+        {
+          "group": "Research",
+          "items": [
+            {
+              "label": "Tokenised Private Credit Isn't Ready for DeFi Lending Yet",
+              "url": "https://ishitarastogi.substack.com/p/tokenised-private-credit-isnt-ready",
+              "description": "TheRawByte on Substack"
+            },
+            {
+              "label": "Will All L1s Move to Ethereum?",
+              "url": "https://www.decentralised.co/p/will-all-l1s-move-to-ethereum",
+              "description": "Cited on Ethereum.org"
+            },
+            {
+              "label": "Hazeflow Research",
+              "url": "https://research.hazeflow.xyz/",
+              "description": "Published deep dives"
+            }
+          ]
+        },
+        {
+          "group": "Community",
+          "items": [
+            {
+              "label": "X / Twitter",
+              "url": "https://x.com/therawbyte",
+              "description": "@therawbyte"
+            },
+            {
+              "label": "Ishita Rastogi",
+              "url": "https://x.com/Ishita_30",
+              "description": "Research & narrative"
+            },
+            {
+              "label": "Commission the studio",
+              "url": "mailto:chainsiblings@gmail.com",
+              "description": "chainsiblings@gmail.com"
+            }
+          ]
+        }
+      ],
+      "category": "RWA Research · Data",
+      "difficulty": "Intermediate",
+      "icon": "cube",
+      "gradient": "from-[#C6FF3D]/20 to-[#0D1A0F]/10",
+      "schemaType": "Organization",
+      "awards": [
+        {
+          "label": "Ethereum.org",
+          "prize": "Research cited",
+          "link": "https://www.decentralised.co/p/will-all-l1s-move-to-ethereum"
+        }
+      ]
+    },
+    {
       "id": 2,
       "title": "VANTA",
       "subtitle": "AI Security • Blockchain • Transaction Firewall",

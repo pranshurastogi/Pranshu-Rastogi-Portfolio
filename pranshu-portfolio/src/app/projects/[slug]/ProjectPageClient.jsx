@@ -17,11 +17,15 @@ import {
   CopyIcon,
   CheckIcon,
   GraduationCapIcon,
+  SmartphoneIcon,
+  LayersIcon,
+  ArrowDownIcon,
 } from "lucide-react";
 import { FaXTwitter } from "react-icons/fa6";
 import Link from "next/link";
 import OptimizedImage from "@/components/ui/OptimizedImage";
 import VideoWithFallback from "@/components/ui/VideoWithFallback";
+import ArchitectureDiagram from "@/components/projects/ArchitectureDiagram";
 import projectsData from "@/data/projects.json";
 import { projectSlug } from "@/lib/site-seo";
 
@@ -32,6 +36,7 @@ function isVideo(src) {
 /** Sidebar quick links — each renders only when the project defines that field */
 const LINK_ITEMS = [
   { key: "live", label: "Live App", sub: "Open app", Icon: ExternalLinkIcon },
+  { key: "beta", label: "Public Beta", sub: "Install via TestFlight", Icon: SmartphoneIcon },
   { key: "github", label: "Source Code", sub: "GitHub", Icon: GithubIcon },
   { key: "docs", label: "Documentation", sub: "Read docs", Icon: BookOpenIcon },
   {
@@ -50,6 +55,10 @@ const LINK_ITEMS = [
   },
   { key: "showcase", label: "Showcase", sub: "View entry", Icon: TrophyIcon },
 ];
+
+/** External links open in a new tab; mailto: links hand off to the mail app */
+const linkProps = (url) =>
+  url?.startsWith("mailto:") ? {} : { target: "_blank", rel: "noopener noreferrer" };
 
 const card = "rounded-2xl border border-white/[0.06] bg-[var(--bg-secondary)]";
 const sectionLabel =
@@ -111,7 +120,10 @@ export default function ProjectPageClient({ project }) {
   const activeLinks = LINK_ITEMS.filter((l) => !!project[l.key]);
   const paragraphs = project.longDescription.split(/\n\s*\n/);
   const hasBadges =
-    project.awards?.length > 0 || project.programs?.length > 0 || project.social?.x;
+    project.awards?.length > 0 ||
+    project.programs?.length > 0 ||
+    project.social?.x ||
+    project.architecture;
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)]">
@@ -193,6 +205,16 @@ export default function ProjectPageClient({ project }) {
                   <span className="font-semibold">{program.label}</span>
                 </a>
               ))}
+              {project.architecture && (
+                <a
+                  href="#architecture-heading"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-[var(--accent-lime)]/30 bg-[var(--accent-lime)]/[0.06] px-3 py-1.5 text-xs text-[var(--accent-lime)] hover:border-[var(--accent-lime)]/60 transition-colors"
+                >
+                  <LayersIcon className="w-3.5 h-3.5" />
+                  {project.architecture.title || "Architecture"}
+                  <ArrowDownIcon className="w-3 h-3" />
+                </a>
+              )}
               {project.social?.x && (
                 <a
                   href={project.social.x}
@@ -356,7 +378,11 @@ export default function ProjectPageClient({ project }) {
             {project.howItWorks?.length > 0 && (
               <section className={`${card} p-6`}>
                 <h2 className={`${sectionLabel} mb-5`}>How it works</h2>
-                <ol className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-3">
+                <ol
+                  className={`grid grid-cols-1 sm:grid-cols-2 gap-3 ${
+                    {3: "xl:grid-cols-3", 4: "xl:grid-cols-4"}[project.howItWorks.length] || "xl:grid-cols-5"
+                  }`}
+                >
                   {project.howItWorks.map((step, i) => (
                     <li
                       key={step.title}
@@ -425,7 +451,9 @@ export default function ProjectPageClient({ project }) {
                 Quick Links
               </p>
               <div className="space-y-3">
-                {activeLinks.map(({ key, label, sub, href, Icon }) => (
+                {activeLinks.map(({ key, label, sub, href, Icon }) => {
+                  const isSite = key === "live" && project.schemaType === "Organization";
+                  return (
                   <a
                     key={key}
                     href={href ? href(project) : project[key]}
@@ -439,16 +467,17 @@ export default function ProjectPageClient({ project }) {
                       </div>
                       <div className="min-w-0">
                         <p className="text-sm font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent-purple)] transition-colors">
-                          {label}
+                          {isSite ? "Website" : label}
                         </p>
                         <p className="text-xs text-[var(--text-muted)] truncate">
-                          {typeof sub === "function" ? sub(project) : sub}
+                          {isSite ? "Visit site" : typeof sub === "function" ? sub(project) : sub}
                         </p>
                       </div>
                     </div>
                     <ArrowRightIcon className="w-4 h-4 flex-shrink-0 text-[var(--text-muted)] group-hover:text-[var(--accent-purple)] group-hover:translate-x-1 transition-all duration-200" />
                   </a>
-                ))}
+                  );
+                })}
               </div>
             </div>
 
@@ -456,7 +485,7 @@ export default function ProjectPageClient({ project }) {
             {project.install && (
               <div className={`${card} p-5`}>
                 <p className="text-[var(--text-muted)] text-xs uppercase tracking-widest mb-3">
-                  Install the SDK
+                  {project.npm ? "Install the SDK" : "Install"}
                 </p>
                 <CopyCommand command={project.install} />
               </div>
@@ -596,6 +625,9 @@ export default function ProjectPageClient({ project }) {
           </motion.aside>
         </div>
 
+        {/* System architecture (optional) */}
+        {project.architecture && <ArchitectureDiagram architecture={project.architecture} />}
+
         {/* Resources: every public link, grouped */}
         {project.resources?.length > 0 && (
           <motion.section
@@ -613,8 +645,8 @@ export default function ProjectPageClient({ project }) {
               Resources
             </h2>
             <p className="text-sm text-[var(--text-muted)] mb-6">
-              Everything public about {project.title}: product, developer tools, pitch and
-              research, and community.
+              Everything public about {project.title}:{" "}
+              {project.resources.map((g) => g.group.toLowerCase()).join(", ")}.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {project.resources.map((group) => (
@@ -627,8 +659,7 @@ export default function ProjectPageClient({ project }) {
                       <li key={item.url}>
                         <a
                           href={item.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          {...linkProps(item.url)}
                           className="group flex items-center justify-between gap-3 py-2.5"
                         >
                           <div className="min-w-0">

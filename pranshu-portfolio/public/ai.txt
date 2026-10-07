@@ -3,7 +3,7 @@
 
 site: https://pranshurastogi.com
 name: Pranshu Rastogi
-summary: DevRel, ecosystem, backend, and blockchain engineer. Head of Ecosystem & Integrations at Push Chain. 7+ years Web3. Founder of SPECTER (post-quantum privacy; ETHCC[9] 3rd prize; Founder School Cohort 2) and builder of VANTA. Open to hiring.
+summary: DevRel, ecosystem, backend, and blockchain engineer. Head of Ecosystem & Integrations at Push Chain. 7+ years Web3. Founder of SPECTER (post-quantum privacy; ETHCC[9] 3rd prize; Founder School Cohort 2), TuckBack (on-device AI reminder app for iPhone) and TheRawByte (RWA research studio). Builder of VANTA. Open to hiring.
 
 roles-open-to:
   - Developer Relations (DevRel)
@@ -35,7 +35,20 @@ flagship-project:
   twitter: https://x.com/specter_PQ
   recognition: ETHCC[9] 3rd Prize Stage Pitch; Founder School Cohort 2
 
+projects:
+  - name: TuckBack
+    summary: Private, local-first AI reminder app for iPhone (Swift 6, Apple Foundation Models, grounded AI pipeline)
+    case-study: https://pranshurastogi.com/projects/tuckback
+    website: https://www.tuckback.com
+    beta: https://testflight.apple.com/join/RqwmqJa1
+  - name: TheRawByte
+    summary: Research studio for tokenized real-world assets; Dune dashboards, intel agents, Private Credit Map
+    case-study: https://pranshurastogi.com/projects/therawbyte
+    website: https://www.therawbyte.com
+    credit-map: https://privatecredit.therawbyte.com
+    twitter: https://x.com/therawbyte
+
 extended-profile: https://pranshurastogi.com/llms.txt
 sitemap: https://pranshurastogi.com/sitemap.xml
 
-keywords: hire DevRel, hire ecosystem lead, hire blockchain engineer, hire backend engineer Web3, Pranshu Rastogi, Push Chain, SPECTER, post-quantum cryptography, stealth addresses, VANTA, Solidity, Rust, smart contracts, protocol integrations, developer relations, technical speaker
+keywords: hire DevRel, hire ecosystem lead, hire blockchain engineer, hire backend engineer Web3, Pranshu Rastogi, Push Chain, SPECTER, post-quantum cryptography, stealth addresses, TuckBack, on-device AI, Apple Foundation Models, Swift, TheRawByte, RWA research, tokenized private credit, VANTA, Solidity, Rust, smart contracts, protocol integrations, developer relations, technical speaker

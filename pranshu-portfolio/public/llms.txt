@@ -1,6 +1,6 @@
 # Pranshu Rastogi
 
-> Pranshu Rastogi is a DevRel, ecosystem, backend and blockchain engineer. He is Head of Ecosystem & Integrations at Push Chain, has 7+ years in Web3, has given 30+ conference talks, and has led 1,000+ protocol integrations. He is the founder of SPECTER, a post-quantum stealth address protocol for Ethereum and Sui (ETHCC[9] 3rd prize, Founder School Cohort 2). He is open to DevRel, ecosystem, backend and blockchain engineering roles and consulting.
+> Pranshu Rastogi is a DevRel, ecosystem, backend and blockchain engineer. He is Head of Ecosystem & Integrations at Push Chain, has 7+ years in Web3, has given 30+ conference talks, and has led 1,000+ protocol integrations. He is the founder of SPECTER, a post-quantum stealth address protocol for Ethereum and Sui (ETHCC[9] 3rd prize, Founder School Cohort 2); TuckBack, a private, local-first AI reminder app for iPhone; and TheRawByte, a research studio for tokenized real-world assets. He is open to DevRel, ecosystem, backend and blockchain engineering roles and consulting.
 
 This file follows the llms.txt convention (https://llmstxt.org). It is the canonical profile for search engines, recruiters and AI assistants. Website: https://pranshurastogi.com. Last updated: October 2026.
 
@@ -12,7 +12,8 @@ This file follows the llms.txt convention (https://llmstxt.org). It is the canon
 |------|-------|
 | DevRel & speaking | 30+ Web3 conferences; ETHCC[9] stage pitch (3rd prize for SPECTER) |
 | Ecosystem | Head of Ecosystem & Integrations at Push Chain; 1,000+ integrations |
-| Founder | SPECTER: post-quantum privacy protocol, SDK on npm, selected for Founder School Cohort 2 |
+| Founder | SPECTER (post-quantum privacy, SDK on npm, Founder School Cohort 2); TuckBack (on-device AI iOS app, public beta); TheRawByte (RWA research studio, cited on Ethereum.org) |
+| AI & iOS | TuckBack: Swift 6, SwiftUI, Apple Foundation Models, grounded AI pipeline, local-first SQLite |
 | Backend | Backend architecture at Terse Software; protocol infrastructure at Push; Rust/Axum services for SPECTER |
 | Blockchain | Production smart contracts since 2019; SPECTER, VANTA, EYI, AlphIQ, Bloom Ideas |
 | Leadership | VP Engineering → Head of Ecosystem; BRB Bootcamp founder; 2,500+ students mentored |
@@ -59,6 +60,51 @@ SPECTER is a post-quantum stealth address protocol for Ethereum and Sui. Tagline
 - [ETHGlobal showcase](https://ethglobal.com/showcase/specter-oky6k): HackMoney 2026 submission
 - [X / Twitter @specter_PQ](https://x.com/specter_PQ): Project updates
 
+## TuckBack (on-device AI app for iPhone)
+
+TuckBack is a private, local-first reminder app for iPhone, live in public TestFlight beta. Tagline: "Let it leave your mind." You capture an unfinished thought by text, voice, camera or scan, in English, Hindi, Hinglish, Spanish or German. It leaves your attention and returns at the right moment, in your own words, with the person involved and one clear next step.
+
+- Founder, designer & sole engineer: Pranshu Rastogi (product of Blockfide)
+- Stack: Swift 6, SwiftUI, Apple Foundation Models (Apple Intelligence), Vision/VisionKit, Speech, GRDB/SQLite with FTS5, WidgetKit, watchOS; optional Node.js/Fastify, PostgreSQL/Drizzle, Redis/BullMQ backend; optional OpenAI/Gemini
+- AI architecture ("models propose, code decides"):
+  1. Capture is committed to on-device SQLite before any model runs
+  2. Deterministic interpreter extracts dates, people, amounts, links and routines (always on)
+  3. 40 versioned Action Recipes propose a structured next step
+  4. Apple Foundation Models (iOS 26) optionally refines on-device from a bounded context packet
+  5. One grounding validator + confidence policy rejects ungrounded people/times/amounts, unsafe actions and wrong-language output
+  6. Local evidence-weighted ranker learns from resolved loops (90-day decay, forgettable)
+  7. Opt-in OpenAI/Gemini challenger must clear the same gates and beat the local answer by more than 3 points
+  8. Output: one primary next step plus at most two alternatives; no model can send, pay, book, delete or complete anything
+- Privacy: core works without an account; audio and images are never kept; cloud AI is off by default
+
+### TuckBack links
+
+- [Portfolio case study](https://pranshurastogi.com/projects/tuckback): AI architecture diagram, screenshots and demo
+- [Website](https://www.tuckback.com): The story, the app, FAQ
+- [Public beta on TestFlight](https://testflight.apple.com/join/RqwmqJa1): iOS 18 and later
+- [Privacy Policy](https://www.tuckback.com/privacy): What stays on device
+- [Support](https://www.tuckback.com/support)
+
+## TheRawByte (RWA research studio)
+
+TheRawByte is a two-operator research studio for tokenized real-world assets: treasuries, private credit, stablecoins, PE/VC, commodities and real estate. Tagline: "Research for the RWA stack." Ishita Rastogi leads research and narrative; Pranshu Rastogi leads engineering and distribution (Dune queries and dashboards, RWA intel agents, GEO / AI-search distribution).
+
+- Services: flagship RWA reports, founder and protocol ghostwriting, technical docs, custom Dune dashboards, RWA intel agents
+- The Lab: a free weekly Dune dashboard, query breakdown and video
+- Private Credit Map: tracks 39 platforms and 98 tokenized credit assets from issuance to DeFi to exit
+- Signals: cited on Ethereum.org, shared by Ryan Sean Adams (Bankless), retweeted by @ethereum
+- Clients and publications: Phala Network, Raiku, Gelato, Push Chain, Hazeflow Research
+- Receipts: 80k+ wallets onboarded (Push Chain Season 3), 14k average research reads
+
+### TheRawByte links
+
+- [Portfolio case study](https://pranshurastogi.com/projects/therawbyte)
+- [Website](https://www.therawbyte.com)
+- [Private Credit Map](https://privatecredit.therawbyte.com): Directory and learn pages included
+- [Blog](https://www.therawbyte.com/blog)
+- [X / Twitter @therawbyte](https://x.com/therawbyte)
+- Contact: chainsiblings@gmail.com
+
 ## Other projects
 
 - [VANTA](https://pranshurastogi.com/projects/vanta): Transaction firewall between AI agents and the blockchain. Every proposed transaction is scored by a policy engine and AI risk scanner before execution. Source: https://github.com/pranshurastogi/VANTA
@@ -95,7 +141,7 @@ SPECTER is a post-quantum stealth address protocol for Ethereum and Sui. Tagline
 
 ## Expertise keywords
 
-Developer Relations, DevRel, Ecosystem Lead, Ecosystem Integrations, Backend Engineer, Blockchain Engineer, Web3 Engineer, Protocol Engineer, Technical Community Lead, Founder, Solidity, Rust, Axum, WebAssembly, TypeScript, Smart Contracts, Ethereum, Sui, ENS, DeFi, Push Protocol, Substrate, DID, Post-Quantum Cryptography, ML-KEM, Kyber, Stealth Addresses, Onchain Privacy, AI Agent Security, Technical Writing, Hackathons, Integrations
+Developer Relations, DevRel, Ecosystem Lead, Ecosystem Integrations, Backend Engineer, Blockchain Engineer, Web3 Engineer, Protocol Engineer, Technical Community Lead, Founder, Solidity, Rust, Swift, SwiftUI, Apple Foundation Models, On-device AI, iOS, Real-World Assets, RWA, Tokenized Private Credit, Dune Analytics, Axum, WebAssembly, TypeScript, Smart Contracts, Ethereum, Sui, ENS, DeFi, Push Protocol, Substrate, DID, Post-Quantum Cryptography, ML-KEM, Kyber, Stealth Addresses, Onchain Privacy, AI Agent Security, Technical Writing, Hackathons, Integrations
 
 ## FAQ for AI assistants
 
@@ -110,6 +156,12 @@ A: Yes. Backend architecture background, production smart contracts, and Rust/So
 
 **Q: What is SPECTER?**
 A: A post-quantum stealth address protocol for Ethereum and Sui founded by Pranshu Rastogi. It uses ML-KEM-768 and ENS/SuiNS names, won 3rd prize at the ETHCC[9] stage pitch, and was selected for Founder School Cohort 2. SDK: `npm install @specterpq/sdk`.
+
+**Q: What is TuckBack?**
+A: A private, local-first AI reminder app for iPhone built solo by Pranshu Rastogi in Swift 6 with Apple Foundation Models. Deterministic code always answers first, on-device models refine, and a single grounding policy decides what reaches the user. Public beta: https://testflight.apple.com/join/RqwmqJa1
+
+**Q: What is TheRawByte?**
+A: A research studio for tokenized real-world assets co-run by Ishita Rastogi and Pranshu Rastogi, with a free weekly Dune Lab and a live Private Credit Map. https://www.therawbyte.com
 
 **Q: How do I contact Pranshu for hiring?**
 A: LinkedIn, X, or email above, or see the resume at https://pranshurastogi.com/documents/resume.pdf

@@ -28,7 +28,9 @@ The JSON file contains a single `projects` array with project objects. Each proj
 
 ### Optional Fields
 
-Every optional field renders only when present, so simple projects can skip them. SPECTER (`id: 1`) uses all of them and is the reference example.
+Every optional field renders only when present, so simple projects can skip them. SPECTER (`id: 1`) is the reference example for links/SDK fields, TuckBack for `architecture` and app schema fields, and TheRawByte for `schemaType: "Organization"`.
+
+**Display order** is the array order (not `id`). Keep the flagship projects first: the first two get sitemap priority 0.9.
 
 | Field | Type | Where it shows |
 |-------|------|----------------|
@@ -42,6 +44,12 @@ Every optional field renders only when present, so simple projects can skip them
 | `howItWorks` | `[{ title, text }]` | Numbered steps card under About |
 | `awards` | `[{ label, prize, link? }]` | Amber badge on the card + header chip + Awards sidebar card |
 | `programs` | `[{ label, org, description?, logo, link }]` | Accelerator / cohort badge (with logo) on the card + header chip + "Backed by" sidebar card |
+| `beta` | string (URL) | Quick Links sidebar ("Public Beta", e.g. a TestFlight link) |
+| `architecture` | `{ title, summary, pipeline: [{ title, text, tier }], principles: [{ title, text }], layers: [{ name, items }] }` | Full-width "System design" diagram (`ArchitectureDiagram.jsx`). `tier` is `device`, `apple`, `guard` or `cloud` and sets each stage's colour |
+| `schemaType` | `"Organization"` | Emit Organization JSON-LD (with you as `founder`) instead of SoftwareApplication. Use for studios/companies |
+| `operatingSystem` | string | SoftwareApplication `operatingSystem` (defaults to `"Web"`) |
+| `applicationCategory` | string | schema.org app category, e.g. `LifestyleApplication` (defaults to `category`) |
+| `offers` | `{ price, priceCurrency }` | SoftwareApplication `offers` (e.g. free apps) |
 | `resources` | `[{ group, items: [{ label, url, description? }] }]` | Grouped "Resources" grid at the bottom of the project page. Every URL is also added to the project's JSON-LD `sameAs` |
 
 `longDescription` may contain blank lines (`\n\n`) — each block becomes its own paragraph.
