@@ -26,6 +26,31 @@ The JSON file contains a single `projects` array with project objects. Each proj
 - **`icon`** (string): Icon identifier (see Available Icons below)
 - **`gradient`** (string): Tailwind CSS gradient classes for the card background
 
+### Optional Fields
+
+Every optional field renders only when present, so simple projects can skip them. SPECTER (`id: 1`) uses all of them and is the reference example.
+
+| Field | Type | Where it shows |
+|-------|------|----------------|
+| `tagline` | string | Large line under the title on the project page; also used in the page `<title>` |
+| `docs` | string (URL) | Quick Links sidebar ("Documentation") |
+| `showcase` | string (URL) | Quick Links sidebar (hackathon / showcase entry) |
+| `npm` | string (package name) | Quick Links sidebar, linked to `npmjs.com/package/<name>` |
+| `install` | string | "Install the SDK" box with a copy button |
+| `social` | `{ x, xHandle }` | Header chip + Quick Links ("Follow on X") |
+| `stats` | `[{ value, label }]` | Key-numbers strip under the header (4 items fit best) |
+| `howItWorks` | `[{ title, text }]` | Numbered steps card under About |
+| `awards` | `[{ label, prize, link? }]` | Amber badge on the card + header chip + Awards sidebar card |
+| `programs` | `[{ label, org, description?, logo, link }]` | Accelerator / cohort badge (with logo) on the card + header chip + "Backed by" sidebar card |
+| `resources` | `[{ group, items: [{ label, url, description? }] }]` | Grouped "Resources" grid at the bottom of the project page. Every URL is also added to the project's JSON-LD `sameAs` |
+
+`longDescription` may contain blank lines (`\n\n`) — each block becomes its own paragraph.
+
+### Media Order
+
+- `images[0]` is the **card thumbnail** on the homepage and the first slide on the project page. An animated GIF here autoplays on the card.
+- OG/Twitter cards and the image sitemap skip GIFs and videos and use the **first still image** instead (`projectStillImage()` in `src/lib/site-seo.js`), so keep at least one PNG/JPG/WebP in the list.
+
 ### Available Icons
 
 The following icon identifiers are supported:
@@ -93,11 +118,14 @@ Use Tailwind CSS gradient classes for the `gradient` field. Examples:
 5. Choose an appropriate icon from the available options
 6. Add project images under `public/images/projects/` (see repo root `ASSETS.md`)
 7. Save the file - the component will automatically load the new data
+8. The project page (`/projects/<slug>`), sitemap (`/sitemap.xml`) and JSON-LD update automatically. The slug is the lowercased title with spaces replaced by `-` (`projectSlug()` in `src/lib/site-seo.js`)
+9. Update `public/llms.txt` and `public/ai.txt` by hand — these are curated for AI crawlers and are **not** generated
 
 ## Media Guidelines
 
 ### Images
 - Place project images in `public/images/projects/`
+- Prefer **WebP** screenshots at 1600px wide (~20–80 KB each); name them `<project>-<view>.webp`
 - Use descriptive filenames (e.g., `my-protocol-dashboard-1.png`)
 - Recommended aspect ratio: 16:9 (landscape)
 - Optimal size: 800x450px or higher
@@ -110,6 +138,14 @@ Use Tailwind CSS gradient classes for the `gradient` field. Examples:
 - Optimal resolution: 1280x720px or higher
 - Supported formats: MOV, MP4, WebM
 - Videos will autoplay (muted) in cards and show controls in modal
+
+### Demo GIFs
+- Keep GIFs under ~5 MB: 720px wide, 8–10 fps, ≤128 colours. Next.js does not optimise GIFs (`unoptimized`), so the file is served as-is
+- Recipe (from a screen recording `demo.mp4`):
+
+```bash
+ffmpeg -i demo.mp4 -vf "setpts=PTS/1.3,fps=8,scale=720:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=96:stats_mode=diff[p];[b][p]paletteuse=dither=none:diff_mode=rectangle" project-demo.gif
+```
 
 ## Color Theme
 

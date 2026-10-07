@@ -3,7 +3,7 @@
 
 site: https://pranshurastogi.com
 name: Pranshu Rastogi
-summary: DevRel, ecosystem, backend, and blockchain engineer. Head of Ecosystem & Integrations at Push Chain. 7+ years Web3. Builder of SPECTER and VANTA. Open to hiring.
+summary: DevRel, ecosystem, backend, and blockchain engineer. Head of Ecosystem & Integrations at Push Chain. 7+ years Web3. Founder of SPECTER (post-quantum privacy; ETHCC[9] 3rd prize; Founder School Cohort 2) and builder of VANTA. Open to hiring.
 
 roles-open-to:
   - Developer Relations (DevRel)
@@ -22,7 +22,20 @@ contact:
   twitter: https://x.com/pranshurastogii
   resume: https://pranshurastogi.com/documents/resume.pdf
 
+flagship-project:
+  name: SPECTER
+  summary: Post-quantum stealth address protocol for Ethereum and Sui (ML-KEM-768, ENS/SuiNS)
+  case-study: https://pranshurastogi.com/projects/specter
+  website: https://specterpq.com
+  docs: https://docs.specterpq.com
+  sdk: https://www.npmjs.com/package/@specterpq/sdk
+  playground: https://play.specterpq.com
+  github: https://github.com/pranshurastogi/SPECTER
+  pitch-deck: https://canva.link/specter-pitch
+  twitter: https://x.com/specter_PQ
+  recognition: ETHCC[9] 3rd Prize Stage Pitch; Founder School Cohort 2
+
 extended-profile: https://pranshurastogi.com/llms.txt
 sitemap: https://pranshurastogi.com/sitemap.xml
 
-keywords: hire DevRel, hire ecosystem lead, hire blockchain engineer, hire backend engineer Web3, Pranshu Rastogi, Push Chain, SPECTER, VANTA, Solidity, Rust, smart contracts, protocol integrations, developer relations, technical speaker
+keywords: hire DevRel, hire ecosystem lead, hire blockchain engineer, hire backend engineer Web3, Pranshu Rastogi, Push Chain, SPECTER, post-quantum cryptography, stealth addresses, VANTA, Solidity, Rust, smart contracts, protocol integrations, developer relations, technical speaker

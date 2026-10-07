@@ -2,9 +2,8 @@
 import { notFound } from "next/navigation";
 import projectsData from "@/data/projects.json";
 import ProjectPageClient from "./ProjectPageClient";
-import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
-import { absoluteUrl } from "@/lib/site-assets";
-import { projectSlug, projectUrl, SITE_URL } from "@/lib/site-seo";
+import { BreadcrumbJsonLd, ProjectJsonLd } from "@/components/seo/JsonLd";
+import { projectSlug, projectStillImage, projectUrl, SITE_URL } from "@/lib/site-seo";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -20,16 +19,18 @@ export async function generateMetadata({ params }) {
   }
 
   const pageUrl = projectUrl(project.title);
-  const ogImage = project.images[0]?.startsWith("http")
-    ? project.images[0]
-    : absoluteUrl(project.images[0]);
+  // OG cards need a still image, so skip any leading GIF/video
+  const ogImage = projectStillImage(project);
 
-  const title = `${project.title} — ${project.category} Project`;
+  const title = project.tagline
+    ? `${project.title} — ${project.tagline}`
+    : `${project.title} — ${project.category} Project`;
   const description = `${project.description} Built with ${project.technologies.slice(0, 5).join(", ")}. By Pranshu Rastogi, blockchain & ecosystem engineer.`;
 
   return {
     title,
     description,
+    keywords: [project.title, project.category, ...project.technologies],
     alternates: { canonical: pageUrl },
     openGraph: {
       title: `${project.title} | Pranshu Rastogi`,
@@ -68,6 +69,7 @@ export default async function ProjectPage({ params }) {
           { name: project.title, url: pageUrl },
         ]}
       />
+      <ProjectJsonLd project={project} />
       <ProjectPageClient project={project} />
     </>
   );

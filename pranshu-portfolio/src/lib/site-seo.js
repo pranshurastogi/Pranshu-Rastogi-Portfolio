@@ -94,6 +94,53 @@ export function projectUrl(title) {
   return `${SITE_URL}/projects/${projectSlug(title)}`;
 }
 
+/** First still image for a project (skips GIFs/videos) — used for OG cards and sitemaps */
+export function projectStillImage(project) {
+  const still = project.images.find((src) => !/\.(gif|mov|mp4|webm)$/i.test(src));
+  const src = still || project.images[0];
+  return src?.startsWith("http") ? src : absoluteUrl(src);
+}
+
+/** Every outbound link for a project (quick links + grouped resources), deduplicated */
+export function projectLinks(project) {
+  const urls = [
+    project.live,
+    project.github,
+    project.docs,
+    project.showcase,
+    project.social?.x,
+    project.npm && `https://www.npmjs.com/package/${project.npm}`,
+    ...(project.resources || []).flatMap((g) => g.items.map((i) => i.url)),
+  ].filter(Boolean);
+  return [...new Set(urls)];
+}
+
+/** Detailed SoftwareApplication schema for a single project page */
+export function buildProjectSchema(project) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "@id": `${projectUrl(project.title)}#software`,
+    name: project.title,
+    alternateName: project.tagline,
+    description: project.description,
+    url: project.live || projectUrl(project.title),
+    mainEntityOfPage: projectUrl(project.title),
+    image: projectStillImage(project),
+    applicationCategory: project.category,
+    operatingSystem: "Web",
+    keywords: project.technologies.join(", "),
+    featureList: project.features,
+    sameAs: projectLinks(project).filter((u) => u !== project.live),
+    author: { "@id": `${SITE_URL}/#person` },
+    creator: { "@type": "Person", name: SITE_NAME, url: `${SITE_URL}/` },
+    award: [
+      ...(project.awards || []).map((a) => `${a.label} — ${a.prize}`),
+      ...(project.programs || []).map((p) => `Selected for ${p.label}`),
+    ],
+  };
+}
+
 export function buildPersonSchema() {
   return {
     "@context": "https://schema.org",
@@ -125,6 +172,7 @@ export function buildPersonSchema() {
     },
     award: [
       "ETHCC[9] — 3rd Prize Stage Pitch (SPECTER)",
+      "Founder School Cohort 2 (SPECTER)",
       "30+ Web3 conference speaking engagements",
       "1,000+ Push Protocol integrations led",
     ],

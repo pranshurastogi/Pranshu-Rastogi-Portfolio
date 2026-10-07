@@ -4,6 +4,7 @@ import {
   buildPersonSchema,
   buildProfessionalServiceSchema,
   buildProfilePageSchema,
+  buildProjectSchema,
   buildProjectsSchema,
   buildWebsiteSchema,
   jsonLdScript,
@@ -37,6 +38,15 @@ export function BreadcrumbJsonLd({ items }) {
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={jsonLdScript(buildBreadcrumbSchema(items))}
+    />
+  );
+}
+
+export function ProjectJsonLd({ project }) {
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={jsonLdScript(buildProjectSchema(project))}
     />
   );
 }

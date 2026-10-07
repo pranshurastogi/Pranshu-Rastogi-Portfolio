@@ -3,42 +3,214 @@
     {
       "id": 1,
       "title": "SPECTER",
-      "subtitle": "Ethereum • Privacy • Post-Quantum Stealth",
-      "description": "Post-quantum stealth address protocol for Ethereum and Sui. Send to anyone using just their ENS (.eth) or SuiNS (.sui) name—SPECTER generates a fresh one-time stealth address for every payment. Uses ML-KEM-768 (NIST FIPS 203) so payments stay private even against quantum adversaries. Integrates with Yellow Network for private trading via off-chain state channels.",
-      "longDescription": "Onchain payments today are fully transparent; every transfer exposes both sender and recipient. SPECTER fixes this. Send to anyone using just their ENS or SuiNS name, and SPECTER generates a fresh, one-time stealth address for every payment. The recipient is the only one who can discover and spend from it—to the rest of the world it looks like funds went to a random address. The cryptography uses ML-KEM-768 (NIST FIPS 203), a post-quantum key encapsulation standard, so payments stay private even against adversaries with quantum computers. SPECTER also integrates with Yellow Network to enable private trading through off-chain state channel settlement. Built for ETHGlobal HackMoney 2026.",
+      "tagline": "Privacy that survives quantum computers",
+      "subtitle": "Post-Quantum Stealth Addresses • Ethereum • Sui",
+      "description": "Post-quantum stealth address protocol for Ethereum and Sui. Pay any ENS (.eth) or SuiNS (.sui) name and SPECTER derives a fresh, unlinkable one-time address for every payment, secured by ML-KEM-768 (NIST FIPS 203). Ships with a TypeScript/WASM SDK on npm, a hosted API, an in-browser playground, and private trading on Yellow Network.",
+      "longDescription": "Onchain payments today are fully transparent: every transfer exposes both sender and recipient. SPECTER fixes this. A recipient publishes one public meta-address (linked to their ENS or SuiNS name), and every sender derives a different one-time stealth address for each payment. Only the recipient can discover and spend those funds; to everyone else they look like transfers to random addresses.\n\nThe discovery path uses ML-KEM-768 (NIST FIPS 203), a lattice-based post-quantum KEM, so announcement data stays private even against \"harvest now, decrypt later\" quantum adversaries. One-byte view tags let recipients skip ~99.6% of announcements, scanning 80K announcements in about 1.5 seconds.\n\nSPECTER is more than a hackathon demo. It ships as a full stack: a Rust/Axum backend and hosted API, a React web app (Setup → Send → Scan), the @specterpq/sdk TypeScript SDK compiled to WebAssembly so all cryptography runs on-device, an interactive SDK playground, a self-custodial \"I don't trust SPECTER\" recovery flow that works even if SPECTER goes offline, and a Yellow Network integration for anonymous state-channel trading. Started at ETHGlobal HackMoney 2026, won 3rd prize at the ETHCC[9] stage pitch, and selected for Founder School Cohort 2.",
       "images": [
-        "/images/projects/specter.png",
-        "/images/projects/specter-1.png"
+        "/images/projects/specter-demo.gif",
+        "/images/projects/specter-home.webp",
+        "/images/projects/specter-how-it-works.webp",
+        "/images/projects/specter-setup.webp",
+        "/images/projects/specter-usecases.webp",
+        "/images/projects/specter-yellow.webp",
+        "/images/projects/specter-playground.webp",
+        "/images/projects/specter-docs.webp",
+        "/images/projects/specter-recovery.webp",
+        "/images/projects/specter-insights.webp"
       ],
       "technologies": [
         "Rust",
         "Axum",
+        "ML-KEM-768",
+        "WebAssembly",
+        "TypeScript",
         "React",
         "Vite",
-        "TypeScript",
-        "ML-KEM-768",
+        "viem",
         "ENS",
         "SuiNS",
+        "Sui",
+        "Yellow Network",
         "IPFS",
         "TailwindCSS",
         "Radix UI",
-        "viem",
-        "Framer Motion"
+        "Framer Motion",
+        "Docusaurus"
       ],
       "features": [
-        "Private payments on Ethereum and Sui",
-        "Send/receive via ENS and SuiNS names only",
-        "Post-quantum security (ML-KEM-768, NIST FIPS 203)",
-        "One-time stealth address per payment",
-        "Yellow Network integration for private trading",
-        "View tags (skips ~99.6% of announcements)",
-        "IPFS meta-address storage",
-        "Non-EVM support (Sui live)"
+        "One-time stealth address for every payment: no public recipient trail",
+        "Pay human-readable names: ENS (.eth) on Ethereum and SuiNS (.sui) on Sui",
+        "Post-quantum discovery with ML-KEM-768 (NIST FIPS 203)",
+        "View tags skip ~99.6% of announcements (80K scanned in ~1.5s)",
+        "@specterpq/sdk on npm: browser-first TypeScript + WASM, keys never leave the device",
+        "Interactive SDK playground and hosted REST API",
+        "Self-custodial recovery that works even if SPECTER goes offline",
+        "Private state-channel trading via Yellow Network",
+        "IPFS meta-address storage"
+      ],
+      "howItWorks": [
+        {
+          "title": "Generate keys",
+          "text": "Create post-quantum spending and viewing keys locally."
+        },
+        {
+          "title": "Register",
+          "text": "Link your meta-address to an ENS or SuiNS name."
+        },
+        {
+          "title": "Send",
+          "text": "Senders pay your name; SPECTER derives a fresh stealth address."
+        },
+        {
+          "title": "Onchain",
+          "text": "Funds land at an unlinkable one-time address."
+        },
+        {
+          "title": "Claim",
+          "text": "Scan with view tags and sweep funds with your keys."
+        }
+      ],
+      "stats": [
+        {
+          "value": "99.6%",
+          "label": "Scan efficiency"
+        },
+        {
+          "value": "~1.5s",
+          "label": "Scan 80K announcements"
+        },
+        {
+          "value": "ML-KEM-768",
+          "label": "NIST FIPS 203"
+        },
+        {
+          "value": "2 chains",
+          "label": "Ethereum + Sui"
+        }
       ],
       "github": "https://github.com/pranshurastogi/SPECTER",
       "live": "https://specterpq.com",
       "docs": "https://docs.specterpq.com",
       "showcase": "https://ethglobal.com/showcase/specter-oky6k",
+      "npm": "@specterpq/sdk",
+      "install": "npm install @specterpq/sdk",
+      "social": {
+        "x": "https://x.com/specter_PQ",
+        "xHandle": "@specter_PQ"
+      },
+      "resources": [
+        {
+          "group": "Product",
+          "items": [
+            {
+              "label": "Web App",
+              "url": "https://specterpq.com",
+              "description": "Setup, send and scan private payments"
+            },
+            {
+              "label": "Use Cases",
+              "url": "https://specterpq.com/usecases",
+              "description": "Payroll, tipping, OTC, DAO payouts"
+            },
+            {
+              "label": "SPECTER × Yellow",
+              "url": "https://specterpq.com/yellow",
+              "description": "Anonymous state-channel trading"
+            },
+            {
+              "label": "I don't trust SPECTER",
+              "url": "https://specterpq.com/i-dont-trust-specter",
+              "description": "Recover funds without SPECTER"
+            }
+          ]
+        },
+        {
+          "group": "Developers",
+          "items": [
+            {
+              "label": "Documentation",
+              "url": "https://docs.specterpq.com",
+              "description": "Concepts, guides and architecture"
+            },
+            {
+              "label": "API Reference",
+              "url": "https://docs.specterpq.com/api/introduction/",
+              "description": "Hosted REST API"
+            },
+            {
+              "label": "@specterpq/sdk",
+              "url": "https://www.npmjs.com/package/@specterpq/sdk",
+              "description": "TypeScript + WASM SDK on npm"
+            },
+            {
+              "label": "SDK Playground",
+              "url": "https://play.specterpq.com",
+              "description": "Run the protocol in your browser"
+            },
+            {
+              "label": "SDK Source",
+              "url": "https://github.com/specter-privacy/specter-sdk",
+              "description": "specter-privacy/specter-sdk (Apache-2.0)"
+            },
+            {
+              "label": "Protocol Source",
+              "url": "https://github.com/pranshurastogi/SPECTER",
+              "description": "Rust backend, web app and docs"
+            }
+          ]
+        },
+        {
+          "group": "Pitch & Research",
+          "items": [
+            {
+              "label": "Pitch Deck",
+              "url": "https://canva.link/specter-pitch",
+              "description": "Vision, market and roadmap"
+            },
+            {
+              "label": "5-min Tour",
+              "url": "https://youtu.be/JTzPpG4cexI",
+              "description": "Setup → send → scan walkthrough"
+            },
+            {
+              "label": "Insights",
+              "url": "https://specterpq.com/insights",
+              "description": "Post-quantum & privacy writing"
+            },
+            {
+              "label": "Research Paper",
+              "url": "https://arxiv.org/pdf/2501.13733v1",
+              "description": "Post-quantum stealth address research (arXiv)"
+            },
+            {
+              "label": "ETHGlobal Showcase",
+              "url": "https://ethglobal.com/showcase/specter-oky6k",
+              "description": "HackMoney 2026 submission"
+            }
+          ]
+        },
+        {
+          "group": "Community",
+          "items": [
+            {
+              "label": "X / Twitter",
+              "url": "https://x.com/specter_PQ",
+              "description": "@specter_PQ"
+            },
+            {
+              "label": "Share Feedback",
+              "url": "https://forms.gle/bDC4Sa5GqFedrf688",
+              "description": "Tell the team what to build"
+            },
+            {
+              "label": "Book a Call",
+              "url": "https://calendly.com/pranshurastogi/15min",
+              "description": "15-min intro with the founder"
+            }
+          ]
+        }
+      ],
       "category": "Privacy & Cryptography",
       "difficulty": "Advanced",
       "icon": "zap",
@@ -47,6 +219,15 @@
         {
           "label": "ETHCC[9]",
           "prize": "3rd Prize — Stage Pitch"
+        }
+      ],
+      "programs": [
+        {
+          "label": "Founder School · Cohort 2",
+          "org": "Founder School",
+          "description": "Selected for the 10-week, equity-free founder program for AI & crypto startups.",
+          "logo": "/images/logos/founder-school.png",
+          "link": "https://founderschool.build"
         }
       ]
     },

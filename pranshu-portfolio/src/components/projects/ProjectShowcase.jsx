@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import projectsData from "../../data/projects.json";
 import OptimizedImage from "../ui/OptimizedImage";
 import VideoWithFallback from "../ui/VideoWithFallback";
+import { projectSlug } from "@/lib/site-seo";
 
 const PROJECTS_PER_PAGE = 6;
 
@@ -46,8 +47,7 @@ export default function ProjectShowcase() {
   }
 
   function openProject(project) {
-    const slug = project.title.toLowerCase().replace(/\s+/g, "-");
-    router.push(`/projects/${slug}`);
+    router.push(`/projects/${projectSlug(project.title)}`);
   }
 
   return (
@@ -149,13 +149,34 @@ export default function ProjectShowcase() {
                         Advanced
                       </div>
                     )}
-                    {/* Award badge */}
-                    {project.awards?.length > 0 && (
-                      <div className="absolute bottom-2 left-2 flex items-center gap-1 px-2 py-0.5 bg-black/70 backdrop-blur rounded-md border border-amber-400/40">
-                        <TrophyIcon className="w-2.5 h-2.5 text-amber-400 flex-shrink-0" />
-                        <span className="text-[9px] font-mono text-amber-300 leading-none">
-                          {project.awards[0].label}
-                        </span>
+                    {/* Recognition badges: award + accelerator program */}
+                    {(project.awards?.length > 0 || project.programs?.length > 0) && (
+                      <div className="absolute bottom-2 left-2 right-2 flex flex-wrap items-center gap-1.5">
+                        {project.awards?.length > 0 && (
+                          <div className="flex items-center gap-1 px-2 py-1 bg-black/70 backdrop-blur rounded-md border border-amber-400/40">
+                            <TrophyIcon className="w-2.5 h-2.5 text-amber-400 flex-shrink-0" />
+                            <span className="text-[9px] font-mono text-amber-300 leading-none">
+                              {project.awards[0].label}
+                            </span>
+                          </div>
+                        )}
+                        {project.programs?.map((program) => (
+                          <div
+                            key={program.label}
+                            className="flex items-center gap-1 pl-0.5 pr-2 py-0.5 bg-black/70 backdrop-blur rounded-md border border-teal-300/40"
+                          >
+                            <OptimizedImage
+                              src={program.logo}
+                              alt={`${program.org} logo`}
+                              width={14}
+                              height={14}
+                              className="rounded-sm bg-white/90"
+                            />
+                            <span className="text-[9px] font-mono text-teal-200 leading-none">
+                              {program.label}
+                            </span>
+                          </div>
+                        ))}
                       </div>
                     )}
                   </div>
