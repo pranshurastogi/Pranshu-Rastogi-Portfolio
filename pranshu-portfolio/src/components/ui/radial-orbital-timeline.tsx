@@ -1,9 +1,23 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
 import { ArrowRight, Link, Building2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+/** Static orb shown while the WebGL globe chunk loads (same footprint) */
+function OrbFallback() {
+  return (
+    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[var(--accent-purple)] via-[var(--accent-cyan)] to-[var(--accent-lime)] opacity-60 blur-[1px]" />
+  );
+}
+
+// three.js + R3F are only needed here, so keep them out of the main bundle
+const Globe = dynamic(() => import("@/components/ui/globe"), {
+  ssr: false,
+  loading: OrbFallback,
+});
 
 interface TimelineItem {
   id: number;
@@ -165,14 +179,16 @@ export default function RadialOrbitalTimeline({
             transform: `translate(${centerOffset.x}px, ${centerOffset.y}px)`,
           }}
         >
-          {/* Center orb */}
-          <div className="absolute w-16 h-16 rounded-full bg-gradient-to-br from-[var(--accent-purple)] via-[var(--accent-cyan)] to-[var(--accent-lime)] animate-pulse flex items-center justify-center z-10">
-            <div className="absolute w-20 h-20 rounded-full border border-white/20 animate-ping opacity-70"></div>
+          {/* Center globe — sphere ≈ 64px (same as the old orb); rings/glow fill the 112px box */}
+          <div className="absolute z-10 flex items-center justify-center w-28 h-28 pointer-events-none">
             <div
-              className="absolute w-24 h-24 rounded-full border border-white/10 animate-ping opacity-50"
-              style={{ animationDelay: "0.5s" }}
-            ></div>
-            <div className="w-8 h-8 rounded-full bg-white/80 backdrop-blur-md"></div>
+              className="absolute inset-3 rounded-full blur-xl opacity-60"
+              style={{
+                background:
+                  "radial-gradient(circle, rgba(159,78,255,0.45) 0%, rgba(0,245,255,0.12) 55%, transparent 75%)",
+              }}
+            />
+            <Globe className="relative w-full h-full" dots={700} size={0.15} speed={0.6} distance={9.2} />
           </div>
 
           {/* Orbit ring */}
