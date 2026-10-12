@@ -2,13 +2,14 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { getVisibleVideos } from "./youtubeConstants";
+import { getPageVideos, VIDEOS_PER_PAGE } from "./youtubeConstants";
 import YouTubeVideoCard from "./YouTubeVideoCard";
-import { X } from "lucide-react";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function YouTubeSection({ videos }) {
   // Hook must be at the top level — before any early returns
   const [modalVideo, setModalVideo] = useState(null);
+  const [page, setPage] = useState(0);
 
   if (!Array.isArray(videos)) {
     return (
@@ -25,7 +26,8 @@ export default function YouTubeSection({ videos }) {
     );
   }
 
-  const visibleVideos = getVisibleVideos(videos);
+  const pageCount = Math.ceil(videos.length / VIDEOS_PER_PAGE);
+  const visibleVideos = getPageVideos(videos, page);
 
   return (
     <div
@@ -58,6 +60,44 @@ export default function YouTubeSection({ videos }) {
             />
           ))}
         </div>
+
+        {pageCount > 1 && (
+          <nav
+            aria-label="YouTube videos pages"
+            className="mt-8 flex items-center justify-center gap-3"
+          >
+            <button
+              type="button"
+              onClick={() => setPage((p) => Math.max(0, p - 1))}
+              disabled={page === 0}
+              aria-label="Previous videos"
+              className="p-2 rounded-full border border-white/10 text-white/70 hover:text-white hover:border-[var(--accent-cyan)]/40 disabled:opacity-30 disabled:pointer-events-none transition-colors"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            {Array.from({ length: pageCount }, (_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setPage(i)}
+                aria-label={`Page ${i + 1}`}
+                aria-current={i === page ? "page" : undefined}
+                className={`h-2 rounded-full transition-all ${
+                  i === page ? "w-6 bg-[var(--accent-lime)]" : "w-2 bg-white/25 hover:bg-white/50"
+                }`}
+              />
+            ))}
+            <button
+              type="button"
+              onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}
+              disabled={page === pageCount - 1}
+              aria-label="Next videos"
+              className="p-2 rounded-full border border-white/10 text-white/70 hover:text-white hover:border-[var(--accent-cyan)]/40 disabled:opacity-30 disabled:pointer-events-none transition-colors"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </nav>
+        )}
       </div>
 
       {/* Modal */}

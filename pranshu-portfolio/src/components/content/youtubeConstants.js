@@ -1,6 +1,5 @@
-// YouTube section config – change here to show more/fewer videos
-export const MAX_VIDEOS_DISPLAY = 5;
-export const MIN_VIDEOS_DISPLAY = 5;
+// YouTube section config – videos per page (6 = two full rows on the 3-col grid)
+export const VIDEOS_PER_PAGE = 6;
 
 export const NEON_COLORS = ["var(--accent-lime)", "var(--accent-cyan)", "var(--accent-purple)", "var(--accent-lime)"];
 
@@ -20,10 +19,12 @@ export function getThumbnailUrl(videoId, quality = "maxres") {
 }
 
 /**
- * @param {Array<{ videoId: string; title: string }>} videos - Full list from feed
- * @returns {Array<{ videoId: string; title: string }>} Sliced list for display (5–7)
+ * @param {Array<{ videoId: string; title: string }>} videos - Full list
+ * @param {number} page - Zero-based page index
+ * @returns {Array<{ videoId: string; title: string }>} Videos for that page
  */
-export function getVisibleVideos(videos) {
+export function getPageVideos(videos, page = 0) {
   if (!Array.isArray(videos)) return [];
-  return videos.slice(0, MAX_VIDEOS_DISPLAY);
+  const start = page * VIDEOS_PER_PAGE;
+  return videos.slice(start, start + VIDEOS_PER_PAGE);
 }

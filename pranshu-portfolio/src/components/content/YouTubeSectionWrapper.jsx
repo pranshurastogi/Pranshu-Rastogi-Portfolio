@@ -8,12 +8,24 @@ export const revalidate = 3600; // 1 hour ISR for RSS
 // Fallback video IDs - manually updated from your channel
 // To add new videos: get video ID from YouTube URL (e.g., https://youtube.com/watch?v=VIDEO_ID)
 const FALLBACK_VIDEOS = [
+  { videoId: "JTzPpG4cexI", title: "SPECTER : Post Quantum Stealth Address Protocol." },
   { videoId: "nh3vEoGYN24", title: "XRange : Cross Chain Trailing Range Rebalancer Uniswap v4 Hooks" },
   { videoId: "UPJ7uowUepU", title: "Open Intent Framework by Ethereum : Discover the Open Intent Advantage! [ERC - 7683]" },
   { videoId: "rcySZCHCaq4", title: "How to Send Email from Ethereum to Solana! (Push Chain Step-by-Step)" },
   { videoId: "bIiewuAYo3Y", title: "How to become DevRel in web3 ?" },
+  { videoId: "5Wtibpj5lq8", title: "This Camera Can Shop: Photo-to-Purchase with Morrow × Prava Payments" },
   { videoId: "TkXput4WxyA", title: "How to become Ecosystem Developer in web3?" },
 ];
+
+// Always shown first, even when the RSS feed is live
+const PINNED_VIDEO_IDS = ["JTzPpG4cexI"];
+
+function withPinned(videos) {
+  const pinned = PINNED_VIDEO_IDS.map(
+    (id) => videos.find((v) => v.videoId === id) || FALLBACK_VIDEOS.find((v) => v.videoId === id)
+  ).filter(Boolean);
+  return [...pinned, ...videos.filter((v) => !PINNED_VIDEO_IDS.includes(v.videoId))];
+}
 
 const YOUTUBE_CHANNEL_ID = "UC8INoQWXK5AwIe5Fdb0BO2Q";
 const RSS_FEED_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${YOUTUBE_CHANNEL_ID}`;
@@ -75,7 +87,7 @@ export default async function YouTubeSectionWrapper() {
     
     if (rssVideos && rssVideos.length > 0) {
       console.log("[YouTubeSection] Successfully loaded from RSS feed");
-      return <YouTubeSection videos={rssVideos} />;
+      return <YouTubeSection videos={withPinned(rssVideos)} />;
     }
 
     // Fallback to manual video list
